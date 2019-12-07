@@ -13,6 +13,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "style": "standard",
+    "style-fix": "standard --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -30,5 +32,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.7.2",
+    "jest": "^24.9.0",
+    "standard": "^14.3.1"
   }
 }

@@ -10,15 +10,15 @@ const GameBoard = React.forwardRef((props, ref) => (
     <GameMap
       ref={ref}
       bounds={props.bounds}
-      handleIAECreated={props.handleIAECreated}
+      onCreatedIAE={props.handleCreatedIAE}
       iaeTypeSelected={props.iaeTypeSelected}
-      handleIAETypeChange={props.handleIAETypeChange}
+      onIAETypeChange={props.onIAETypeChange}
       iaeImplemented={props.iaeImplemented}
     />
 
     <IAETypeSelect
       iaeTypeSelected={props.iaeTypeSelected}
-      handleIAETypeChange={props.handleIAETypeChange}
+      onIAETypeChange={props.handleIAETypeChange}
     />
 
   </div>
@@ -32,7 +32,7 @@ GameBoard.propTypes = {
     PropTypes.shape({ current: PropTypes.any })
   ]),
   bounds: PropTypes.array.isRequired,
-  handleIAECreated: PropTypes.func.isRequired,
+  handleCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
   // IAE Type Select
   iaeTypeSelected: PropTypes.string.isRequired,

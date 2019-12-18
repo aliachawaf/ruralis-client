@@ -12,14 +12,21 @@ import PolylineDecorator from './PolylineDecorator'
 import icon from '../../assets/mapLegend/circle.png'
 
 const arrow = [
-  { offset: '10%', repeat: '30px', symbol: L.Symbol.marker({rotate: true, markerOptions: {
+  {
+    offset: '10%',
+    repeat: '30px',
+    symbol: L.Symbol.marker({
+      rotate: true,
+      markerOptions: {
         icon: L.icon({
           iconUrl: icon,
           iconAnchor: [8, 8]
         })
-      }})}
+      }
+    })
+  }
 
-];
+]
 
 const GameMap = React.forwardRef((props, ref) => (
   <Map
@@ -38,7 +45,7 @@ const GameMap = React.forwardRef((props, ref) => (
     <FeatureGroup>
       <EditControl
         position='topright'
-        onCreated={e => props.handleIAECreated(e)}
+        onCreated={e => props.onCreatedIAE(e)}
         draw={{
           marker: false,
           circlemarker: false
@@ -47,9 +54,9 @@ const GameMap = React.forwardRef((props, ref) => (
     </FeatureGroup>
 
     {
-      props.iaeImplemented.map(iae =>
+      props.iaeImplemented.map((iae, index) =>
 
-        <PolylineDecorator color={iae.color} patterns={arrow} positions={iae.positions} />
+        <PolylineDecorator key={index} color={iae.color} patterns={arrow} positions={iae.positions} />
 
       )
     }
@@ -62,7 +69,7 @@ GameMap.propTypes = {
     PropTypes.shape({ current: PropTypes.any })
   ]),
   bounds: PropTypes.array.isRequired,
-  handleIAECreated: PropTypes.func.isRequired,
+  onCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired
 }
 

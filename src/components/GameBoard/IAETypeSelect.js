@@ -9,7 +9,7 @@ const iaeTypes = [
 
 const IAETypeSelect = (props) => (
 
-  <select value={props.iaeTypeSelected} onChange={props.handleIAETypeChange}>
+  <select value={props.iaeTypeSelected} onChange={props.onIAETypeChange}>
     {
       iaeTypes.map(iaeType =>
         <option key={iaeType.key} value={iaeType.value}>{iaeType.text}</option>
@@ -20,7 +20,7 @@ const IAETypeSelect = (props) => (
 
 IAETypeSelect.propTypes = {
   iaeTypeSelected: PropTypes.string.isRequired,
-  handleIAETypeChange: PropTypes.func.isRequired
+  onIAETypeChange: PropTypes.func.isRequired
 }
 
 IAETypeSelect.defaultProps = {}

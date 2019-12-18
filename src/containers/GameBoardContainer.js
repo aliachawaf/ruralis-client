@@ -44,7 +44,7 @@ class GameBoardContainer extends React.Component {
       <GameBoard
         ref={mapRef}
         bounds={bounds}
-        handleIAECreated={this.onCreatedIAE}
+        handleCreatedIAE={this.onCreatedIAE}
         iaeTypeSelected={this.state.iaeTypeSelected}
         handleIAETypeChange={this.onIAETypeChange}
         iaeImplemented={this.state.iaeImplemented}

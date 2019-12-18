@@ -5,8 +5,21 @@ import L from 'leaflet'
 import { FeatureGroup, ImageOverlay, Map } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 
-import gameMap from '../assets/gameMap.png'
-import '../../node_modules/leaflet-draw/dist/leaflet.draw.css'
+import gameMap from '../../assets/gameMap.png'
+import 'leaflet-draw/dist/leaflet.draw.css'
+import PolylineDecorator from './PolylineDecorator'
+
+import icon from '../../assets/mapLegend/circle.png'
+
+const arrow = [
+  { offset: '10%', repeat: '30px', symbol: L.Symbol.marker({rotate: true, markerOptions: {
+        icon: L.icon({
+          iconUrl: icon,
+          iconAnchor: [8, 8]
+        })
+      }})}
+
+];
 
 const GameMap = React.forwardRef((props, ref) => (
   <Map
@@ -25,7 +38,7 @@ const GameMap = React.forwardRef((props, ref) => (
     <FeatureGroup>
       <EditControl
         position='topright'
-        onCreated={e => props.handleCreatedIAE(e)}
+        onCreated={e => props.handleIAECreated(e)}
         draw={{
           marker: false,
           circlemarker: false
@@ -33,6 +46,13 @@ const GameMap = React.forwardRef((props, ref) => (
       />
     </FeatureGroup>
 
+    {
+      props.iaeImplemented.map(iae =>
+
+        <PolylineDecorator color={iae.color} patterns={arrow} positions={iae.positions} />
+
+      )
+    }
   </Map>
 ))
 
@@ -42,7 +62,8 @@ GameMap.propTypes = {
     PropTypes.shape({ current: PropTypes.any })
   ]),
   bounds: PropTypes.array.isRequired,
-  handleCreatedIAE: PropTypes.func.isRequired
+  handleIAECreated: PropTypes.func.isRequired,
+  iaeImplemented: PropTypes.array.isRequired
 }
 
 GameMap.defaultProps = {}

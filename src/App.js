@@ -1,10 +1,10 @@
 import React from 'react'
-import GameBoard from './containers/GameBoard'
+import GameBoardContainer from './containers/GameBoardContainer'
 
 function App () {
   return (
     <div style={{ height: '180px' }}>
-      <GameBoard />
+      <GameBoardContainer />
     </div>
   )
 }

@@ -10,7 +10,7 @@ class GameBoardContainer extends React.Component {
     super(props)
     this.state = {
       iaeImplemented: [],
-      iaeTypeSelected: ''
+      iaeTypeSelected: 0
     }
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onIAETypeChange = this.onIAETypeChange.bind(this)
@@ -21,12 +21,22 @@ class GameBoardContainer extends React.Component {
   }
 
   onCreatedIAE (e) {
-    console.log(e)
-    const newIAE =
-      {
-        color: this.state.iaeTypeSelected,
+    let newIAE
+
+    if (e.layerType === 'circle') {
+      newIAE = {
+        id: this.state.iaeTypeSelected,
+        drawingType: e.layerType,
+        center: e.layer._latlng,
+        radius: e.layer._radius
+      }
+    } else {
+      newIAE = {
+        id: this.state.iaeTypeSelected,
+        drawingType: e.layerType,
         positions: e.layer._latlngs
       }
+    }
 
     this.setState({
       iaeImplemented: this.state.iaeImplemented.concat(newIAE)
@@ -34,20 +44,18 @@ class GameBoardContainer extends React.Component {
   }
 
   onIAETypeChange (e) {
-    console.log('change ' + e.target.value)
     this.setState({ iaeTypeSelected: e.target.value })
   }
 
   render () {
     return (
-
       <GameBoard
         ref={mapRef}
         bounds={bounds}
         handleCreatedIAE={this.onCreatedIAE}
+        iaeImplemented={this.state.iaeImplemented}
         iaeTypeSelected={this.state.iaeTypeSelected}
         handleIAETypeChange={this.onIAETypeChange}
-        iaeImplemented={this.state.iaeImplemented}
       />
     )
   }

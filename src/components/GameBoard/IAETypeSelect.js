@@ -1,18 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-const iaeTypes = [
-  { key: 1, text: 'Rouge', value: 'red' },
-  { key: 2, text: 'Bleu', value: 'blue' },
-  { key: 3, text: 'Vert', value: 'green' }
-]
+import { mapLegend } from '../../config/mapLegend'
 
 const IAETypeSelect = (props) => (
 
   <select value={props.iaeTypeSelected} onChange={props.onIAETypeChange}>
     {
-      iaeTypes.map(iaeType =>
-        <option key={iaeType.key} value={iaeType.value}>{iaeType.text}</option>
+      mapLegend.map((iae, index) =>
+        <option key={index} value={index}>{iae.iaeGroup + ' ' + iae.iaeName}</option>
       )
     }
   </select>
@@ -23,6 +18,8 @@ IAETypeSelect.propTypes = {
   onIAETypeChange: PropTypes.func.isRequired
 }
 
-IAETypeSelect.defaultProps = {}
+IAETypeSelect.defaultProps = {
+  iaeTypeSelected: 0
+}
 
 export default IAETypeSelect

@@ -2,6 +2,8 @@ import React from 'react'
 
 import GameBoard from '../components/GameBoard/GameBoard'
 
+import * as APIFetch from '../helpers/APIFetch'
+
 const bounds = [[0, 0], [900, 1050]]
 const mapRef = React.createRef()
 
@@ -14,6 +16,7 @@ class GameBoardContainer extends React.Component {
     }
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onIAETypeChange = this.onIAETypeChange.bind(this)
+    this.onValidateIAEs = this.onValidateIAEs.bind(this)
   }
 
   componentDidMount () {
@@ -47,6 +50,17 @@ class GameBoardContainer extends React.Component {
     this.setState({ iaeTypeSelected: e.target.value })
   }
 
+  onValidateIAEs () {
+    console.log('validate : ' + this.state.iaeImplemented)
+
+    // Send IAEs implemented to Server
+    // TODO
+    const resource = 'api/public/game/:idGame/IAE'
+    APIFetch.fetchRuralisAPI(resource, { IAES: this.state.iaeImplemented }, APIFetch.POST)
+      .then()
+      .catch()
+  }
+
   render () {
     return (
       <GameBoard
@@ -56,6 +70,7 @@ class GameBoardContainer extends React.Component {
         iaeImplemented={this.state.iaeImplemented}
         iaeTypeSelected={this.state.iaeTypeSelected}
         handleIAETypeChange={this.onIAETypeChange}
+        handleValidateIAEs={this.onValidateIAEs}
       />
     )
   }

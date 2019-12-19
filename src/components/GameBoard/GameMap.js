@@ -43,8 +43,18 @@ const GameMap = React.forwardRef((props, ref) => (
     {
       props.iaeImplemented.map((iae, index) => {
         return iae.drawingType === 'circle'
-          ? <Circle key={index} color={mapLegend[iae.id].color} center={iae.center} radius={iae.radius} />
-          : <PolylineDecorator key={index} color={mapLegend[iae.id].color} patterns={mapLegend[iae.id].decorator} positions={iae.positions} />
+          ? <Circle
+            key={index}
+            color={mapLegend[iae.id].color}
+            center={iae.center}
+            radius={iae.radius}
+          /> // eslint-disable-line
+          : <PolylineDecorator
+            key={index}
+            color={mapLegend[iae.id].color}
+            patterns={mapLegend[iae.id].decorator}
+            positions={iae.positions}
+          /> // eslint-disable-line
       }
       )
     }

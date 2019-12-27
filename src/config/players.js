@@ -1,35 +1,38 @@
-export const players = [
+import jonathanReveurCard from '../assets/players/cards/jonathan.png'
+import jonathanReveurPic from '../assets/players/pictures/jonathan.png'
 
+const players = [
   {
-    number: 1,
-    role: ''
-  },
-  {
-    number: 1,
-    role: ''
-  },
-  {
-    number: 2,
-    role: ''
-  },
-  {
-    number: 3,
-    role: ''
-  },
-  {
-    number: 4,
-    role: ''
-  },
-  {
-    number: 5,
-    role: ''
-  },
-  {
-    number: 6,
-    role: ''
-  },
-  {
-    number: 7,
-    role: ''
+    role: 'agriculteur',
+    name: 'Jonathan Rêveur',
+    description: 'Agriculteur et observateur de la nature',
+    picture: jonathanReveurPic,
+    card: jonathanReveurCard
+  }, {
+    role: 'agriculteur',
+    name: 'Jonathan Rêveur',
+    description: 'Agriculteur et observateur de la nature',
+    picture: jonathanReveurPic,
+    card: jonathanReveurCard
+  }, {
+    role: 'agriculteur',
+    name: 'Jonathan Rêveur',
+    description: 'Agriculteur et observateur de la nature',
+    picture: jonathanReveurPic,
+    card: jonathanReveurCard
+  }, {
+    role: 'agriculteur',
+    name: 'Jonathan Rêveur',
+    description: 'Agriculteur et observateur de la nature',
+    picture: jonathanReveurPic,
+    card: jonathanReveurCard
+  }, {
+    role: 'agriculteur',
+    name: 'Jonathan Rêveur',
+    description: 'Agriculteur et observateur de la nature',
+    picture: jonathanReveurPic,
+    card: jonathanReveurCard
   }
 ]
+
+export default players

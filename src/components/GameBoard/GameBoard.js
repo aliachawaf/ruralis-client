@@ -4,28 +4,46 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import GameMap from './GameMap'
 import IAETypeSelect from './IAETypeSelect'
 import GameStep from './GameStep'
+import StartGameModal from './StartGameModal'
 
-const GameBoard = React.forwardRef((props, ref) => (
+const GameBoard = React.forwardRef((props, ref) => {
+  const {
+    bounds,
+    handleCreatedIAE,
+    iaeImplemented,
+    iaeTypeSelected,
+    handleIAETypeChange,
+    handleValidateIAEs,
+    players,
+    opened,
+    handleStartGame
+  } = props
 
-  <div>
-    <GameMap
-      ref={ref}
-      bounds={props.bounds}
-      onCreatedIAE={props.handleCreatedIAE}
-      iaeTypeSelected={props.iaeTypeSelected}
-      onIAETypeChange={props.onIAETypeChange}
-      iaeImplemented={props.iaeImplemented}
-    />
+  return (
+    <div>
+      <StartGameModal
+        players={players}
+        opened={opened}
+        handleStartGame={handleStartGame}
+      />
 
-    <IAETypeSelect
-      iaeTypeSelected={props.iaeTypeSelected}
-      onIAETypeChange={props.handleIAETypeChange}
-    />
+      <GameMap
+        ref={ref}
+        bounds={bounds}
+        onCreatedIAE={handleCreatedIAE}
+        iaeTypeSelected={iaeTypeSelected}
+        iaeImplemented={iaeImplemented}
+      />
 
-    <GameStep onValidateIAEs={props.handleValidateIAEs} />
-  </div>
+      <IAETypeSelect
+        iaeTypeSelected={iaeTypeSelected}
+        onIAETypeChange={handleIAETypeChange}
+      />
 
-))
+      <GameStep onValidateIAEs={handleValidateIAEs} />
+    </div>
+  )
+})
 
 GameBoard.propTypes = {
   // GameMap
@@ -40,7 +58,11 @@ GameBoard.propTypes = {
   iaeTypeSelected: PropTypes.string.isRequired,
   handleIAETypeChange: PropTypes.func.isRequired,
   // Game Step
-  handleValidateIAEs: PropTypes.func.isRequired
+  handleValidateIAEs: PropTypes.func.isRequired,
+  // Start Game Modal
+  players: PropTypes.array.isRequired,
+  opened: PropTypes.bool.isRequired,
+  handleStartGame: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {}

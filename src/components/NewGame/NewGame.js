@@ -1,43 +1,46 @@
 import React from 'react'
 import RuralisHeader from '../common/RuralisHeader'
-import { Button, Container, Dropdown, Input } from 'semantic-ui-react'
+import { Button, Container, Divider, Header } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-
-const options = [
-  { key: 1, text: 1, value: 1 },
-  { key: 2, text: 2, value: 2 }
-]
+import PlayersSelect from './Players/PlayersSelect'
+import ScenarioSelect from './Scenario/ScenarioSelect'
 
 const NewGame = (props) => {
-  const { handleOnClick, handleOnChangePlayers, nbPlayers, scenario, handleChangeScenario } = props
+  const {
+    handleOnClick,
+    handleOnChangeNbPlayers,
+    nbPlayers,
+    handleOnClickPlayer,
+    playersSelected,
+    scenario,
+    handleChangeScenario
+  } = props
 
   return (
     <div>
       <RuralisHeader title='Nouvelle Partie' />
 
       <Container>
-        <Input
-          icon='users'
-          iconPosition='left'
-          type='number'
-          min={5}
-          max={7}
-          value={nbPlayers}
-          onChange={handleOnChangePlayers}
+        <Header as='h3' icon='users' content='Choix des joueurs' dividing />
+        <PlayersSelect
+          handleOnChangeNbPlayers={handleOnChangeNbPlayers}
+          nbPlayers={nbPlayers}
+          handleOnClickPlayer={handleOnClickPlayer}
+          playersSelected={playersSelected}
         />
       </Container>
-      <Container>
-        <Dropdown
-          selection
-          options={options}
-          value={scenario}
-          placeholder='Choisir un scénario'
-          onChange={handleChangeScenario}
-        />
-      </Container>
-      <Container>
 
-        <Button content='Lancer nouvelle partie' onClick={handleOnClick} />
+      <Divider hidden />
+
+      <Container>
+        <Header as='h3' icon='file text' content='Choix du scénario' dividing />
+        <ScenarioSelect handleChangeScenario={handleChangeScenario} scenario={scenario} />
+      </Container>
+
+      <Divider hidden />
+
+      <Container>
+        <Button floated='right' content='Lancer nouvelle partie' onClick={handleOnClick} />
       </Container>
     </div>
   )
@@ -45,8 +48,10 @@ const NewGame = (props) => {
 
 NewGame.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
-  handleOnChangePlayers: PropTypes.func.isRequired,
+  handleOnChangeNbPlayers: PropTypes.func.isRequired,
   nbPlayers: PropTypes.number.isRequired,
+  handleOnClickPlayer: PropTypes.func.isRequired,
+  playersSelected: PropTypes.array.isRequired,
   scenario: PropTypes.number.isRequired,
   handleChangeScenario: PropTypes.func.isRequired
 }

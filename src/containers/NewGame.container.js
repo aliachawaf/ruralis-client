@@ -7,10 +7,12 @@ class NewGameContainer extends React.Component {
     super(props)
     this.state = {
       nbPlayers: 5,
+      playersSelected: [4, 5],
       scenario: ''
     }
     this.onClickNewGame = this.onClickNewGame.bind(this)
-    this.onChangePlayers = this.onChangePlayers.bind(this)
+    this.onChangeNbPlayers = this.onChangeNbPlayers.bind(this)
+    this.onClickPlayer = this.onClickPlayer.bind(this)
     this.onChangeScenario = this.onChangeScenario.bind(this)
   }
 
@@ -18,14 +20,14 @@ class NewGameContainer extends React.Component {
     // Send game data to server
     // TODO
     const params = {
-      players: this.randomPlayers(),
+      players: this.state.playersSelected,
       scenario: this.state.scenario
     }
     console.log(params)
   }
 
-  onChangePlayers (e) {
-    console.log(e.target.value)
+  onChangeNbPlayers (e) {
+    console.log('oui' + e.target.value)
 
     this.setState({
       nbPlayers: e.target.value
@@ -37,16 +39,20 @@ class NewGameContainer extends React.Component {
     this.setState({ scenario: value })
   }
 
-  randomPlayers () {
-    switch (this.state.nbPlayers) {
-      case 5:
-        return []
-      case 6:
-        return []
-      case 7:
-        return []
-      default:
-        return []
+  onClickPlayer = (playerIndex) => {
+    const playersSelected = this.state.playersSelected
+
+    if (playersSelected.includes(playerIndex)) {
+      // Remove the player from the selected ones
+      const indexToRemove = playersSelected.indexOf(playerIndex)
+      this.setState({
+        playersSelected: playersSelected.filter((_, i) => i !== indexToRemove)
+      })
+    } else {
+      // Add the player to the selected ones
+      this.setState({
+        playersSelected: [...playersSelected, playerIndex]
+      })
     }
   }
 
@@ -54,8 +60,10 @@ class NewGameContainer extends React.Component {
     return (
       <NewGame
         handleOnClick={this.onClickNewGame}
-        handleOnChangePlayers={this.onChangePlayers}
+        handleOnChangeNbPlayers={this.onChangeNbPlayers}
         nbPlayers={this.state.nbPlayers}
+        handleOnClickPlayer={this.onClickPlayer}
+        playersSelected={this.state.playersSelected}
         scenario={this.state.scenario}
         handleChangeScenario={this.onChangeScenario}
       />

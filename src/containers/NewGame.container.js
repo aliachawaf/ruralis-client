@@ -17,7 +17,7 @@ class NewGameContainer extends React.Component {
   }
 
   onClickNewGame () {
-    // Send game data to server
+    // Send game data to server and redirect to game board
     // TODO
     const params = {
       players: this.state.playersSelected,

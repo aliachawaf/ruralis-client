@@ -36,7 +36,7 @@ const HomeRuralis = () => (
 
     <Container textAlign='right'>
       <Link to='/game/rules'>
-        <Label as='a' icon='file' content='Règles du jeu' onClick={() => console.log('label')} />
+        <Label as='a' icon='file' size='big' content='Règles du jeu' />
       </Link>
     </Container>
 

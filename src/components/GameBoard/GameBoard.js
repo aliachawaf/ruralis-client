@@ -4,7 +4,9 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import GameMap from './GameMap'
 import IAETypeSelect from './IAETypeSelect'
 import GameStep from './GameStep'
-import { Grid } from 'semantic-ui-react'
+import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
+
+import mapInfoLegend from '../../assets/mapInfoLegend.png'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
@@ -17,31 +19,39 @@ const GameBoard = React.forwardRef((props, ref) => {
   } = props
 
   return (
-    <Grid columns={3} stackable>
+    <Segment basic>
+      <Grid columns={3} stackable textAlign='center'>
 
-      <Grid.Column width={9}>
-        <GameMap
-          ref={ref}
-          bounds={bounds}
-          onCreatedIAE={handleCreatedIAE}
-          iaeTypeSelected={iaeTypeSelected}
-          onIAETypeChange={handleIAETypeChange}
-          iaeImplemented={iaeImplemented}
-        />
-      </Grid.Column>
+        <Grid.Column width={9}>
+          <GameMap
+            ref={ref}
+            bounds={bounds}
+            onCreatedIAE={handleCreatedIAE}
+            iaeTypeSelected={iaeTypeSelected}
+            onIAETypeChange={handleIAETypeChange}
+            iaeImplemented={iaeImplemented}
+          />
+        </Grid.Column>
 
-      <Grid.Column width={4}>
-        <IAETypeSelect
-          iaeTypeSelected={iaeTypeSelected}
-          onIAETypeChange={handleIAETypeChange}
-        />
-      </Grid.Column>
+        <Grid.Column width={3}>
+          <Header content={'Choix de l\'IAE à implémenter'} />
 
-      <Grid.Column width={3}>
-        <GameStep onValidateIAEs={handleValidateIAEs} />
-      </Grid.Column>
+          <IAETypeSelect
+            iaeTypeSelected={iaeTypeSelected}
+            onIAETypeChange={handleIAETypeChange}
+          />
 
-    </Grid>
+          <Divider hidden />
+
+          <Image src={mapInfoLegend} />
+        </Grid.Column>
+
+        <Grid.Column width={4}>
+          <GameStep onValidateIAEs={handleValidateIAEs} />
+        </Grid.Column>
+
+      </Grid>
+    </Segment>
   )
 })
 

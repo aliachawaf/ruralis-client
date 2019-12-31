@@ -30,7 +30,7 @@ const GameMap = React.forwardRef((props, ref) => {
       dragging={false}
     >
 
-      {/* GAME MAP */}
+      {/* GAME MAP IMAGE */}
       <ImageOverlay
         url={gameMap}
         bounds={bounds}

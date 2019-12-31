@@ -3,6 +3,7 @@ import React from 'react'
 import GameBoard from '../components/GameBoard/GameBoard'
 
 import * as APIFetch from '../helpers/APIFetch'
+import players from '../config/players'
 
 const bounds = [[0, 0], [900, 1050]]
 const mapRef = React.createRef()
@@ -11,9 +12,11 @@ class GameBoardContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      openedStartGameModal: true,
       iaeImplemented: [],
       iaeTypeSelected: '00'
     }
+    this.onStartGame = this.onStartGame.bind(this)
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
@@ -21,6 +24,14 @@ class GameBoardContainer extends React.Component {
 
   componentDidMount () {
     mapRef.current.leafletElement.fitBounds(bounds)
+  }
+
+  onStartGame () {
+    this.setState({
+      openedStartGameModal: false
+    })
+
+    // TODO launch timer for first round
   }
 
   onCreatedIAE (e) {
@@ -66,6 +77,9 @@ class GameBoardContainer extends React.Component {
       <GameBoard
         ref={mapRef}
         bounds={bounds}
+        handleStartGame={this.onStartGame}
+        opened={this.state.openedStartGameModal}
+        players={players} // TODO get players selected in game creation
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
         iaeTypeSelected={this.state.iaeTypeSelected}

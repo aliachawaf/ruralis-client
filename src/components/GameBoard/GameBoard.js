@@ -4,6 +4,8 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import GameMap from './GameMap'
 import IAETypeSelect from './IAETypeSelect'
 import GameStep from './GameStep'
+import StartGameModal from './StartGameModal'
+
 import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapInfoLegend.png'
@@ -15,11 +17,20 @@ const GameBoard = React.forwardRef((props, ref) => {
     iaeImplemented,
     iaeTypeSelected,
     handleIAETypeChange,
-    handleValidateIAEs
+    handleValidateIAEs,
+    players,
+    opened,
+    handleStartGame
   } = props
 
   return (
     <Segment basic>
+      <StartGameModal
+        players={players}
+        opened={opened}
+        handleStartGame={handleStartGame}
+      />
+
       <Grid columns={3} stackable textAlign='center'>
 
         <Grid.Column width={9}>
@@ -64,7 +75,11 @@ GameBoard.propTypes = {
   iaeTypeSelected: PropTypes.string.isRequired,
   handleIAETypeChange: PropTypes.func.isRequired,
   // Game Step
-  handleValidateIAEs: PropTypes.func.isRequired
+  handleValidateIAEs: PropTypes.func.isRequired,
+  // Start Game Modal
+  players: PropTypes.array.isRequired,
+  opened: PropTypes.bool.isRequired,
+  handleStartGame: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {

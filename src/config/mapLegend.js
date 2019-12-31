@@ -4,107 +4,277 @@ import redDot from '../assets/mapLegend/redDot.png'
 import redV from '../assets/mapLegend/redV.png'
 
 /**
+ * @type {*[]}
  *
- * @type {{
- * iaeGroup
- * iaeName
- * color
- * decorator
- * drawingType
- * }[]}
+ * [
+ * {
+ *   iaeGroup
+ *   drawingType
+ *   color
+ *   iaeList : [iaeName, iaeLegend, decorator]
+ * }*
+ * ]
+ *
  */
 
-export const mapLegend = [
+const mapLegend = [
+  /** *********************************** GROUP HAIE MONOSTRATIFIEE *************************************/
   {
     iaeGroup: 'Haie Monostratifiée',
-    iaeName: 'entretien seul',
+    drawingType: 'polyline',
     color: 'orange',
-    decorator: [],
-    drawingType: 'polyline'
-  },
-  {
-    iaeGroup: 'Haie Monostratifiée',
-    iaeName: 'énergie',
-    color: 'orange',
-    decorator: [],
-    drawingType: 'polyline'
-  },
-  {
-    iaeGroup: 'Haie Monostratifiée',
-    iaeName: 'broyat',
-    color: 'orange',
-    decorator: [{
-      offset: '10%',
-      repeat: '30px',
-      symbol: L.Symbol.marker({
-        rotate: true,
-        markerOptions: {
-          icon: L.icon({
-            iconUrl: orangeDot,
-            iconAnchor: [8, 8]
+    iaeList: [
+      {
+        iaeName: 'entretien seul',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'énergie',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'broyat',
+        iaeLegend: orangeDot,
+        decorator: [{
+          offset: '10%',
+          repeat: '30px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: orangeDot,
+                iconAnchor: [8, 8]
+              })
+            }
           })
-        }
-      })
-    }],
-    drawingType: 'polyline'
+        }]
+      }
+    ]
   },
+
+  /** ********************************** GROUP HAIE PLURISTRATIFIEE ************************************/
   {
     iaeGroup: 'Haie Pluristratifiée',
-    iaeName: 'entretien seul',
+    drawingType: 'polyline',
     color: 'red',
-    decorator: [],
-    drawingType: 'polyline'
-  },
-  {
-    iaeGroup: 'Haie Pluristratifiée',
-    iaeName: 'énergie',
-    color: 'red',
-    decorator: [],
-    drawingType: 'polyline'
-  },
-  {
-    iaeGroup: 'Haie Pluristratifiée',
-    iaeName: 'broyat',
-    color: 'red',
-    decorator: [{
-      offset: '10%',
-      repeat: '30px',
-      symbol: L.Symbol.marker({
-        rotate: true,
-        markerOptions: {
-          icon: L.icon({
-            iconUrl: redDot,
-            iconAnchor: [8, 8]
+    iaeList: [
+      {
+        iaeName: 'entretien seul',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'énergie',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'broyat',
+        iaeLegend: orangeDot,
+        decorator: [{
+          offset: '10%',
+          repeat: '30px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: redDot,
+                iconAnchor: [8, 8]
+              })
+            }
           })
-        }
-      })
-    }],
-    drawingType: 'polyline'
-  },
-  {
-    iaeGroup: 'Haie Pluristratifiée',
-    iaeName: 'bois d\'oeuvre',
-    color: 'red',
-    decorator: [{
-      offset: '10%',
-      repeat: '16px',
-      symbol: L.Symbol.marker({
-        rotate: true,
-        markerOptions: {
-          icon: L.icon({
-            iconUrl: redV,
-            iconAnchor: [8, 8]
+        }]
+      },
+      {
+        iaeName: 'bois d\'oeuvre',
+        iaeLegend: orangeDot,
+        decorator: [{
+          offset: '10%',
+          repeat: '16px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: redV,
+                iconAnchor: [8, 8]
+              })
+            }
           })
-        }
-      })
-    }],
-    drawingType: 'polyline'
+        }]
+      }
+    ]
   },
+
+  /** ************************************* GROUP BANDE ENHERBEE ***************************************/
+  {
+    iaeGroup: 'Bande Enherbée',
+    drawingType: 'polyline',
+    color: 'blue',
+    iaeList: [
+      {
+        iaeName: 'entretien seul',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'énergie',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'fauche',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'patûre',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'fauche et patûre',
+        iaeLegend: orangeDot,
+        decorator: []
+      }
+    ]
+  },
+
+  /** ************************************** GROUP BANDE FLEURIE ***************************************/
+  {
+    iaeGroup: 'Bande Fleurie',
+    drawingType: 'polyline',
+    color: 'purple',
+    iaeList: [
+      {
+        iaeName: 'entretien seul',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'énergie',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'fauche',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'patûre',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'fauche et patûre',
+        iaeLegend: orangeDot,
+        decorator: []
+      }
+    ]
+  },
+
+  /** *********************************** GROUP PRAIRIE PERMANENTE  ************************************/
+  {
+    iaeGroup: 'Prairie Permanente',
+    drawingType: 'polygon',
+    color: 'green',
+    iaeList: [
+      {
+        iaeName: 'énergie',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'fauche',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'patûre',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'fauche et patûre',
+        iaeLegend: orangeDot,
+        decorator: []
+      }
+    ]
+  },
+
+  /** **************************************** GROUP BOSQUET  ******************************************/
+  {
+    iaeGroup: 'Bosquet',
+    drawingType: 'polygon',
+    color: 'black',
+    iaeList: [
+      {
+        iaeName: 'entretien seul',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'énergie',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'broyat',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'bois d\'oeuvre',
+        iaeLegend: orangeDot,
+        decorator: []
+      }
+    ]
+  },
+
+  /** ***************************** GROUP AGROFORESTERIE INTRAPARCELLAIRE  *****************************/
+  {
+    iaeGroup: 'Agroforesterie Intraparcellaire',
+    drawingType: 'polygon',
+    color: 'purple',
+    iaeList: [
+      {
+        iaeName: 'énergie',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'bois d\'oeuvre',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'pré-verger',
+        iaeLegend: orangeDot,
+        decorator: []
+      }
+    ]
+  },
+
+  /** ***************************************** GROUP MARES  *******************************************/
   {
     iaeGroup: 'Mares',
-    iaeName: 'entretien seul',
+    drawingType: 'circle',
     color: 'brown',
-    decorator: [],
-    drawingType: 'circle'
+    iaeList: [
+      {
+        iaeName: 'entretien seul',
+        iaeLegend: orangeDot,
+        decorator: []
+      },
+      {
+        iaeName: 'abreuvement animaux',
+        iaeLegend: orangeDot,
+        decorator: []
+      }
+    ]
   }
 ]
+
+export default mapLegend

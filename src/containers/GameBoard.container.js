@@ -12,10 +12,10 @@ class GameBoardContainer extends React.Component {
     super(props)
     this.state = {
       iaeImplemented: [],
-      iaeTypeSelected: 0
+      iaeTypeSelected: '00'
     }
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
-    this.onIAETypeChange = this.onIAETypeChange.bind(this)
+    this.onChangeIAEType = this.onChangeIAEType.bind(this)
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
   }
 
@@ -46,8 +46,8 @@ class GameBoardContainer extends React.Component {
     })
   }
 
-  onIAETypeChange (e) {
-    this.setState({ iaeTypeSelected: e.target.value })
+  onChangeIAEType = (e, { value }) => {
+    this.setState({ iaeTypeSelected: value })
   }
 
   onValidateIAEs () {
@@ -69,7 +69,7 @@ class GameBoardContainer extends React.Component {
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
         iaeTypeSelected={this.state.iaeTypeSelected}
-        handleIAETypeChange={this.onIAETypeChange}
+        handleIAETypeChange={this.onChangeIAEType}
         handleValidateIAEs={this.onValidateIAEs}
       />
     )

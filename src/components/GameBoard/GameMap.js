@@ -9,63 +9,73 @@ import gameMap from '../../assets/gameMap.png'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import PolylineDecorator from './PolylineDecorator'
 
-import { mapLegend } from '../../config/mapLegend'
+import mapLegend from '../../config/mapLegend'
 
-const GameMap = React.forwardRef((props, ref) => (
-  <Map
-    ref={ref}
-    style={{ height: '90vh', width: '55vw' }}
-    crs={L.CRS.Simple}
-    attributionControl={false}
-    dragging={false}
-  >
+const GameMap = React.forwardRef((props, ref) => {
+  const {
+    bounds,
+    onCreatedIAE,
+    iaeImplemented,
+    iaeTypeSelected
+  } = props
 
-    <ImageOverlay
-      url={gameMap}
-      bounds={props.bounds}
-    />
+  const iaeSelectedDrawingType = mapLegend[iaeTypeSelected.charAt(0)].drawingType
 
-    <FeatureGroup>
-      <EditControl
-        position='topright'
-        onCreated={e => props.onCreatedIAE(e)}
-        draw={{
-          marker: false,
-          circlemarker: false,
-          polyline: (mapLegend[props.iaeTypeSelected].drawingType === 'polyline'),
-          polygon: (mapLegend[props.iaeTypeSelected].drawingType === 'polygon'),
-          rectangle: (mapLegend[props.iaeTypeSelected].drawingType === 'polygon'),
-          circle: (mapLegend[props.iaeTypeSelected].drawingType === 'circle')
-        }}
+  return (
+    <Map
+      ref={ref}
+      style={{ height: '90vh', width: '55vw' }}
+      crs={L.CRS.Simple}
+      attributionControl={false}
+      dragging={false}
+    >
+
+      {/* GAME MAP */}
+      <ImageOverlay
+        url={gameMap}
+        bounds={bounds}
       />
-    </FeatureGroup>
 
-    {
-      props.iaeImplemented.map((iae, index) => {
-        return iae.drawingType === 'circle'
-          ? <Circle
-            key={index}
-            color={mapLegend[iae.id].color}
-            center={iae.center}
-            radius={iae.radius}
-          /> // eslint-disable-line
-          : <PolylineDecorator
-            key={index}
-            color={mapLegend[iae.id].color}
-            patterns={mapLegend[iae.id].decorator}
-            positions={iae.positions}
-          /> // eslint-disable-line
+      {/* DRAWING TOOLTIP */}
+      <FeatureGroup>
+        <EditControl
+          position='topright'
+          onCreated={e => onCreatedIAE(e)}
+          draw={{
+            marker: false,
+            circlemarker: false,
+            polyline: (iaeSelectedDrawingType === 'polyline'),
+            polygon: (iaeSelectedDrawingType === 'polygon'),
+            rectangle: (iaeSelectedDrawingType === 'polygon'),
+            circle: (iaeSelectedDrawingType === 'circle')
+          }}
+        />
+      </FeatureGroup>
+
+      {/* IAE IMPLEMENTED DRAWINGS */}
+      {
+        iaeImplemented.map((iae, index) => {
+          return iae.drawingType === 'circle'
+            ? <Circle
+              key={index}
+              color={mapLegend[iae.id.charAt(0)].color}
+              center={iae.center}
+              radius={iae.radius}
+              /> // eslint-disable-line
+            : <PolylineDecorator
+              key={index}
+              color={mapLegend[iae.id.charAt(0)].color}
+              patterns={mapLegend[iae.id.charAt(0)].iaeList[iae.id.charAt(1)].decorator}
+              positions={iae.positions}
+              /> // eslint-disable-line
+        }
+        )
       }
-      )
-    }
-  </Map>
-))
+    </Map>
+  )
+})
 
 GameMap.propTypes = {
-  ref: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ]),
   bounds: PropTypes.array.isRequired,
   onCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
@@ -73,7 +83,8 @@ GameMap.propTypes = {
 }
 
 GameMap.defaultProps = {
-  iaeImplemented: []
+  iaeImplemented: [],
+  iaeTypeSelected: '00'
 }
 
 export default GameMap

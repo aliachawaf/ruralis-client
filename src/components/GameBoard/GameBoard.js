@@ -4,35 +4,49 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import GameMap from './GameMap'
 import IAETypeSelect from './IAETypeSelect'
 import GameStep from './GameStep'
+import { Grid } from 'semantic-ui-react'
 
-const GameBoard = React.forwardRef((props, ref) => (
+const GameBoard = React.forwardRef((props, ref) => {
+  const {
+    bounds,
+    handleCreatedIAE,
+    iaeImplemented,
+    iaeTypeSelected,
+    handleIAETypeChange,
+    handleValidateIAEs
+  } = props
 
-  <div>
-    <GameMap
-      ref={ref}
-      bounds={props.bounds}
-      onCreatedIAE={props.handleCreatedIAE}
-      iaeTypeSelected={props.iaeTypeSelected}
-      onIAETypeChange={props.onIAETypeChange}
-      iaeImplemented={props.iaeImplemented}
-    />
+  return (
+    <Grid columns={3} stackable>
 
-    <IAETypeSelect
-      iaeTypeSelected={props.iaeTypeSelected}
-      onIAETypeChange={props.handleIAETypeChange}
-    />
+      <Grid.Column width={9}>
+        <GameMap
+          ref={ref}
+          bounds={bounds}
+          onCreatedIAE={handleCreatedIAE}
+          iaeTypeSelected={iaeTypeSelected}
+          onIAETypeChange={handleIAETypeChange}
+          iaeImplemented={iaeImplemented}
+        />
+      </Grid.Column>
 
-    <GameStep onValidateIAEs={props.handleValidateIAEs} />
-  </div>
+      <Grid.Column width={4}>
+        <IAETypeSelect
+          iaeTypeSelected={iaeTypeSelected}
+          onIAETypeChange={handleIAETypeChange}
+        />
+      </Grid.Column>
 
-))
+      <Grid.Column width={3}>
+        <GameStep onValidateIAEs={handleValidateIAEs} />
+      </Grid.Column>
+
+    </Grid>
+  )
+})
 
 GameBoard.propTypes = {
   // GameMap
-  ref: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ]),
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
@@ -43,6 +57,9 @@ GameBoard.propTypes = {
   handleValidateIAEs: PropTypes.func.isRequired
 }
 
-GameBoard.defaultProps = {}
+GameBoard.defaultProps = {
+  iaeImplemented: [],
+  iaeTypeSelected: '00'
+}
 
 export default GameBoard

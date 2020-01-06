@@ -25,7 +25,6 @@ class NewGameContainer extends React.Component {
       this.setState({ error: true })
     } else {
       this.setState({ error: false })
-
       // Send game data to server and redirect to game board
       const params = {
         players: this.state.playersSelected,
@@ -33,7 +32,7 @@ class NewGameContainer extends React.Component {
       }
       const resource = 'api/public/game'
       APIFetch.fetchRuralisAPI(resource, params, APIFetch.POST)
-        .then(res => console.log(res.data))
+        .then(res => this.props.history.push('/game/board/' + res.data.game._id))
         .catch(err => console.log(err))
     }
   }

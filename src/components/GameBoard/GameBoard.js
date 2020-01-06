@@ -6,6 +6,10 @@ import IAETypeSelect from './IAETypeSelect'
 import GameStep from './GameStep'
 import StartGameModal from './StartGameModal'
 
+import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
+
+import mapInfoLegend from '../../assets/mapInfoLegend.png'
+
 const GameBoard = React.forwardRef((props, ref) => {
   const {
     bounds,
@@ -20,37 +24,50 @@ const GameBoard = React.forwardRef((props, ref) => {
   } = props
 
   return (
-    <div>
+    <Segment basic>
       <StartGameModal
         players={players}
         opened={opened}
         handleStartGame={handleStartGame}
       />
 
-      <GameMap
-        ref={ref}
-        bounds={bounds}
-        onCreatedIAE={handleCreatedIAE}
-        iaeTypeSelected={iaeTypeSelected}
-        iaeImplemented={iaeImplemented}
-      />
+      <Grid columns={3} stackable textAlign='center'>
 
-      <IAETypeSelect
-        iaeTypeSelected={iaeTypeSelected}
-        onIAETypeChange={handleIAETypeChange}
-      />
+        <Grid.Column width={9}>
+          <GameMap
+            ref={ref}
+            bounds={bounds}
+            onCreatedIAE={handleCreatedIAE}
+            iaeTypeSelected={iaeTypeSelected}
+            onIAETypeChange={handleIAETypeChange}
+            iaeImplemented={iaeImplemented}
+          />
+        </Grid.Column>
 
-      <GameStep onValidateIAEs={handleValidateIAEs} />
-    </div>
+        <Grid.Column width={3}>
+          <Header content={'Choix de l\'IAE à implémenter'} />
+
+          <IAETypeSelect
+            iaeTypeSelected={iaeTypeSelected}
+            onIAETypeChange={handleIAETypeChange}
+          />
+
+          <Divider hidden />
+
+          <Image src={mapInfoLegend} />
+        </Grid.Column>
+
+        <Grid.Column width={4}>
+          <GameStep onValidateIAEs={handleValidateIAEs} />
+        </Grid.Column>
+
+      </Grid>
+    </Segment>
   )
 })
 
 GameBoard.propTypes = {
   // GameMap
-  ref: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ]),
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
@@ -65,6 +82,9 @@ GameBoard.propTypes = {
   handleStartGame: PropTypes.func.isRequired
 }
 
-GameBoard.defaultProps = {}
+GameBoard.defaultProps = {
+  iaeImplemented: [],
+  iaeTypeSelected: '00'
+}
 
 export default GameBoard

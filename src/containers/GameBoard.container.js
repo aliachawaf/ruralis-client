@@ -27,10 +27,16 @@ class GameBoardContainer extends React.Component {
   }
 
   onStartGame () {
-    this.setState({
-      openedStartGameModal: false
-    })
-
+    // const idGame = this.props.match.params.idGame
+    const idGame = 19
+    const resource = 'api/public/game/' + idGame + '/start'
+    APIFetch.fetchRuralisAPI(resource, {}, APIFetch.PUT)
+      .then(() => {
+        this.setState({
+          openedStartGameModal: false
+        })
+      })
+      .catch(err => console.log(err))
     // TODO launch timer for first round
   }
 

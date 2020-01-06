@@ -9,7 +9,8 @@ class NewGameContainer extends React.Component {
     this.state = {
       nbPlayers: 5,
       playersSelected: [4, 5],
-      scenario: ''
+      scenario: -1,
+      error: false
     }
     this.onClickNewGame = this.onClickNewGame.bind(this)
     this.onChangeNbPlayers = this.onChangeNbPlayers.bind(this)
@@ -18,17 +19,22 @@ class NewGameContainer extends React.Component {
   }
 
   onClickNewGame () {
-    // Send game data to server and redirect to game board
-    // TODO
-    const params = {
-      players: this.state.playersSelected,
-      scenario: this.state.scenario
+    const error = (this.state.nbPlayers !== this.state.playersSelected.length || this.state.scenario === -1)
+
+    if (error) {
+      this.setState({ error: true })
+    } else {
+      this.setState({ error: false })
+      // Send game data to server and redirect to game board
+      const params = {
+        players: this.state.playersSelected,
+        scenario: this.state.scenario
+      }
+      const resource = 'api/public/game'
+      APIFetch.fetchRuralisAPI(resource, params, APIFetch.POST)
+        .then(res => this.props.history.push('/game/board/' + res.data.game._id))
+        .catch(err => console.log(err))
     }
-    console.log(params)
-    const resource = 'api/public/game'
-    APIFetch.fetchRuralisAPI(resource, params, APIFetch.POST)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
   }
 
   onChangeNbPlayers (e) {
@@ -71,6 +77,7 @@ class NewGameContainer extends React.Component {
         playersSelected={this.state.playersSelected}
         scenario={this.state.scenario}
         handleChangeScenario={this.onChangeScenario}
+        error={this.state.error}
       />
     )
   }

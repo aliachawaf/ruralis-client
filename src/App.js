@@ -11,7 +11,7 @@ function App () {
       <div>
         <Switch>
           <Route exact path='/home' component={HomeRuralis} />
-          <Route exact path='/game/board' component={GameBoardContainer} />
+          <Route exact path='/game/board/:idGame' component={GameBoardContainer} />
           <Route exact path='/game/new' component={NewGameContainer} />
           <Route exact path='/game/rules' component={GameRules} />
           <Redirect from='/*' to='/home' />

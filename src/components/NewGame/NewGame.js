@@ -1,6 +1,6 @@
 import React from 'react'
 import RuralisHeader from '../common/RuralisHeader'
-import { Button, Container, Divider, Header } from 'semantic-ui-react'
+import { Button, Container, Divider, Header, Message } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import PlayersSelect from './Players/PlayersSelect'
 import ScenarioSelect from './Scenario/ScenarioSelect'
@@ -13,7 +13,8 @@ const NewGame = (props) => {
     handleOnClickPlayer,
     playersSelected,
     scenario,
-    handleChangeScenario
+    handleChangeScenario,
+    error
   } = props
 
   return (
@@ -40,6 +41,14 @@ const NewGame = (props) => {
       <Divider hidden />
 
       <Container>
+        {
+          error &&
+            <Message
+              negative
+              icon='warning sign'
+              header={'Veuillez sélectionner vos ' + nbPlayers + ' joueurs et choisir un scénario pour pouvoir lancer la partie.'}
+            />
+        }
         <Button floated='right' content='Lancer nouvelle partie' onClick={handleOnClick} />
       </Container>
     </div>
@@ -53,7 +62,8 @@ NewGame.propTypes = {
   handleOnClickPlayer: PropTypes.func.isRequired,
   playersSelected: PropTypes.array.isRequired,
   scenario: PropTypes.number.isRequired,
-  handleChangeScenario: PropTypes.func.isRequired
+  handleChangeScenario: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired
 }
 
 export default NewGame

@@ -27,8 +27,7 @@ class GameBoardContainer extends React.Component {
   }
 
   onStartGame () {
-    // const idGame = this.props.match.params.idGame
-    const idGame = 19
+    const idGame = this.props.match.params.idGame
     const resource = 'api/public/game/' + idGame + '/start'
     APIFetch.fetchRuralisAPI(resource, {}, APIFetch.PUT)
       .then(() => {

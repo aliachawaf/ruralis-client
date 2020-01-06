@@ -1,6 +1,7 @@
 import React from 'react'
 
 import NewGame from '../components/NewGame/NewGame'
+import * as APIFetch from '../helpers/APIFetch'
 
 class NewGameContainer extends React.Component {
   constructor (props) {
@@ -24,6 +25,10 @@ class NewGameContainer extends React.Component {
       scenario: this.state.scenario
     }
     console.log(params)
+    const resource = 'api/public/game'
+    APIFetch.fetchRuralisAPI(resource, params, APIFetch.POST)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
   }
 
   onChangeNbPlayers (e) {

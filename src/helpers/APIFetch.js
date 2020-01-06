@@ -14,11 +14,12 @@ export const fetchRuralisAPI = (resource, params = {}, verb = GET) => {
     throw Error('REACT_APP_API_HOST in .env file not found.')
   }
   const url = process.env.REACT_APP_API_HOST + resource
+  console.log(url)
   return axios({
     data: params,
     headers: {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('ruralis_token')}` // eslint-disable-line
+      'Content-type': 'application/json'
+      // Authorization: `Bearer ${localStorage.getItem('ruralis_token')}` // eslint-disable-line
     },
     method: verb,
     responseType: 'json',

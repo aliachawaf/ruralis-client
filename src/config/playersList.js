@@ -1,7 +1,7 @@
 import jonathanReveurCard from '../assets/players/cards/jonathan.png'
 import jonathanReveurPic from '../assets/players/pictures/jonathan.png'
 
-const players = [
+const playersList = [
   {
     number: 1,
     role: 'agriculteur',
@@ -60,4 +60,4 @@ const players = [
   }
 ]
 
-export default players
+export default playersList

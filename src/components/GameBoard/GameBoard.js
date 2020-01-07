@@ -19,7 +19,8 @@ const GameBoard = React.forwardRef((props, ref) => {
     iaeTypeSelected,
     handleIAETypeChange,
     handleValidateIAEs,
-    players,
+    gamePlayers,
+    scenario,
     opened,
     handleStartGame
   } = props
@@ -29,7 +30,8 @@ const GameBoard = React.forwardRef((props, ref) => {
       <RuralisHeader title='Partie' />
       <Segment basic>
         <StartGameModal
-          players={players}
+          gamePlayers={gamePlayers}
+          scenario={scenario}
           opened={opened}
           handleStartGame={handleStartGame}
         />
@@ -81,7 +83,8 @@ GameBoard.propTypes = {
   // Game Step
   handleValidateIAEs: PropTypes.func.isRequired,
   // Start Game Modal
-  players: PropTypes.array.isRequired,
+  gamePlayers: PropTypes.array.isRequired,
+  scenario: PropTypes.number.isRequired,
   opened: PropTypes.bool.isRequired,
   handleStartGame: PropTypes.func.isRequired
 }

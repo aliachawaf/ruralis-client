@@ -1,12 +1,12 @@
 import React from 'react'
 import { Card, Grid, Image, Label } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
-import players from '../../../config/players'
+import playersList from '../../../config/playersList'
 
 const PlayersRow = (props) => {
   const { playerRole, nbPlayersRequired, listPlayersSelected, handleOnClickPlayer } = props
 
-  const listPlayersRole = players.filter(p => p.role === playerRole)
+  const listPlayersRole = playersList.filter(p => p.role === playerRole)
 
   const playersCompleted = listPlayersRole.filter(p => listPlayersSelected.includes(p.number)).length === nbPlayersRequired
 

@@ -9,6 +9,7 @@ import StartGameModal from './StartGameModal'
 import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapInfoLegend.png'
+import RuralisHeader from '../common/RuralisHeader'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
@@ -24,45 +25,48 @@ const GameBoard = React.forwardRef((props, ref) => {
   } = props
 
   return (
-    <Segment basic>
-      <StartGameModal
-        players={players}
-        opened={opened}
-        handleStartGame={handleStartGame}
-      />
+    <div>
+      <RuralisHeader title='Partie' />
+      <Segment basic>
+        <StartGameModal
+          players={players}
+          opened={opened}
+          handleStartGame={handleStartGame}
+        />
 
-      <Grid columns={3} stackable textAlign='center'>
+        <Grid columns={3} stackable textAlign='center'>
 
-        <Grid.Column width={9}>
-          <GameMap
-            ref={ref}
-            bounds={bounds}
-            onCreatedIAE={handleCreatedIAE}
-            iaeTypeSelected={iaeTypeSelected}
-            onIAETypeChange={handleIAETypeChange}
-            iaeImplemented={iaeImplemented}
-          />
-        </Grid.Column>
+          <Grid.Column width={9}>
+            <GameMap
+              ref={ref}
+              bounds={bounds}
+              onCreatedIAE={handleCreatedIAE}
+              iaeTypeSelected={iaeTypeSelected}
+              onIAETypeChange={handleIAETypeChange}
+              iaeImplemented={iaeImplemented}
+            />
+          </Grid.Column>
 
-        <Grid.Column width={3}>
-          <Header content={'Choix de l\'IAE à implémenter'} />
+          <Grid.Column width={3}>
+            <Header content={'Choix de l\'IAE à implémenter'} />
 
-          <IAETypeSelect
-            iaeTypeSelected={iaeTypeSelected}
-            onIAETypeChange={handleIAETypeChange}
-          />
+            <IAETypeSelect
+              iaeTypeSelected={iaeTypeSelected}
+              onIAETypeChange={handleIAETypeChange}
+            />
 
-          <Divider hidden />
+            <Divider hidden />
 
-          <Image src={mapInfoLegend} />
-        </Grid.Column>
+            <Image src={mapInfoLegend} />
+          </Grid.Column>
 
-        <Grid.Column width={4}>
-          <GameStep onValidateIAEs={handleValidateIAEs} />
-        </Grid.Column>
+          <Grid.Column width={4}>
+            <GameStep onValidateIAEs={handleValidateIAEs} />
+          </Grid.Column>
 
-      </Grid>
-    </Segment>
+        </Grid>
+      </Segment>
+    </div>
   )
 })
 

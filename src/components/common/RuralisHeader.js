@@ -8,7 +8,7 @@ const RuralisHeader = (props) => {
   return (
     <Segment color='red' inverted basic>
       <Header>
-        <Image src={logo} />
+        <Image as='a' src={logo} href='/home' />
         {title}
       </Header>
     </Segment>

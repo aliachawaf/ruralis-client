@@ -3,7 +3,6 @@ import React from 'react'
 import GameBoard from '../components/GameBoard/GameBoard'
 
 import * as APIFetch from '../helpers/APIFetch'
-import players from '../config/players'
 
 const bounds = [[0, 0], [900, 1050]]
 const mapRef = React.createRef()
@@ -13,6 +12,8 @@ class GameBoardContainer extends React.Component {
     super(props)
     this.state = {
       openedStartGameModal: true,
+      players: [],
+      scenario: -1,
       iaeImplemented: [],
       iaeTypeSelected: '00'
     }
@@ -24,6 +25,19 @@ class GameBoardContainer extends React.Component {
 
   componentDidMount () {
     mapRef.current.leafletElement.fitBounds(bounds)
+
+    // Get game info
+    const idGame = this.props.match.params.idGame
+    const resource = 'api/public/game/' + idGame
+
+    APIFetch.fetchRuralisAPI(resource, {}, APIFetch.GET)
+      .then(res => {
+        this.setState({
+          players: res.data.game.players,
+          scenario: res.data.game.scenario
+        })
+      })
+      .catch(err => console.log(err))
   }
 
   onStartGame () {
@@ -84,7 +98,8 @@ class GameBoardContainer extends React.Component {
         bounds={bounds}
         handleStartGame={this.onStartGame}
         opened={this.state.openedStartGameModal}
-        players={players} // TODO get players selected in game creation
+        gamePlayers={this.state.players}
+        scenario={this.state.scenario}
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
         iaeTypeSelected={this.state.iaeTypeSelected}

@@ -12,11 +12,13 @@ const GameStep = (props) => (
         <Header content='Déroulement de la Partie' />
       </Segment>
 
-      <Segment>
+      <Segment basic>
         SCORE
       </Segment>
 
-      {props.currentStep === 1 && <Step1 onValidateIAEs={props.onValidateIAEs} />}
+      <Divider />
+
+      {props.currentStep === 1 && <Step1 onValidateIAEs={props.onValidateIAEs} timerLaunched={props.timerLaunched} />}
 
       <Divider />
 
@@ -32,7 +34,8 @@ const GameStep = (props) => (
 GameStep.propTypes = {
   currentStep: PropTypes.number.isRequired,
   // Step 1
-  handleValidateIAEs: PropTypes.func.isRequired
+  handleValidateIAEs: PropTypes.func.isRequired,
+  timerLaunched: PropTypes.bool.isRequired
   // Step 2
   // Step 3
   // Step 4

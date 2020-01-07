@@ -27,6 +27,7 @@ class GameStepContainer extends React.Component {
       <GameStep
         handleValidateIAEs={this.onValidateIAEs}
         currentStep={this.props.currentStep}
+        timerLaunched={this.props.timerLaunched}
       />
     )
   }
@@ -34,6 +35,7 @@ class GameStepContainer extends React.Component {
 
 GameStepContainer.propTypes = {
   currentStep: PropTypes.number.isRequired,
+  timerLaunched: PropTypes.bool.isRequired,
   iaeImplemented: PropTypes.array.isRequired
 }
 

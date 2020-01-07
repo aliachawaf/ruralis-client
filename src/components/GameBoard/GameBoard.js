@@ -67,6 +67,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             <GameStepContainer
               currentStep={currentStep}
               iaeImplemented={iaeImplemented}
+              timerLaunched={!opened}
             />
           </Grid.Column>
 

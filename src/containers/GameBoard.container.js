@@ -15,12 +15,12 @@ class GameBoardContainer extends React.Component {
       players: [],
       scenario: -1,
       iaeImplemented: [],
-      iaeTypeSelected: '00'
+      iaeTypeSelected: '00',
+      currentStep: 1
     }
     this.onStartGame = this.onStartGame.bind(this)
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
-    this.onValidateIAEs = this.onValidateIAEs.bind(this)
   }
 
   componentDidMount () {
@@ -34,7 +34,8 @@ class GameBoardContainer extends React.Component {
       .then(res => {
         this.setState({
           players: res.data.game.players,
-          scenario: res.data.game.scenario
+          scenario: res.data.game.scenario,
+          currentStep: res.data.game.step
         })
       })
       .catch(err => console.log(err))
@@ -80,21 +81,11 @@ class GameBoardContainer extends React.Component {
     this.setState({ iaeTypeSelected: value })
   }
 
-  onValidateIAEs () {
-    console.log('validate : ' + this.state.iaeImplemented)
-
-    // Send IAEs implemented to Server
-    // TODO
-    const resource = 'api/public/game/:idGame/IAE'
-    APIFetch.fetchRuralisAPI(resource, { IAES: this.state.iaeImplemented }, APIFetch.POST)
-      .then()
-      .catch()
-  }
-
   render () {
     return (
       <GameBoard
         ref={mapRef}
+        currentStep={this.state.currentStep}
         bounds={bounds}
         handleStartGame={this.onStartGame}
         opened={this.state.openedStartGameModal}
@@ -104,7 +95,6 @@ class GameBoardContainer extends React.Component {
         iaeImplemented={this.state.iaeImplemented}
         iaeTypeSelected={this.state.iaeTypeSelected}
         handleIAETypeChange={this.onChangeIAEType}
-        handleValidateIAEs={this.onValidateIAEs}
       />
     )
   }

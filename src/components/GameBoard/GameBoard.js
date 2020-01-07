@@ -3,22 +3,22 @@ import PropTypes from 'prop-types'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import GameMap from './GameMap'
 import IAETypeSelect from './IAETypeSelect'
-import GameStep from './GameStep'
 import StartGameModal from './StartGameModal'
 
 import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
+import GameStepContainer from '../../containers/GameStep.container'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
+    currentStep,
     bounds,
     handleCreatedIAE,
     iaeImplemented,
     iaeTypeSelected,
     handleIAETypeChange,
-    handleValidateIAEs,
     gamePlayers,
     scenario,
     opened,
@@ -63,7 +63,10 @@ const GameBoard = React.forwardRef((props, ref) => {
           </Grid.Column>
 
           <Grid.Column width={4}>
-            <GameStep onValidateIAEs={handleValidateIAEs} />
+            <GameStepContainer
+              currentStep={currentStep}
+              iaeImplemented={iaeImplemented}
+            />
           </Grid.Column>
 
         </Grid>
@@ -73,6 +76,7 @@ const GameBoard = React.forwardRef((props, ref) => {
 })
 
 GameBoard.propTypes = {
+  currentStep: PropTypes.number.isRequired,
   // GameMap
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
@@ -81,7 +85,6 @@ GameBoard.propTypes = {
   iaeTypeSelected: PropTypes.string.isRequired,
   handleIAETypeChange: PropTypes.func.isRequired,
   // Game Step
-  handleValidateIAEs: PropTypes.func.isRequired,
   // Start Game Modal
   gamePlayers: PropTypes.array.isRequired,
   scenario: PropTypes.number.isRequired,

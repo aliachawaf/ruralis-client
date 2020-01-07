@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Header, Segment } from 'semantic-ui-react'
+import { Divider, Header, Progress, Segment } from 'semantic-ui-react'
 import Step1 from './Step1'
 
 const GameStep = (props) => (
@@ -18,8 +18,10 @@ const GameStep = (props) => (
 
       {props.currentStep === 1 && <Step1 onValidateIAEs={props.onValidateIAEs} />}
 
-      <Segment>
-        Progress bar
+      <Divider />
+
+      <Segment basic>
+        <Progress value={props.currentStep} total='3' progress='ratio' color='yellow' />
       </Segment>
 
     </Segment.Group>

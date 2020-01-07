@@ -14,6 +14,7 @@ import GameStepContainer from '../../containers/GameStep.container'
 const GameBoard = React.forwardRef((props, ref) => {
   const {
     currentStep,
+    gameId,
     bounds,
     handleCreatedIAE,
     iaeImplemented,
@@ -27,7 +28,7 @@ const GameBoard = React.forwardRef((props, ref) => {
 
   return (
     <div>
-      <RuralisHeader title='Partie' />
+      <RuralisHeader title={'Partie ' + gameId} />
       <Segment basic>
         <StartGameModal
           gamePlayers={gamePlayers}
@@ -77,6 +78,7 @@ const GameBoard = React.forwardRef((props, ref) => {
 
 GameBoard.propTypes = {
   currentStep: PropTypes.number.isRequired,
+  gameId: PropTypes.number.isRequired,
   // GameMap
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,

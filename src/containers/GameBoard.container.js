@@ -37,7 +37,9 @@ class GameBoardContainer extends React.Component {
         this.setState({
           players: res.data.game.players,
           scenario: res.data.game.scenario,
-          currentStep: res.data.game.step
+          currentStep: res.data.game.step,
+          iaeImplemented: res.data.game.implementedIAE,
+          circleIaeImplemented: res.data.game.circleIAEs
         })
       })
       .catch(err => console.log(err))

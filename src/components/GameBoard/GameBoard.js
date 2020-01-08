@@ -3,22 +3,26 @@ import PropTypes from 'prop-types'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import GameMap from './GameMap'
 import IAETypeSelect from './IAETypeSelect'
-import GameStep from './GameStep'
 import StartGameModal from './StartGameModal'
 
 import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
+import GameStepContainer from '../../containers/GameStep.container'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
+    currentStep,
+    idGame,
     bounds,
     handleCreatedIAE,
     iaeImplemented,
+    circleIaeImplemented,
+    iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
-    handleValidateIAEs,
+    numTour,
     gamePlayers,
     scenario,
     opened,
@@ -27,14 +31,18 @@ const GameBoard = React.forwardRef((props, ref) => {
 
   return (
     <div>
-      <RuralisHeader title='Partie' />
+      <RuralisHeader title={'Partie ' + idGame} />
       <Segment basic>
-        <StartGameModal
-          gamePlayers={gamePlayers}
-          scenario={scenario}
-          opened={opened}
-          handleStartGame={handleStartGame}
-        />
+
+        {
+          numTour === 0 &&
+            <StartGameModal
+              gamePlayers={gamePlayers}
+              scenario={scenario}
+              opened={opened}
+              handleStartGame={handleStartGame}
+            />
+        }
 
         <Grid columns={3} stackable textAlign='center'>
 
@@ -43,9 +51,9 @@ const GameBoard = React.forwardRef((props, ref) => {
               ref={ref}
               bounds={bounds}
               onCreatedIAE={handleCreatedIAE}
-              iaeTypeSelected={iaeTypeSelected}
-              onIAETypeChange={handleIAETypeChange}
+              iaeGroupSelected={iaeGroupSelected}
               iaeImplemented={iaeImplemented}
+              circleIaeImplemented={circleIaeImplemented}
             />
           </Grid.Column>
 
@@ -53,6 +61,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             <Header content={'Choix de l\'IAE à implémenter'} />
 
             <IAETypeSelect
+              iaeGroupSelected={iaeGroupSelected}
               iaeTypeSelected={iaeTypeSelected}
               onIAETypeChange={handleIAETypeChange}
             />
@@ -63,7 +72,13 @@ const GameBoard = React.forwardRef((props, ref) => {
           </Grid.Column>
 
           <Grid.Column width={4}>
-            <GameStep onValidateIAEs={handleValidateIAEs} />
+            <GameStepContainer
+              idGame={idGame}
+              currentStep={currentStep}
+              iaeImplemented={iaeImplemented}
+              circleIaeImplemented={circleIaeImplemented}
+              timerLaunched={!opened}
+            />
           </Grid.Column>
 
         </Grid>
@@ -73,15 +88,19 @@ const GameBoard = React.forwardRef((props, ref) => {
 })
 
 GameBoard.propTypes = {
+  currentStep: PropTypes.number.isRequired,
+  idGame: PropTypes.string.isRequired,
+  numTour: PropTypes.number.isRequired,
   // GameMap
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
+  circleIaeImplemented: PropTypes.array.isRequired,
   // IAE Type Select
-  iaeTypeSelected: PropTypes.string.isRequired,
+  iaeGroupSelected: PropTypes.number.isRequired,
+  iaeTypeSelected: PropTypes.number.isRequired,
   handleIAETypeChange: PropTypes.func.isRequired,
   // Game Step
-  handleValidateIAEs: PropTypes.func.isRequired,
   // Start Game Modal
   gamePlayers: PropTypes.array.isRequired,
   scenario: PropTypes.number.isRequired,
@@ -90,8 +109,11 @@ GameBoard.propTypes = {
 }
 
 GameBoard.defaultProps = {
+  numTour: 0,
   iaeImplemented: [],
-  iaeTypeSelected: '00'
+  circleIaeImplemented: [],
+  iaeGroupSelected: 0,
+  iaeTypeSelected: 0
 }
 
 export default GameBoard

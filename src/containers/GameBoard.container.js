@@ -15,12 +15,15 @@ class GameBoardContainer extends React.Component {
       players: [],
       scenario: -1,
       iaeImplemented: [],
-      iaeTypeSelected: '00'
+      circleIaeImplemented: [],
+      iaeGroupSelected: 0,
+      iaeTypeSelected: 0,
+      currentStep: 1,
+      numTour: 0
     }
     this.onStartGame = this.onStartGame.bind(this)
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
-    this.onValidateIAEs = this.onValidateIAEs.bind(this)
   }
 
   componentDidMount () {
@@ -34,7 +37,11 @@ class GameBoardContainer extends React.Component {
       .then(res => {
         this.setState({
           players: res.data.game.players,
-          scenario: res.data.game.scenario
+          scenario: res.data.game.scenario,
+          currentStep: res.data.game.step,
+          iaeImplemented: res.data.game.implementedIAE,
+          circleIaeImplemented: res.data.game.circleIAEs,
+          numTour: res.data.game.numTour
         })
       })
       .catch(err => console.log(err))
@@ -50,52 +57,47 @@ class GameBoardContainer extends React.Component {
         })
       })
       .catch(err => console.log(err))
-    // TODO launch timer for first round
   }
 
   onCreatedIAE (e) {
-    let newIAE
-
     if (e.layerType === 'circle') {
-      newIAE = {
-        id: this.state.iaeTypeSelected,
-        drawingType: e.layerType,
+      const newIAE = {
+        IAEGroup: this.state.iaeGroupSelected,
+        IAEType: this.state.iaeTypeSelected,
         center: e.layer._latlng,
         radius: e.layer._radius
       }
+
+      this.setState({
+        circleIaeImplemented: this.state.circleIaeImplemented.concat(newIAE)
+      })
     } else {
-      newIAE = {
-        id: this.state.iaeTypeSelected,
-        drawingType: e.layerType,
-        positions: e.layer._latlngs
+      const newIAE = {
+        IAEGroup: this.state.iaeGroupSelected,
+        IAEType: this.state.iaeTypeSelected,
+        coords: e.layer._latlngs
       }
-      console.log(e)
+
+      this.setState({
+        iaeImplemented: this.state.iaeImplemented.concat(newIAE)
+      })
     }
+  }
 
+  onChangeIAEType = (group, type) => {
     this.setState({
-      iaeImplemented: this.state.iaeImplemented.concat(newIAE)
+      iaeGroupSelected: group,
+      iaeTypeSelected: type
     })
-  }
-
-  onChangeIAEType = (e, { value }) => {
-    this.setState({ iaeTypeSelected: value })
-  }
-
-  onValidateIAEs () {
-    console.log('validate : ' + this.state.iaeImplemented)
-
-    // Send IAEs implemented to Server
-    // TODO
-    const resource = 'api/public/game/:idGame/IAE'
-    APIFetch.fetchRuralisAPI(resource, { IAES: this.state.iaeImplemented }, APIFetch.POST)
-      .then()
-      .catch()
   }
 
   render () {
     return (
       <GameBoard
         ref={mapRef}
+        idGame={this.props.match.params.idGame}
+        currentStep={this.state.currentStep}
+        numTour={this.state.numTour}
         bounds={bounds}
         handleStartGame={this.onStartGame}
         opened={this.state.openedStartGameModal}
@@ -103,9 +105,10 @@ class GameBoardContainer extends React.Component {
         scenario={this.state.scenario}
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
+        circleIaeImplemented={this.state.circleIaeImplemented}
+        iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}
         handleIAETypeChange={this.onChangeIAEType}
-        handleValidateIAEs={this.onValidateIAEs}
       />
     )
   }

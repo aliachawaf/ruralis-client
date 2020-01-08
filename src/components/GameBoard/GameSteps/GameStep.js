@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Divider, Header, Progress, Segment } from 'semantic-ui-react'
-import Step1 from './Step1'
+import Step1 from './Step1/Step1'
 
 const GameStep = (props) => (
 

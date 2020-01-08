@@ -26,6 +26,7 @@ const GameMap = React.forwardRef((props, ref) => {
       ref={ref}
       style={{ height: '90vh', width: '55vw' }}
       crs={L.CRS.Simple}
+      minZoom={-5}
       attributionControl={false}
       dragging={false}
     >
@@ -43,7 +44,7 @@ const GameMap = React.forwardRef((props, ref) => {
           onCreated={e => onCreatedIAE(e)}
           draw={{
             marker: false,
-            circlemarker: false,
+            circlemarker: true,
             polyline: (iaeSelectedDrawingType === 'polyline'),
             polygon: (iaeSelectedDrawingType === 'polygon'),
             rectangle: (iaeSelectedDrawingType === 'polygon'),

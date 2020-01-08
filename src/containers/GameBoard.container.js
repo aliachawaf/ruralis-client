@@ -4,7 +4,7 @@ import GameBoard from '../components/GameBoard/GameBoard'
 
 import * as APIFetch from '../helpers/APIFetch'
 
-const bounds = [[0, 0], [900, 1050]]
+const bounds = [[0, 0], [3330, 3825]]
 const mapRef = React.createRef()
 
 class GameBoardContainer extends React.Component {
@@ -69,6 +69,7 @@ class GameBoardContainer extends React.Component {
         drawingType: e.layerType,
         positions: e.layer._latlngs
       }
+      console.log(e)
     }
 
     this.setState({

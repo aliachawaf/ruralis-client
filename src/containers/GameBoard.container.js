@@ -92,7 +92,7 @@ class GameBoardContainer extends React.Component {
       <GameBoard
         ref={mapRef}
         currentStep={this.state.currentStep}
-        gameId={this.props.match.params.idGame}
+        idGame={this.props.match.params.idGame}
         bounds={bounds}
         handleStartGame={this.onStartGame}
         opened={this.state.openedStartGameModal}

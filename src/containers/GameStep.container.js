@@ -10,14 +10,14 @@ class GameStepContainer extends React.Component {
   }
 
   onValidateIAEs () {
-    console.log(this.props.iaeImplemented)
-
     // Send IAEs implemented to Server
-    // TODO
-    const resource = 'api/public/game/:idGame/IAE'
-    APIFetch.fetchRuralisAPI(resource, { IAES: this.props.iaeImplemented }, APIFetch.POST)
-      .then()
-      .catch()
+    const resource = 'api/public/game/' + this.props.idGame + '/IAE'
+    APIFetch.fetchRuralisAPI(
+      resource,
+      { IAEs: this.props.iaeImplemented, circleIAEs: this.props.circleIaeImplemented },
+      APIFetch.POST
+    )
+      .catch(err => console.log(err))
   }
 
   render () {
@@ -32,6 +32,7 @@ class GameStepContainer extends React.Component {
 }
 
 GameStepContainer.propTypes = {
+  idGame: PropTypes.string.isRequired,
   currentStep: PropTypes.number.isRequired,
   timerLaunched: PropTypes.bool.isRequired,
   iaeImplemented: PropTypes.array.isRequired,

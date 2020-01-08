@@ -22,6 +22,7 @@ const GameBoard = React.forwardRef((props, ref) => {
     iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
+    numTour,
     gamePlayers,
     scenario,
     opened,
@@ -32,12 +33,16 @@ const GameBoard = React.forwardRef((props, ref) => {
     <div>
       <RuralisHeader title={'Partie ' + idGame} />
       <Segment basic>
-        <StartGameModal
-          gamePlayers={gamePlayers}
-          scenario={scenario}
-          opened={opened}
-          handleStartGame={handleStartGame}
-        />
+
+        {
+          numTour === 0 &&
+            <StartGameModal
+              gamePlayers={gamePlayers}
+              scenario={scenario}
+              opened={opened}
+              handleStartGame={handleStartGame}
+            />
+        }
 
         <Grid columns={3} stackable textAlign='center'>
 
@@ -85,6 +90,7 @@ const GameBoard = React.forwardRef((props, ref) => {
 GameBoard.propTypes = {
   currentStep: PropTypes.number.isRequired,
   idGame: PropTypes.string.isRequired,
+  numTour: PropTypes.number.isRequired,
   // GameMap
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
@@ -103,6 +109,7 @@ GameBoard.propTypes = {
 }
 
 GameBoard.defaultProps = {
+  numTour: 0,
   iaeImplemented: [],
   circleIaeImplemented: [],
   iaeGroupSelected: 0,

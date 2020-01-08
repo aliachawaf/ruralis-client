@@ -18,7 +18,8 @@ class GameBoardContainer extends React.Component {
       circleIaeImplemented: [],
       iaeGroupSelected: 0,
       iaeTypeSelected: 0,
-      currentStep: 1
+      currentStep: 1,
+      numTour: 0
     }
     this.onStartGame = this.onStartGame.bind(this)
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
@@ -39,7 +40,8 @@ class GameBoardContainer extends React.Component {
           scenario: res.data.game.scenario,
           currentStep: res.data.game.step,
           iaeImplemented: res.data.game.implementedIAE,
-          circleIaeImplemented: res.data.game.circleIAEs
+          circleIaeImplemented: res.data.game.circleIAEs,
+          numTour: res.data.game.numTour
         })
       })
       .catch(err => console.log(err))
@@ -93,8 +95,9 @@ class GameBoardContainer extends React.Component {
     return (
       <GameBoard
         ref={mapRef}
-        currentStep={this.state.currentStep}
         idGame={this.props.match.params.idGame}
+        currentStep={this.state.currentStep}
+        numTour={this.state.numTour}
         bounds={bounds}
         handleStartGame={this.onStartGame}
         opened={this.state.openedStartGameModal}

@@ -16,10 +16,11 @@ const GameMap = React.forwardRef((props, ref) => {
     bounds,
     onCreatedIAE,
     iaeImplemented,
-    iaeTypeSelected
+    circleIaeImplemented,
+    iaeGroupSelected
   } = props
 
-  const iaeSelectedDrawingType = mapLegend[iaeTypeSelected.charAt(0)].drawingType
+  const iaeSelectedDrawingType = mapLegend[iaeGroupSelected].drawingType
 
   return (
     <Map
@@ -54,21 +55,25 @@ const GameMap = React.forwardRef((props, ref) => {
 
       {/* IAE IMPLEMENTED DRAWINGS */}
       {
-        iaeImplemented.map((iae, index) => {
-          return iae.drawingType === 'circle'
-            ? <Circle
-              key={index}
-              color={mapLegend[iae.id.charAt(0)].color}
-              center={iae.center}
-              radius={iae.radius}
-              /> // eslint-disable-line
-            : <PolylineDecorator
-              key={index}
-              color={mapLegend[iae.id.charAt(0)].color}
-              patterns={mapLegend[iae.id.charAt(0)].iaeList[iae.id.charAt(1)].decorator}
-              positions={iae.positions}
-              /> // eslint-disable-line
-        }
+        iaeImplemented.map((iae, index) => (
+          <PolylineDecorator
+            key={index}
+            color={mapLegend[iae.IAEGroup].color}
+            patterns={mapLegend[iae.IAEGroup].iaeList[iae.IAEType].decorator}
+            positions={iae.coords}
+          />
+        ))
+      }
+
+      {
+        circleIaeImplemented.map((iae, index) => (
+          <Circle
+            key={index}
+            color={mapLegend[iae.IAEGroup].color}
+            center={iae.center}
+            radius={iae.radius}
+          />
+        )
         )
       }
     </Map>
@@ -79,12 +84,14 @@ GameMap.propTypes = {
   bounds: PropTypes.array.isRequired,
   onCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
-  iaeTypeSelected: PropTypes.string.isRequired
+  circleIaeImplemented: PropTypes.array.isRequired,
+  iaeGroupSelected: PropTypes.number.isRequired
 }
 
 GameMap.defaultProps = {
   iaeImplemented: [],
-  iaeTypeSelected: '00'
+  circleIaeImplemented: [],
+  iaeGroupSelected: 0
 }
 
 export default GameMap

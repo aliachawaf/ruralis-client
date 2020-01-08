@@ -18,6 +18,8 @@ const GameBoard = React.forwardRef((props, ref) => {
     bounds,
     handleCreatedIAE,
     iaeImplemented,
+    circleIaeImplemented,
+    iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
     gamePlayers,
@@ -44,9 +46,9 @@ const GameBoard = React.forwardRef((props, ref) => {
               ref={ref}
               bounds={bounds}
               onCreatedIAE={handleCreatedIAE}
-              iaeTypeSelected={iaeTypeSelected}
-              onIAETypeChange={handleIAETypeChange}
+              iaeGroupSelected={iaeGroupSelected}
               iaeImplemented={iaeImplemented}
+              circleIaeImplemented={circleIaeImplemented}
             />
           </Grid.Column>
 
@@ -54,6 +56,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             <Header content={'Choix de l\'IAE à implémenter'} />
 
             <IAETypeSelect
+              iaeGroupSelected={iaeGroupSelected}
               iaeTypeSelected={iaeTypeSelected}
               onIAETypeChange={handleIAETypeChange}
             />
@@ -67,6 +70,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             <GameStepContainer
               currentStep={currentStep}
               iaeImplemented={iaeImplemented}
+              circleIaeImplemented={circleIaeImplemented}
               timerLaunched={!opened}
             />
           </Grid.Column>
@@ -79,13 +83,15 @@ const GameBoard = React.forwardRef((props, ref) => {
 
 GameBoard.propTypes = {
   currentStep: PropTypes.number.isRequired,
-  gameId: PropTypes.number.isRequired,
+  gameId: PropTypes.string.isRequired,
   // GameMap
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
+  circleIaeImplemented: PropTypes.array.isRequired,
   // IAE Type Select
-  iaeTypeSelected: PropTypes.string.isRequired,
+  iaeGroupSelected: PropTypes.number.isRequired,
+  iaeTypeSelected: PropTypes.number.isRequired,
   handleIAETypeChange: PropTypes.func.isRequired,
   // Game Step
   // Start Game Modal
@@ -97,7 +103,9 @@ GameBoard.propTypes = {
 
 GameBoard.defaultProps = {
   iaeImplemented: [],
-  iaeTypeSelected: '00'
+  circleIaeImplemented: [],
+  iaeGroupSelected: 0,
+  iaeTypeSelected: 0
 }
 
 export default GameBoard

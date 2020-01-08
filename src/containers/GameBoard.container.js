@@ -15,7 +15,9 @@ class GameBoardContainer extends React.Component {
       players: [],
       scenario: -1,
       iaeImplemented: [],
-      iaeTypeSelected: '00',
+      circleIaeImplemented: [],
+      iaeGroupSelected: 0,
+      iaeTypeSelected: 0,
       currentStep: 1
     }
     this.onStartGame = this.onStartGame.bind(this)
@@ -51,34 +53,38 @@ class GameBoardContainer extends React.Component {
         })
       })
       .catch(err => console.log(err))
-    // TODO launch timer for first round
   }
 
   onCreatedIAE (e) {
-    let newIAE
-
     if (e.layerType === 'circle') {
-      newIAE = {
-        id: this.state.iaeTypeSelected,
-        drawingType: e.layerType,
+      const newIAE = {
+        IAEGroup: this.state.iaeGroupSelected,
+        IAEType: this.state.iaeTypeSelected,
         center: e.layer._latlng,
         radius: e.layer._radius
       }
-    } else {
-      newIAE = {
-        id: this.state.iaeTypeSelected,
-        drawingType: e.layerType,
-        positions: e.layer._latlngs
-      }
-    }
 
-    this.setState({
-      iaeImplemented: this.state.iaeImplemented.concat(newIAE)
-    })
+      this.setState({
+        circleIaeImplemented: this.state.circleIaeImplemented.concat(newIAE)
+      })
+    } else {
+      const newIAE = {
+        IAEGroup: this.state.iaeGroupSelected,
+        IAEType: this.state.iaeTypeSelected,
+        coords: e.layer._latlngs
+      }
+
+      this.setState({
+        iaeImplemented: this.state.iaeImplemented.concat(newIAE)
+      })
+    }
   }
 
-  onChangeIAEType = (e, { value }) => {
-    this.setState({ iaeTypeSelected: value })
+  onChangeIAEType = (group, type) => {
+    this.setState({
+      iaeGroupSelected: group,
+      iaeTypeSelected: type
+    })
   }
 
   render () {
@@ -94,6 +100,8 @@ class GameBoardContainer extends React.Component {
         scenario={this.state.scenario}
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
+        circleIaeImplemented={this.state.circleIaeImplemented}
+        iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}
         handleIAETypeChange={this.onChangeIAEType}
       />

@@ -6,8 +6,6 @@ import * as APIFetch from '../helpers/APIFetch'
 class GameStepContainer extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-    }
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
   }
 
@@ -36,7 +34,8 @@ class GameStepContainer extends React.Component {
 GameStepContainer.propTypes = {
   currentStep: PropTypes.number.isRequired,
   timerLaunched: PropTypes.bool.isRequired,
-  iaeImplemented: PropTypes.array.isRequired
+  iaeImplemented: PropTypes.array.isRequired,
+  circleIaeImplemented: PropTypes.array.isRequired
 }
 
 export default GameStepContainer

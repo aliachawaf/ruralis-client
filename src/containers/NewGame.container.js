@@ -38,17 +38,10 @@ class NewGameContainer extends React.Component {
   }
 
   onChangeNbPlayers (e) {
-    console.log('oui' + e.target.value)
-
-    this.setState({
-      nbPlayers: e.target.value
-    })
+    this.setState({ nbPlayers: e.target.value })
   }
 
-  onChangeScenario = (e, { value }) => {
-    console.log('SCENARIO : ' + value)
-    this.setState({ scenario: value })
-  }
+  onChangeScenario = (e, { value }) => this.setState({ scenario: value })
 
   onClickPlayer = (playerIndex) => {
     const playersSelected = this.state.playersSelected

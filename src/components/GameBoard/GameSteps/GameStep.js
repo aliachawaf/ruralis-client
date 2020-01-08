@@ -18,7 +18,7 @@ const GameStep = (props) => (
 
       <Divider />
 
-      {props.currentStep === 1 && <Step1 onValidateIAEs={props.onValidateIAEs} timerLaunched={props.timerLaunched} />}
+      {props.currentStep === 1 && <Step1 onValidateIAEs={props.handleValidateIAEs} timerLaunched={props.timerLaunched} />}
 
       <Divider />
 

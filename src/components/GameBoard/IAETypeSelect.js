@@ -4,29 +4,24 @@ import { Container, Dropdown, Image } from 'semantic-ui-react'
 import mapLegend from '../../config/mapLegend'
 
 const IAETypeSelect = (props) => {
-  const { iaeTypeSelected, onIAETypeChange } = props
+  const { iaeGroupSelected, iaeTypeSelected, onIAETypeChange } = props
 
-  const indexGroupSelected = iaeTypeSelected.charAt(0)
-  const indexIaeSelected = iaeTypeSelected.charAt(1)
-
-  const iaeSelectedLegend = mapLegend[indexGroupSelected].iaeList[indexIaeSelected]
+  const iaeSelected = mapLegend[iaeGroupSelected].iaeList[iaeTypeSelected]
 
   return (
     <Container>
       <Dropdown
-        text='IAE'
         fluid
         button
         scrolling
-        selection
         trigger={
           <span>
             <Image
-              src={iaeSelectedLegend.iaeLegend}
+              src={iaeSelected.iaeLegend}
               verticalAlign='middle'
               spaced='right'
             />
-            {iaeSelectedLegend.iaeName}
+            {iaeSelected.iaeName}
           </span>
         }
       >
@@ -36,16 +31,17 @@ const IAETypeSelect = (props) => {
 
               <Dropdown.Header key={groupIndex} icon='pencil' content={group.iaeGroup} />,
 
-              group.iaeList.map((iae, iaeIndex) =>
+              group.iaeList.map((iae, iaeIndex) => (
                 <Dropdown.Item
                   key={groupIndex + '' + iaeIndex}
                   value={groupIndex + '' + iaeIndex}
                   image={{ src: iae.iaeLegend, size: 'mini' }}
                   text={iae.iaeName}
-                  active={iaeTypeSelected === groupIndex + '' + iaeIndex}
-                  selected={iaeTypeSelected === groupIndex + '' + iaeIndex}
-                  onClick={onIAETypeChange}
+                  active={iaeGroupSelected === groupIndex && iaeTypeSelected === iaeIndex}
+                  selected={iaeGroupSelected === groupIndex && iaeTypeSelected === iaeIndex}
+                  onClick={() => onIAETypeChange(groupIndex, iaeIndex)}
                 />
+              )
               ),
               groupIndex !== mapLegend.length - 1 && <Dropdown.Divider />
             ])
@@ -58,12 +54,14 @@ const IAETypeSelect = (props) => {
 }
 
 IAETypeSelect.propTypes = {
-  iaeTypeSelected: PropTypes.string.isRequired,
+  iaeGroupSelected: PropTypes.number.isRequired,
+  iaeTypeSelected: PropTypes.number.isRequired,
   onIAETypeChange: PropTypes.func.isRequired
 }
 
 IAETypeSelect.defaultProps = {
-  iaeTypeSelected: '00'
+  iaeGroupSelected: 0,
+  iaeTypeSelected: 0
 }
 
 export default IAETypeSelect

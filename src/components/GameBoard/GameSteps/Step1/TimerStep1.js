@@ -19,7 +19,7 @@ const TimerStep1 = (props) => (
 
         <Icon
           size='huge'
-          name={getTime() > 310000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'}
+          name={getTime() > 301000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'}
         />
 
         <Divider hidden />

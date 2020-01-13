@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import L from 'leaflet'
-import { CircleMarker, FeatureGroup, ImageOverlay, Map, Tooltip } from 'react-leaflet'
+import { CircleMarker, FeatureGroup, ImageOverlay, Map, Marker, Tooltip } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 import { Header } from 'semantic-ui-react'
 
@@ -11,6 +11,7 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import PolylineDecorator from './PolylineDecorator'
 
 import mapLegend from '../../config/mapLegend'
+import cross from '../../assets/mapLegend/mares/cross.png'
 
 const GameMap = React.forwardRef((props, ref) => {
   const {
@@ -74,15 +75,26 @@ const GameMap = React.forwardRef((props, ref) => {
       }
 
       {
-        circleIaeImplemented.map((iae, index) => (
-          <CircleMarker
-            key={index}
-            color={mapLegend[iae.IAEGroup].color}
-            center={iae.center}
-          />
-        )
+        circleIaeImplemented.map((iae, index) => {
+          const withCross = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName === 'abreuvement animaux'
+
+          return ([
+            <CircleMarker
+              key={index}
+              color={mapLegend[iae.IAEGroup].color}
+              center={iae.center}
+            />,
+            withCross &&
+              <Marker
+                position={iae.center}
+                icon={L.icon({ iconSize: [25, 25], iconUrl: cross })}
+              />]
+          )
+        }
         )
       }
+      }
+
     </Map>
   )
 })

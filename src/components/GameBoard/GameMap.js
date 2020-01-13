@@ -2,14 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import L from 'leaflet'
-import { Circle, FeatureGroup, ImageOverlay, Map } from 'react-leaflet'
+import { CircleMarker, FeatureGroup, ImageOverlay, Map, Marker, Tooltip } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
+import { Header } from 'semantic-ui-react'
 
 import gameMap from '../../assets/gameMap.png'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import PolylineDecorator from './PolylineDecorator'
 
 import mapLegend from '../../config/mapLegend'
+import cross from '../../assets/mapLegend/mares/cross.png'
 
 const GameMap = React.forwardRef((props, ref) => {
   const {
@@ -45,11 +47,11 @@ const GameMap = React.forwardRef((props, ref) => {
           onCreated={e => onCreatedIAE(e)}
           draw={{
             marker: false,
-            circlemarker: true,
+            circle: false,
             polyline: (iaeSelectedDrawingType === 'polyline'),
             polygon: (iaeSelectedDrawingType === 'polygon'),
             rectangle: (iaeSelectedDrawingType === 'polygon'),
-            circle: (iaeSelectedDrawingType === 'circle')
+            circlemarker: (iaeSelectedDrawingType === 'circlemarker')
           }}
         />
       </FeatureGroup>
@@ -60,23 +62,38 @@ const GameMap = React.forwardRef((props, ref) => {
           <PolylineDecorator
             key={index}
             color={mapLegend[iae.IAEGroup].color}
+            fill
             patterns={mapLegend[iae.IAEGroup].iaeList[iae.IAEType].decorator}
             positions={iae.coords}
-          />
+          >
+            <Tooltip direction='top'>
+              <Header content={mapLegend[iae.IAEGroup].iaeGroup} />
+              {mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName}
+            </Tooltip>
+          </PolylineDecorator>
         ))
       }
 
       {
-        circleIaeImplemented.map((iae, index) => (
-          <Circle
-            key={index}
-            color={mapLegend[iae.IAEGroup].color}
-            center={iae.center}
-            radius={iae.radius}
-          />
-        )
+        circleIaeImplemented.map((iae, index) => {
+          const withCross = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName === 'abreuvement animaux'
+
+          return ([
+            <CircleMarker
+              key={index}
+              color={mapLegend[iae.IAEGroup].color}
+              center={iae.center}
+            />,
+            withCross &&
+              <Marker
+                position={iae.center}
+                icon={L.icon({ iconSize: [25, 25], iconUrl: cross })}
+              />]
+          )
+        }
         )
       }
+
     </Map>
   )
 })

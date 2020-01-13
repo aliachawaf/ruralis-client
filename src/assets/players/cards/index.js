@@ -1,0 +1,7 @@
+export const ReveurCard = require('./1.png')
+export const ConventionCard = require('./2.png')
+export const BuissonCard = require('./3.png')
+export const WatersCard = require('./4.png')
+export const TourdeplaineCard = require('./5.png')
+export const SolamourCard = require('./6.png')
+export const CerecopeCard = require('./7.png')

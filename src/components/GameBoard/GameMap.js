@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import L from 'leaflet'
-import { CircleMarker, FeatureGroup, ImageOverlay, Map, Popup } from 'react-leaflet'
+import { CircleMarker, FeatureGroup, ImageOverlay, Map, Tooltip } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 import { Header } from 'semantic-ui-react'
 
@@ -65,10 +65,10 @@ const GameMap = React.forwardRef((props, ref) => {
             patterns={mapLegend[iae.IAEGroup].iaeList[iae.IAEType].decorator}
             positions={iae.coords}
           >
-            <Popup>
+            <Tooltip direction='top'>
               <Header content={mapLegend[iae.IAEGroup].iaeGroup} />
               {mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName}
-            </Popup>
+            </Tooltip>
           </PolylineDecorator>
         ))
       }

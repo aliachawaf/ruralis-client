@@ -93,7 +93,6 @@ const GameMap = React.forwardRef((props, ref) => {
         }
         )
       }
-      }
 
     </Map>
   )

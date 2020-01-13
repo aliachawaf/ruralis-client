@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import L from 'leaflet'
-import { Circle, FeatureGroup, ImageOverlay, Map } from 'react-leaflet'
+import { CircleMarker, FeatureGroup, ImageOverlay, Map } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 
 import gameMap from '../../assets/gameMap.png'
@@ -45,11 +45,11 @@ const GameMap = React.forwardRef((props, ref) => {
           onCreated={e => onCreatedIAE(e)}
           draw={{
             marker: false,
-            circlemarker: true,
+            circle: false,
             polyline: (iaeSelectedDrawingType === 'polyline'),
             polygon: (iaeSelectedDrawingType === 'polygon'),
             rectangle: (iaeSelectedDrawingType === 'polygon'),
-            circle: (iaeSelectedDrawingType === 'circle')
+            circlemarker: (iaeSelectedDrawingType === 'circlemarker')
           }}
         />
       </FeatureGroup>
@@ -68,11 +68,10 @@ const GameMap = React.forwardRef((props, ref) => {
 
       {
         circleIaeImplemented.map((iae, index) => (
-          <Circle
+          <CircleMarker
             key={index}
             color={mapLegend[iae.IAEGroup].color}
             center={iae.center}
-            radius={iae.radius}
           />
         )
         )

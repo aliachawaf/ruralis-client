@@ -511,7 +511,7 @@ const mapLegend = [
   /** ***************************************** GROUP MARES  *******************************************/
   {
     iaeGroup: 'Mares',
-    drawingType: 'circle',
+    drawingType: 'circlemarker',
     color: '#64372F',
     environment: 3,
     iaeList: [

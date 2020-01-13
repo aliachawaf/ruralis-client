@@ -4,6 +4,8 @@ import GameBoard from '../components/GameBoard/GameBoard'
 
 import * as APIFetch from '../helpers/APIFetch'
 
+import mapLegend from '../config/mapLegend'
+
 const bounds = [[0, 0], [3330, 3825]]
 const mapRef = React.createRef()
 
@@ -19,7 +21,11 @@ class GameBoardContainer extends React.Component {
       iaeGroupSelected: 0,
       iaeTypeSelected: 0,
       currentStep: 1,
-      numTour: 0
+      numTour: 0,
+      production: 0,
+      tempsTravail: 70,
+      environnement: 0,
+      ancrageSocial: 0
     }
     this.onStartGame = this.onStartGame.bind(this)
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
@@ -60,6 +66,7 @@ class GameBoardContainer extends React.Component {
   }
 
   onCreatedIAE (e) {
+    console.log(e);
     if (e.layerType === 'circle') {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
@@ -71,6 +78,8 @@ class GameBoardContainer extends React.Component {
       this.setState({
         circleIaeImplemented: this.state.circleIaeImplemented.concat(newIAE)
       })
+      this.updateScore(newIAE, e.layerType)
+      console.log(this.state)
     } else {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
@@ -81,6 +90,35 @@ class GameBoardContainer extends React.Component {
       this.setState({
         iaeImplemented: this.state.iaeImplemented.concat(newIAE)
       })
+      this.updateScore(newIAE, e.layerType)
+
+      console.log(this.state)
+    }
+  }
+
+  updateScore (newIAE, layerType) {
+    const nbUnite = this.calculNbUnite(newIAE, layerType)
+
+    const newEnv = mapLegend[newIAE.IAEGroup].environment
+    const newTempsTravail = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].workingTime
+    const newProduction = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].production
+
+    if (newIAE) {
+      this.setState({
+        production: this.state.production + (nbUnite * newProduction),
+        tempsTravail: this.state.tempsTravail + (nbUnite * newTempsTravail),
+        environnement: this.state.environnement + (nbUnite * newEnv)
+      })
+    }
+  }
+
+  calculNbUnite (newIAE, layerType) {
+    if (layerType === 'circle') {
+      return 1
+    } else {
+      if (newIAE.coords.length === 2) { // line
+        return (mapRef.current.leafletElement.distance(newIAE.coords[0], newIAE.coords[1]) / 150)
+      }
     }
   }
 

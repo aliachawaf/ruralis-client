@@ -70,7 +70,8 @@ class GameBoardContainer extends React.Component {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
         IAEType: this.state.iaeTypeSelected,
-        center: e.layer._latlng
+        center: e.layer._latlng,
+        unity: 1
       }
 
       this.setState({
@@ -82,20 +83,21 @@ class GameBoardContainer extends React.Component {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
         IAEType: this.state.iaeTypeSelected,
-        coords: e.layer._latlngs
+        coords: e.layer._latlngs,
+        unity: this.calculNbUnite(e.layer._latlngs)
       }
 
       this.setState({
         iaeImplemented: this.state.iaeImplemented.concat(newIAE)
       })
-      this.updateScore(newIAE, e.layerType)
+      this.updateScore(newIAE)
 
       console.log(this.state)
     }
   }
 
-  updateScore (newIAE, layerType) {
-    const nbUnite = this.calculNbUnite(newIAE, layerType)
+  updateScore (newIAE) {
+    const nbUnite = newIAE.unity
 
     const newEnv = mapLegend[newIAE.IAEGroup].environment
     const newTempsTravail = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].workingTime
@@ -110,13 +112,10 @@ class GameBoardContainer extends React.Component {
     }
   }
 
-  calculNbUnite (newIAE, layerType) {
-    if (layerType === 'circlemarker') {
-      return 1
-    } else {
-      if (newIAE.coords.length === 2) { // line
-        return (mapRef.current.leafletElement.distance(newIAE.coords[0], newIAE.coords[1]) / 150)
-      }
+  calculNbUnite (iaeCoords) {
+    if (iaeCoords.length === 2) {
+      const unity = (mapRef.current.leafletElement.distance(iaeCoords[0], iaeCoords[1]) / 150)
+      return Math.round(unity * 10) / 10
     }
   }
 

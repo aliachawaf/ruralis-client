@@ -1,7 +1,39 @@
 import L from 'leaflet'
 import orangeDot from '../assets/mapLegend/orangeDot.png'
-import redDot from '../assets/mapLegend/redDot.png'
-import redV from '../assets/mapLegend/redV.png'
+
+import {
+  BEenergieIcon,
+  BEenergieLegend,
+  BEentretienLegend,
+  BEfaucheIcon,
+  BEfaucheLegend,
+  BEfauchepatureIcon,
+  BEfauchepatureLegend,
+  BEpatureIcon,
+  BEpatureLegend,
+  BFendpoint,
+  BFenergieIcon,
+  BFenergieLegend,
+  BFentretienLegend,
+  BFfaucheIcon,
+  BFfaucheLegend,
+  BFfauchepatureIcon,
+  BFfauchepatureLegend,
+  BFpatureIcon,
+  BFpatureLegend,
+  HMbroyatIcon,
+  HMbroyatLegend,
+  HMenergieIcon,
+  HMenergieLegend,
+  HMentretienLegend,
+  HPboisIcon,
+  HPboisLegend,
+  HPbroyatIcon,
+  HPbroyatLegend,
+  HPenergieIcon,
+  HPenergieLegend,
+  HPentretienLegend
+} from '../assets/mapLegend'
 
 /**
  * @type {*[]}
@@ -17,41 +49,79 @@ import redV from '../assets/mapLegend/redV.png'
  *
  */
 
+const BFendpointLeft =
+  {
+    offset: '0px',
+    repeat: '0px',
+    symbol: L.Symbol.marker({
+      markerOptions: {
+        icon: L.icon({
+          iconUrl: BFendpoint,
+          iconAnchor: [8, 8]
+        })
+      }
+    })
+  }
+
+const BFendpointRight =
+  {
+    offset: '100%',
+    repeat: '0px',
+    symbol: L.Symbol.marker({
+      markerOptions: {
+        icon: L.icon({
+          iconUrl: BFendpoint,
+          iconAnchor: [8, 8]
+        })
+      }
+    })
+  }
+
 const mapLegend = [
   /** *********************************** GROUP HAIE MONOSTRATIFIEE *************************************/
   {
     iaeGroup: 'Haie Monostratifiée',
     drawingType: 'polyline',
-    color: 'orange',
+    color: '#E06A35',
     environment: 1,
     iaeList: [
       {
         iaeName: 'entretien seul',
-        iaeLegend: orangeDot,
+        iaeLegend: HMentretienLegend,
         decorator: [],
         production: 0,
         workingTime: -2
       },
       {
         iaeName: 'énergie',
-        iaeLegend: orangeDot,
-        decorator: [],
+        iaeLegend: HMenergieLegend,
+        decorator: [{
+          repeat: '10px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: HMenergieIcon,
+                iconAnchor: [8, 8]
+              })
+            }
+          })
+        }],
         production: 2,
         workingTime: -4
       },
       {
         iaeName: 'broyat',
-        iaeLegend: orangeDot,
+        iaeLegend: HMbroyatLegend,
         production: 1,
         workingTime: -3,
         decorator: [{
-          offset: '10%',
           repeat: '30px',
           symbol: L.Symbol.marker({
             rotate: true,
             markerOptions: {
               icon: L.icon({
-                iconUrl: orangeDot,
+                iconUrl: HMbroyatIcon,
                 iconAnchor: [8, 8]
               })
             }
@@ -65,36 +135,46 @@ const mapLegend = [
   {
     iaeGroup: 'Haie Pluristratifiée',
     drawingType: 'polyline',
-    color: 'red',
+    color: '#C02B2D',
     environment: 2,
     iaeList: [
       {
         iaeName: 'entretien seul',
-        iaeLegend: orangeDot,
+        iaeLegend: HPentretienLegend,
         decorator: [],
         production: 0,
         workingTime: -1
       },
       {
         iaeName: 'énergie',
-        iaeLegend: orangeDot,
-        decorator: [],
+        iaeLegend: HPenergieLegend,
+        decorator: [{
+          repeat: '10px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: HPenergieIcon,
+                iconAnchor: [8, 8]
+              })
+            }
+          })
+        }],
         production: 2,
         workingTime: -3
       },
       {
         iaeName: 'broyat',
-        iaeLegend: orangeDot,
+        iaeLegend: HPbroyatLegend,
         production: 1,
         workingTime: -2,
         decorator: [{
-          offset: '10%',
           repeat: '30px',
           symbol: L.Symbol.marker({
             rotate: true,
             markerOptions: {
               icon: L.icon({
-                iconUrl: redDot,
+                iconUrl: HPbroyatIcon,
                 iconAnchor: [8, 8]
               })
             }
@@ -103,17 +183,18 @@ const mapLegend = [
       },
       {
         iaeName: 'bois d\'oeuvre',
-        iaeLegend: orangeDot,
+        iaeLegend: HPboisLegend,
         production: 3,
         workingTime: -4,
         decorator: [{
-          offset: '10%',
+          offset: '5px',
+          endOffset: '5px',
           repeat: '16px',
           symbol: L.Symbol.marker({
             rotate: true,
             markerOptions: {
               icon: L.icon({
-                iconUrl: redV,
+                iconUrl: HPboisIcon,
                 iconAnchor: [8, 8]
               })
             }
@@ -127,43 +208,91 @@ const mapLegend = [
   {
     iaeGroup: 'Bande Enherbée',
     drawingType: 'polyline',
-    color: 'blue',
+    color: '#99ccff',
     environment: 1,
     iaeList: [
       {
         iaeName: 'entretien seul',
-        iaeLegend: orangeDot,
+        iaeLegend: BEentretienLegend,
         production: 1,
         workingTime: -1,
         decorator: []
       },
       {
         iaeName: 'énergie',
-        iaeLegend: orangeDot,
+        iaeLegend: BEenergieLegend,
         production: 2,
         workingTime: -1,
-        decorator: []
+        decorator: [{
+          offset: '10%',
+          repeat: '10px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: BEenergieIcon,
+                iconAnchor: [8, 8]
+              })
+            }
+          })
+        }]
       },
       {
         iaeName: 'fauche',
-        iaeLegend: orangeDot,
+        iaeLegend: BEfaucheLegend,
         production: 1,
         workingTime: -2,
-        decorator: []
+        decorator: [{
+          offset: '25px',
+          repeat: '25px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: BEfaucheIcon,
+                iconAnchor: [22, 0]
+              })
+            }
+          })
+        }]
       },
       {
         iaeName: 'patûre',
-        iaeLegend: orangeDot,
+        iaeLegend: BEpatureLegend,
         production: 1,
         workingTime: -1,
-        decorator: []
+        decorator: [{
+          offset: '25px',
+          repeat: '25px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: BEpatureIcon,
+                iconAnchor: [22, 0]
+              })
+            }
+          })
+        }]
       },
       {
         iaeName: 'fauche et patûre',
-        iaeLegend: orangeDot,
+        iaeLegend: BEfauchepatureLegend,
         production: 2,
         workingTime: -3,
-        decorator: []
+        decorator: [{
+          offset: '25px',
+          repeat: '30px',
+          symbol: L.Symbol.marker({
+            rotate: true,
+            markerOptions: {
+              icon: L.icon({
+                iconUrl: BEfauchepatureIcon,
+                iconAnchor: [22, 0]
+              })
+            }
+          })
+        }]
       }
     ]
   },
@@ -172,37 +301,102 @@ const mapLegend = [
   {
     iaeGroup: 'Bande Fleurie',
     drawingType: 'polyline',
-    color: 'purple',
+    color: '#312C67',
     environment: 2,
     iaeList: [
       {
         iaeName: 'entretien seul',
-        iaeLegend: orangeDot,
+        iaeLegend: BFentretienLegend,
         production: 1,
         workingTime: -1,
-        decorator: []
+        decorator: [
+          BFendpointLeft,
+          BFendpointRight
+        ]
       },
       {
         iaeName: 'énergie',
-        iaeLegend: orangeDot,
-        decorator: []
+        iaeLegend: BFenergieLegend,
+        decorator: [
+          BFendpointLeft,
+          BFendpointRight,
+          {
+            offset: '12px',
+            endOffset: '10px',
+            repeat: '10px',
+            symbol: L.Symbol.marker({
+              rotate: true,
+              markerOptions: {
+                icon: L.icon({
+                  iconUrl: BFenergieIcon,
+                  iconAnchor: [8, 8]
+                })
+              }
+            })
+          }
+        ]
       },
       {
         iaeName: 'fauche',
-        iaeLegend: orangeDot,
-        decorator: []
+        iaeLegend: BFfaucheLegend,
+        decorator: [
+          BFendpointLeft,
+          BFendpointRight,
+          {
+            offset: '25px',
+            repeat: '25px',
+            symbol: L.Symbol.marker({
+              rotate: true,
+              markerOptions: {
+                icon: L.icon({
+                  iconUrl: BFfaucheIcon,
+                  iconAnchor: [22, 0]
+                })
+              }
+            })
+          }]
       },
       {
         iaeName: 'patûre',
-        iaeLegend: orangeDot,
+        iaeLegend: BFpatureLegend,
         production: 2,
         workingTime: -2,
-        decorator: []
+        decorator: [
+          BFendpointLeft,
+          BFendpointRight,
+          {
+            offset: '25px',
+            repeat: '25px',
+            symbol: L.Symbol.marker({
+              rotate: true,
+              markerOptions: {
+                icon: L.icon({
+                  iconUrl: BFpatureIcon,
+                  iconAnchor: [22, 0]
+                })
+              }
+            })
+          }]
       },
       {
         iaeName: 'fauche et patûre',
-        iaeLegend: orangeDot,
-        decorator: []
+        iaeLegend: BFfauchepatureLegend,
+        decorator: [
+          BFendpointLeft,
+          BFendpointRight,
+          {
+            offset: '40px',
+            repeat: '30px',
+            symbol: L.Symbol.marker({
+              rotate: true,
+              markerOptions: {
+                icon: L.icon({
+                  iconUrl: BFfauchepatureIcon,
+                  iconAnchor: [22, 0]
+                })
+              }
+            })
+          }]
       }
     ]
   },
@@ -211,7 +405,7 @@ const mapLegend = [
   {
     iaeGroup: 'Prairie Permanente',
     drawingType: 'polygon',
-    color: 'green',
+    color: '#34996F',
     environment: 2,
     iaeList: [
       {
@@ -249,7 +443,7 @@ const mapLegend = [
   {
     iaeGroup: 'Bosquet',
     drawingType: 'polygon',
-    color: 'black',
+    color: '#1A1919',
     environment: 3,
     iaeList: [
       {
@@ -287,7 +481,7 @@ const mapLegend = [
   {
     iaeGroup: 'Agroforesterie Intraparcellaire',
     drawingType: 'polygon',
-    color: 'purple',
+    color: '#49275A',
     environment: 1,
     iaeList: [
       {
@@ -317,8 +511,8 @@ const mapLegend = [
   /** ***************************************** GROUP MARES  *******************************************/
   {
     iaeGroup: 'Mares',
-    drawingType: 'circle',
-    color: 'brown',
+    drawingType: 'circlemarker',
+    color: '#64372F',
     environment: 3,
     iaeList: [
       {

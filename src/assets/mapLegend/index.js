@@ -50,3 +50,7 @@ export const BFfauchepatureIcon = require('./bandeFleurie/fauchepature/icon.png'
 export const BFfauchepatureLegend = require('./bandeFleurie/fauchepature/legend.png')
 
 export const BFendpoint = require('./bandeFleurie/endpoint.png')
+
+/* MARES */
+export const MareEntretien = require('./mares/entretien.png')
+export const MareAbreveument = require('./mares/abreuvement.png')

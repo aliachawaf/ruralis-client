@@ -103,9 +103,9 @@ class GameBoardContainer extends React.Component {
 
     if (newIAE) {
       this.setState({
-        production: this.state.production + (nbUnite * newProduction),
-        tempsTravail: this.state.tempsTravail + (nbUnite * newTempsTravail),
-        environnement: this.state.environnement + (nbUnite * newEnv)
+        production: Math.round((this.state.production + (nbUnite * newProduction)) * 10) / 10,
+        tempsTravail: Math.round((this.state.tempsTravail + (nbUnite * newTempsTravail)) * 10) / 10,
+        environnement: Math.round((this.state.environnement + (nbUnite * newEnv)) * 10) / 10
       })
     }
   }
@@ -137,6 +137,7 @@ class GameBoardContainer extends React.Component {
         bounds={bounds}
         handleStartGame={this.onStartGame}
         opened={this.state.openedStartGameModal}
+        handleIAETypeChange={this.onChangeIAEType}
         gamePlayers={this.state.players}
         scenario={this.state.scenario}
         handleCreatedIAE={this.onCreatedIAE}
@@ -148,7 +149,6 @@ class GameBoardContainer extends React.Component {
         tempsTravail={this.state.tempsTravail}
         environnement={this.state.environnement}
         ancrageSocial={this.state.ancrageSocial}
-        handleIAETypeChange={this.onChangeIAEType}
       />
     )
   }

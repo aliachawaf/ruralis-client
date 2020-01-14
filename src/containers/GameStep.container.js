@@ -33,6 +33,10 @@ class GameStepContainer extends React.Component {
         handleValidateIAEs={this.onValidateIAEs}
         currentStep={this.props.currentStep}
         timerLaunched={this.props.timerLaunched}
+        ancrageSocial={this.props.ancrageSocial}
+        environnement={this.props.environnement}
+        production={this.props.production}
+        tempsTravail={this.props.tempsTravail}
       />
     )
   }
@@ -43,7 +47,12 @@ GameStepContainer.propTypes = {
   currentStep: PropTypes.number.isRequired,
   timerLaunched: PropTypes.bool.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
-  circleIaeImplemented: PropTypes.array.isRequired
+  circleIaeImplemented: PropTypes.array.isRequired,
+  // SCORING
+  production: PropTypes.number.isRequired,
+  environnement: PropTypes.number.isRequired,
+  tempsTravail: PropTypes.number.isRequired,
+  ancrageSocial: PropTypes.number.isRequired
 }
 
 export default GameStepContainer

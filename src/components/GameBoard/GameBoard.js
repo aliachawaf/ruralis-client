@@ -113,7 +113,12 @@ GameBoard.propTypes = {
   gamePlayers: PropTypes.array.isRequired,
   scenario: PropTypes.number.isRequired,
   opened: PropTypes.bool.isRequired,
-  handleStartGame: PropTypes.func.isRequired
+  handleStartGame: PropTypes.func.isRequired,
+  // SCORING
+  production: PropTypes.number.isRequired,
+  environnement: PropTypes.number.isRequired,
+  tempsTravail: PropTypes.number.isRequired,
+  ancrageSocial: PropTypes.number.isRequired
 }
 
 GameBoard.defaultProps = {

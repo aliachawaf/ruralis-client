@@ -83,6 +83,8 @@ const GameMap = React.forwardRef((props, ref) => {
               key={index}
               color={mapLegend[iae.IAEGroup].color}
               center={iae.center}
+              weight={2}
+              fill={false}
             />,
             withCross &&
               <Marker

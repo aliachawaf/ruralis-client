@@ -1,5 +1,4 @@
 import L from 'leaflet'
-import orangeDot from '../assets/mapLegend/orangeDot.png'
 
 import {
   BEenergieIcon,
@@ -32,7 +31,9 @@ import {
   HPbroyatLegend,
   HPenergieIcon,
   HPenergieLegend,
-  HPentretienLegend
+  HPentretienLegend,
+  MareAbreveument,
+  MareEntretien
 } from '../assets/mapLegend'
 
 /**
@@ -410,28 +411,28 @@ const mapLegend = [
     iaeList: [
       {
         iaeName: 'énergie',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 0,
         workingTime: -1,
         decorator: []
       },
       {
         iaeName: 'fauche',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 1,
         workingTime: 1,
         decorator: []
       },
       {
         iaeName: 'patûre',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 2,
         workingTime: 0,
         decorator: []
       },
       {
         iaeName: 'fauche et patûre',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 2,
         workingTime: 1,
         decorator: []
@@ -448,28 +449,28 @@ const mapLegend = [
     iaeList: [
       {
         iaeName: 'entretien seul',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 0,
         workingTime: -1,
         decorator: []
       },
       {
         iaeName: 'énergie',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 2,
         workingTime: -3,
         decorator: []
       },
       {
         iaeName: 'broyat',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 1,
         workingTime: -2,
         decorator: []
       },
       {
         iaeName: 'bois d\'oeuvre',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 3,
         workingTime: -4,
         decorator: []
@@ -486,21 +487,21 @@ const mapLegend = [
     iaeList: [
       {
         iaeName: 'énergie',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 2,
         workingTime: -4,
         decorator: []
       },
       {
         iaeName: 'bois d\'oeuvre',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 4,
         workingTime: -4,
         decorator: []
       },
       {
         iaeName: 'pré-verger',
-        iaeLegend: orangeDot,
+        iaeLegend: '',
         production: 3,
         workingTime: -3,
         decorator: []
@@ -517,14 +518,14 @@ const mapLegend = [
     iaeList: [
       {
         iaeName: 'entretien seul',
-        iaeLegend: orangeDot,
+        iaeLegend: MareEntretien,
         production: 0,
         workingTime: -1,
         decorator: []
       },
       {
         iaeName: 'abreuvement animaux',
-        iaeLegend: orangeDot,
+        iaeLegend: MareAbreveument,
         production: 1,
         workingTime: 1,
         decorator: []

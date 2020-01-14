@@ -66,7 +66,7 @@ class GameBoardContainer extends React.Component {
   }
 
   onCreatedIAE (e) {
-    console.log(e);
+    console.log(e)
     if (e.layerType === 'circle') {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,

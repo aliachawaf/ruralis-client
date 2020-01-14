@@ -16,7 +16,14 @@ class GameStepContainer extends React.Component {
       resource,
       { IAEs: this.props.iaeImplemented, circleIAEs: this.props.circleIaeImplemented },
       APIFetch.POST
-    )
+    ).then(() => {
+      console.log(this.props)
+      APIFetch.fetchRuralisAPI(
+        'api/public/game/' + this.props.idGame + '/scoring',
+        { production: this.props.production, environnement: this.props.environnement, ancrageSocial: this.props.ancrageSocial, tempsTravail: this.props.tempsTravail },
+        APIFetch.PUT)
+    })
+
       .catch(err => console.log(err))
   }
 

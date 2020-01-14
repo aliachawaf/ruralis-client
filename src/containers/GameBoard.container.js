@@ -66,9 +66,7 @@ class GameBoardContainer extends React.Component {
   }
 
   onCreatedIAE (e) {
-
     if (e.layerType === 'circlemarker') {
-
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
         IAEType: this.state.iaeTypeSelected,
@@ -113,7 +111,7 @@ class GameBoardContainer extends React.Component {
   }
 
   calculNbUnite (newIAE, layerType) {
-    if (layerType === 'circle') {
+    if (layerType === 'circlemarker') {
       return 1
     } else {
       if (newIAE.coords.length === 2) { // line
@@ -146,6 +144,10 @@ class GameBoardContainer extends React.Component {
         circleIaeImplemented={this.state.circleIaeImplemented}
         iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}
+        production={this.state.production}
+        tempsTravail={this.state.tempsTravail}
+        environnement={this.state.environnement}
+        ancrageSocial={this.state.ancrageSocial}
         handleIAETypeChange={this.onChangeIAEType}
       />
     )

@@ -26,7 +26,11 @@ const GameBoard = React.forwardRef((props, ref) => {
     gamePlayers,
     scenario,
     opened,
-    handleStartGame
+    handleStartGame,
+    production,
+    environnement,
+    tempsTravail,
+    ancrageSocial
   } = props
 
   return (
@@ -78,6 +82,10 @@ const GameBoard = React.forwardRef((props, ref) => {
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
               timerLaunched={!opened}
+              production={production}
+              tempsTravail={tempsTravail}
+              ancrageSocial={ancrageSocial}
+              environnement={environnement}
             />
           </Grid.Column>
 

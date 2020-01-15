@@ -13,7 +13,7 @@ const ScenarioSelect = (props) => {
       <Dropdown
         selection
         options={scenarii.map(s => ({ key: s.number, text: 'Scénario ' + s.number + ' : ' + s.name, value: s.number }))}
-        value={scenario}
+        value={scenario === -1 ? '' : scenario}
         placeholder='Choisir un scénario'
         onChange={handleChangeScenario}
       />

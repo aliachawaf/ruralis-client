@@ -43,7 +43,13 @@ class NewGameContainer extends React.Component {
   }
 
   onChangeNbPlayers (e) {
-    this.setState({ nbPlayers: parseInt(e.target.value) })
+    const newNbPlayers = parseInt(e.target.value)
+
+    if (newNbPlayers < this.state.nbPlayers) {
+      this.setState({ playersSelected: [4, 5] })
+    }
+
+    this.setState({ nbPlayers: newNbPlayers })
   }
 
   onChangeScenario = (e, { value }) => this.setState({ scenario: value })

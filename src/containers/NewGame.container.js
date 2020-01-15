@@ -19,7 +19,12 @@ class NewGameContainer extends React.Component {
   }
 
   onClickNewGame () {
+    console.log(this.state.nbPlayers)
+    console.log(this.state.playersSelected.length)
+    console.log(this.state.playersSelected)
     const error = (this.state.nbPlayers !== this.state.playersSelected.length || this.state.scenario === -1)
+
+    console.log(this.state.nbPlayers !== this.state.playersSelected.length)
 
     if (error) {
       this.setState({ error: true })
@@ -38,7 +43,7 @@ class NewGameContainer extends React.Component {
   }
 
   onChangeNbPlayers (e) {
-    this.setState({ nbPlayers: e.target.value })
+    this.setState({ nbPlayers: parseInt(e.target.value) })
   }
 
   onChangeScenario = (e, { value }) => this.setState({ scenario: value })

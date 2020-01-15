@@ -17,15 +17,9 @@ const TimerStep1 = (props) => (
       <>
         {props.timerLaunched && start()}
 
-        <Icon
-          size='huge'
-          name={getTime() > 301000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'}
-        />
-
-        <Divider hidden />
-
         <Statistic>
           <Statistic.Value>
+            <Icon name={getTime() > 301000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'} />
             <Timer.Minutes />
             :
             <Timer.Seconds formatValue={value => `${(value < 10 ? `0${value}` : value)}`} />

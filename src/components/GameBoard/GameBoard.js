@@ -79,6 +79,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             <GameStepContainer
               idGame={idGame}
               currentStep={currentStep}
+              numTour={numTour}
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
               timerLaunched={!opened}

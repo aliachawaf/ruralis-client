@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import L from 'leaflet'
-import { CircleMarker, FeatureGroup, ImageOverlay, Map, Marker, Tooltip } from 'react-leaflet'
+import { CircleMarker, FeatureGroup, ImageOverlay, Map, Marker, ScaleControl, Tooltip } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 import { Header, Statistic } from 'semantic-ui-react'
 
@@ -39,6 +39,9 @@ const GameMap = React.forwardRef((props, ref) => {
         url={gameMap}
         bounds={bounds}
       />
+
+      {/* MAP SCALE */}
+      <ScaleControl imperial={false} position='bottomright' />
 
       {/* DRAWING TOOLTIP */}
       <FeatureGroup>

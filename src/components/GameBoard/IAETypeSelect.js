@@ -25,7 +25,7 @@ const IAETypeSelect = (props) => {
           </span>
         }
       >
-        <Dropdown.Menu>
+        <Dropdown.Menu style={{ maxHeight: '80vh' }}>
           {
             mapLegend.map((group, groupIndex) => ([
 

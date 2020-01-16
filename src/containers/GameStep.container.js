@@ -7,6 +7,7 @@ class GameStepContainer extends React.Component {
   constructor (props) {
     super(props)
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
+    this.onValidateAction = this.onValidateAction.bind(this)
   }
 
   onValidateIAEs () {

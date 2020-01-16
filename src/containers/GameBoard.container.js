@@ -22,6 +22,8 @@ class GameBoardContainer extends React.Component {
       iaeTypeSelected: 0,
       currentStep: 1,
       numTour: 0,
+      actionSelected: -1,
+      actionsDone: [],
       production: 0,
       tempsTravail: 70,
       environnement: 0,
@@ -30,6 +32,7 @@ class GameBoardContainer extends React.Component {
     this.onStartGame = this.onStartGame.bind(this)
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
+    this.onChangeAction = this.onChangeAction.bind(this)
   }
 
   componentDidMount () {
@@ -47,7 +50,8 @@ class GameBoardContainer extends React.Component {
           currentStep: res.data.game.step,
           iaeImplemented: res.data.game.implementedIAE,
           circleIaeImplemented: res.data.game.circleIAEs,
-          numTour: res.data.game.numTour
+          numTour: res.data.game.numTour,
+          actionsDone: res.data.game.actionsDone
         })
       })
       .catch(err => console.log(err))
@@ -126,6 +130,16 @@ class GameBoardContainer extends React.Component {
     })
   }
 
+  onChangeAction = (e, { value }) => {
+    if (value === this.state.actionSelected) {
+      // Uncheck action
+      this.setState({ actionSelected: -1 })
+    } else {
+      // Check action
+      this.setState({ actionSelected: value })
+    }
+  }
+
   render () {
     return (
       <GameBoard
@@ -144,6 +158,9 @@ class GameBoardContainer extends React.Component {
         circleIaeImplemented={this.state.circleIaeImplemented}
         iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}
+        actionsDone={this.state.actionsDone}
+        actionSelected={this.state.actionSelected}
+        handleOnChangeAction={this.onChangeAction}
         production={this.state.production}
         tempsTravail={this.state.tempsTravail}
         environnement={this.state.environnement}

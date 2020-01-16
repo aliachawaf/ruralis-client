@@ -39,6 +39,4 @@ Step1.defaultProps = {
   timerLaunched: false
 }
 
-Step1.defaultProps = {}
-
 export default Step1

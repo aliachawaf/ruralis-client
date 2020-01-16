@@ -1,10 +1,12 @@
 import React from 'react'
-
+import { connect } from 'react-redux'
 import GameBoard from '../components/GameBoard/GameBoard'
-
+import PropTypes from 'prop-types'
 import * as APIFetch from '../helpers/APIFetch'
 
 import mapLegend from '../config/mapLegend'
+
+import { fetchGame } from '../actions/gameActions'
 
 const bounds = [[0, 0], [3330, 3825]]
 const mapRef = React.createRef()
@@ -14,16 +16,11 @@ class GameBoardContainer extends React.Component {
     super(props)
     this.state = {
       openedStartGameModal: true,
-      players: [],
-      scenario: -1,
       iaeImplemented: [],
       circleIaeImplemented: [],
       iaeGroupSelected: 0,
       iaeTypeSelected: 0,
-      currentStep: 1,
-      numTour: 0,
       actionSelected: -1,
-      actionsDone: [],
       production: 0,
       tempsTravail: 70,
       environnement: 0,
@@ -40,21 +37,8 @@ class GameBoardContainer extends React.Component {
 
     // Get game info
     const idGame = this.props.match.params.idGame
-    const resource = 'api/public/game/' + idGame
 
-    APIFetch.fetchRuralisAPI(resource, {}, APIFetch.GET)
-      .then(res => {
-        this.setState({
-          players: res.data.game.players,
-          scenario: res.data.game.scenario,
-          currentStep: res.data.game.step,
-          iaeImplemented: res.data.game.implementedIAE,
-          circleIaeImplemented: res.data.game.circleIAEs,
-          numTour: res.data.game.numTour,
-          actionsDone: res.data.game.actionsDone
-        })
-      })
-      .catch(err => console.log(err))
+    this.props.fetchGame(idGame)
   }
 
   onStartGame () {
@@ -170,6 +154,16 @@ class GameBoardContainer extends React.Component {
   }
 }
 
-GameBoardContainer.propTypes = {}
+GameBoardContainer.propTypes = {
+  game: PropTypes.object.isRequired,
+  fetchGame: PropTypes.func.isRequired
+}
 
-export default GameBoardContainer
+const mapStateToProps = state => ({
+  game: state.game
+})
+
+export default connect(
+  mapStateToProps,
+  { fetchGame }
+)(GameBoardContainer)

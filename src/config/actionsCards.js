@@ -1,7 +1,16 @@
+import action1 from '../assets/livretGEA/1.png'
+import action2 from '../assets/livretGEA/2.png'
+import action3 from '../assets/livretGEA/3.png'
+import action4 from '../assets/livretGEA/4.png'
+import action5 from '../assets/livretGEA/5.png'
+import action6 from '../assets/livretGEA/6.png'
+import action7 from '../assets/livretGEA/7.png'
+import action8 from '../assets/livretGEA/8.png'
+
 const actions = [
   {
     numCard: 1,
-    cardPicture: '',
+    cardPicture: action1,
     title: 'Achat de matériel agricole',
     environnementEffect: -10,
     productionEffect: -20,
@@ -14,7 +23,7 @@ const actions = [
   },
   {
     numCard: 2,
-    cardPicture: '',
+    cardPicture: action2,
     title: 'Allongement de la rotation',
     environnementEffect: 10,
     productionEffect: 20,
@@ -27,7 +36,7 @@ const actions = [
   },
   {
     numCard: 3,
-    cardPicture: '',
+    cardPicture: action3,
     title: 'Augmentation du cheptel',
     environnementEffect: 0,
     productionEffect: -30,
@@ -40,7 +49,7 @@ const actions = [
   },
   {
     numCard: 4,
-    cardPicture: '',
+    cardPicture: action4,
     title: 'Développement de l\'agrotourisme',
     environnementEffect: 0,
     productionEffect: 20,
@@ -53,7 +62,7 @@ const actions = [
   },
   {
     numCard: 5,
-    cardPicture: '',
+    cardPicture: action5,
     title: 'Introduction du non travail du sol',
     environnementEffect: 15,
     productionEffect: -5,
@@ -66,7 +75,7 @@ const actions = [
   },
   {
     numCard: 6,
-    cardPicture: '',
+    cardPicture: action6,
     title: 'Nouvelle subvention pour l\'envrionnement',
     environnementEffect: 0,
     productionEffect: 10,
@@ -79,7 +88,7 @@ const actions = [
   },
   {
     numCard: 7,
-    cardPicture: '',
+    cardPicture: action7,
     title: 'Embauche d\'un salarié',
     environnementEffect: 0,
     productionEffect: -20,
@@ -92,7 +101,7 @@ const actions = [
   },
   {
     numCard: 8,
-    cardPicture: '',
+    cardPicture: action8,
     title: 'Partage du territoire agricole',
     environnementEffect: 0,
     productionEffect: -5,
@@ -104,3 +113,5 @@ const actions = [
     ancrageSocialCondition: 0
   }
 ]
+
+export default actions

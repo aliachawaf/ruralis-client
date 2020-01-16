@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Divider, Header, Image, Progress, Segment, Statistic } from 'semantic-ui-react'
 import Step1 from './Step1/Step1'
 import score from '../../../assets/score.png'
+import Step2 from './Step2/Step2'
 
 const GameStep = (props) => (
 
@@ -37,6 +38,14 @@ const GameStep = (props) => (
       {props.currentStep === 1 &&
         <Step1 onValidateIAEs={props.handleValidateIAEs} timerLaunched={props.timerLaunched} />}
 
+      {props.currentStep === 2 &&
+        <Step2
+          actionsDone={props.actionsDone}
+          actionSelected={props.actionSelected}
+          onChangeAction={props.onChangeAction}
+          onValidateActions={props.handleValidateAction}
+        />}
+
       <Divider />
 
       <Segment basic>
@@ -58,8 +67,12 @@ GameStep.propTypes = {
   ancrageSocial: PropTypes.number.isRequired,
   // Step 1
   handleValidateIAEs: PropTypes.func.isRequired,
-  timerLaunched: PropTypes.bool.isRequired
+  timerLaunched: PropTypes.bool.isRequired,
   // Step 2
+  actionsDone: PropTypes.array.isRequired,
+  actionSelected: PropTypes.number.isRequired,
+  onChangeAction: PropTypes.func.isRequired,
+  handleValidateAction: PropTypes.func.isRequired
   // Step 3
   // Step 4
 }

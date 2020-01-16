@@ -22,6 +22,9 @@ const GameBoard = React.forwardRef((props, ref) => {
     iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
+    actionsDone,
+    actionSelected,
+    handleOnChangeAction,
     numTour,
     gamePlayers,
     scenario,
@@ -83,6 +86,9 @@ const GameBoard = React.forwardRef((props, ref) => {
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
               timerLaunched={!opened}
+              actionsDone={actionsDone}
+              actionSelected={actionSelected}
+              onChangeAction={handleOnChangeAction}
               production={production}
               tempsTravail={tempsTravail}
               ancrageSocial={ancrageSocial}
@@ -110,6 +116,9 @@ GameBoard.propTypes = {
   iaeTypeSelected: PropTypes.number.isRequired,
   handleIAETypeChange: PropTypes.func.isRequired,
   // Game Step
+  actionsDone: PropTypes.array.isRequired,
+  actionSelected: PropTypes.number.isRequired,
+  handleOnChangeAction: PropTypes.func.isRequired,
   // Start Game Modal
   gamePlayers: PropTypes.array.isRequired,
   scenario: PropTypes.number.isRequired,
@@ -126,6 +135,7 @@ GameBoard.defaultProps = {
   numTour: 0,
   iaeImplemented: [],
   circleIaeImplemented: [],
+  actionsDone: [],
   iaeGroupSelected: 0,
   iaeTypeSelected: 0
 }

@@ -11,6 +11,7 @@ import mapLegend from '../../../config/mapLegend'
 import { connect } from 'react-redux'
 import IaeDrawing from './IaeDrawing'
 import CircleIaeDrawing from './CircleIaeDrawing'
+import PolylineDecorator from './PolylineDecorator' // eslint-disable-line
 
 const GameMap = React.forwardRef((props, ref) => {
   const {

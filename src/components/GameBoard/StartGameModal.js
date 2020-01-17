@@ -3,11 +3,12 @@ import { Button, Card, Divider, Header, Image, Modal } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
 import playersList from '../../config/playersList'
+import { connect } from 'react-redux'
 
 const StartGameModal = (props) => {
-  const { gamePlayers, scenario, opened, handleStartGame } = props
+  const { game, opened, handleStartGame } = props
 
-  const gamePlayersInfos = playersList.filter(p => gamePlayers.includes(p.number))
+  const gamePlayersInfos = playersList.filter(p => game.players.includes(p.number))
 
   return (
     <Modal
@@ -20,7 +21,7 @@ const StartGameModal = (props) => {
       <Modal.Header>Début du jeu</Modal.Header>
       <Modal.Content>
 
-        <Header as='h3' color='red' content={gamePlayers.length + ' Joueurs'} dividing />
+        <Header as='h3' color='red' content={game.players.length + ' Joueurs'} dividing />
         <p>
           Chaque joueur se présente aux autres, en partageant son nom, son métier,
           ses intérêts, mais pas ses objectifs, qui doivent rester secrets !
@@ -44,7 +45,7 @@ const StartGameModal = (props) => {
 
         <Divider hidden />
 
-        <Header as='h3' color='red' content={'Scénario ' + scenario} dividing />
+        <Header as='h3' color='red' content={'Scénario ' + game.scenario} dividing />
         <p>Présentation du scénario de départ ainsi que l'objectif commun à atteindre.</p>
 
       </Modal.Content>
@@ -56,10 +57,15 @@ const StartGameModal = (props) => {
 }
 
 StartGameModal.propTypes = {
-  gamePlayers: PropTypes.array.isRequired,
-  scenario: PropTypes.number.isRequired,
+  game: PropTypes.object.isRequired,
   opened: PropTypes.bool.isRequired,
   handleStartGame: PropTypes.func.isRequired
 }
 
-export default StartGameModal
+const mapStateToProps = state => ({
+  game: state.game
+})
+
+export default connect(
+  mapStateToProps
+)(StartGameModal)

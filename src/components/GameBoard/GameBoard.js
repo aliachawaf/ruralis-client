@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import 'leaflet-draw/dist/leaflet.draw.css'
-import GameMap from './GameMap'
+import GameMap from './GameMap/GameMap'
 import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
+import { connect } from 'react-redux'
 
 import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
 
@@ -13,8 +14,7 @@ import GameStepContainer from '../../containers/GameStep.container'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
-    currentStep,
-    idGame,
+    game,
     bounds,
     handleCreatedIAE,
     iaeImplemented,
@@ -22,30 +22,20 @@ const GameBoard = React.forwardRef((props, ref) => {
     iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
-    actionsDone,
     actionSelected,
     handleOnChangeAction,
-    numTour,
-    gamePlayers,
-    scenario,
     opened,
-    handleStartGame,
-    production,
-    environnement,
-    tempsTravail,
-    ancrageSocial
+    handleStartGame
   } = props
 
   return (
     <div>
-      <RuralisHeader title={'Partie ' + idGame} />
+      <RuralisHeader title={'Partie ' + game._id} />
       <Segment basic>
 
         {
-          numTour === 0 &&
+          game.numTour === 0 &&
             <StartGameModal
-              gamePlayers={gamePlayers}
-              scenario={scenario}
               opened={opened}
               handleStartGame={handleStartGame}
             />
@@ -80,19 +70,11 @@ const GameBoard = React.forwardRef((props, ref) => {
 
           <Grid.Column width={4}>
             <GameStepContainer
-              idGame={idGame}
-              currentStep={currentStep}
-              numTour={numTour}
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
               timerLaunched={!opened}
-              actionsDone={actionsDone}
               actionSelected={actionSelected}
               onChangeAction={handleOnChangeAction}
-              production={production}
-              tempsTravail={tempsTravail}
-              ancrageSocial={ancrageSocial}
-              environnement={environnement}
             />
           </Grid.Column>
 
@@ -103,9 +85,7 @@ const GameBoard = React.forwardRef((props, ref) => {
 })
 
 GameBoard.propTypes = {
-  currentStep: PropTypes.number.isRequired,
-  idGame: PropTypes.string.isRequired,
-  numTour: PropTypes.number.isRequired,
+  game: PropTypes.object.isRequired,
   // GameMap
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
@@ -116,28 +96,27 @@ GameBoard.propTypes = {
   iaeTypeSelected: PropTypes.number.isRequired,
   handleIAETypeChange: PropTypes.func.isRequired,
   // Game Step
-  actionsDone: PropTypes.array.isRequired,
   actionSelected: PropTypes.number.isRequired,
   handleOnChangeAction: PropTypes.func.isRequired,
   // Start Game Modal
-  gamePlayers: PropTypes.array.isRequired,
-  scenario: PropTypes.number.isRequired,
   opened: PropTypes.bool.isRequired,
-  handleStartGame: PropTypes.func.isRequired,
-  // SCORING
-  production: PropTypes.number.isRequired,
-  environnement: PropTypes.number.isRequired,
-  tempsTravail: PropTypes.number.isRequired,
-  ancrageSocial: PropTypes.number.isRequired
+  handleStartGame: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {
-  numTour: 0,
   iaeImplemented: [],
   circleIaeImplemented: [],
-  actionsDone: [],
   iaeGroupSelected: 0,
   iaeTypeSelected: 0
 }
 
-export default GameBoard
+const mapStateToProps = state => ({
+  game: state.game
+})
+
+export default connect(
+  mapStateToProps,
+  null,
+  null,
+  { forwardRef: true }
+)(GameBoard)

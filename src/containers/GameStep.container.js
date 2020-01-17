@@ -1,7 +1,9 @@
 import React from 'react'
 import GameStep from '../components/GameBoard/GameSteps/GameStep'
 import PropTypes from 'prop-types'
-import * as APIFetch from '../helpers/APIFetch'
+import { connect } from 'react-redux'
+
+import { addIAE, applyAction, updateScore } from '../actions/gameActions'
 
 class GameStepContainer extends React.Component {
   constructor (props) {
@@ -11,78 +13,49 @@ class GameStepContainer extends React.Component {
   }
 
   onValidateIAEs () {
+    this.props.updateScore(this.props.game._id, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
     // Send IAEs implemented to Server
-    const resource = 'api/public/game/' + this.props.idGame + '/IAE'
-    APIFetch.fetchRuralisAPI(
-      resource,
-      { IAEs: this.props.iaeImplemented, circleIAEs: this.props.circleIaeImplemented },
-      APIFetch.POST
-    ).then(() => {
-      console.log(this.props)
-      APIFetch.fetchRuralisAPI(
-        'api/public/game/' + this.props.idGame + '/scoring',
-        { production: this.props.production, environnement: this.props.environnement, ancrageSocial: this.props.ancrageSocial, tempsTravail: this.props.tempsTravail },
-        APIFetch.PUT)
-    })
-
-      .catch(err => console.log(err))
+    this.props.addIAE(this.props.game._id, this.props.iaeImplemented, this.props.circleIaeImplemented)
   }
 
   onValidateAction () {
+    this.props.updateScore(this.props.game._id, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
     // Send Action selected to server
-    const resource = 'api/public/game/' + this.props.idGame + '/action'
-    APIFetch.fetchRuralisAPI(
-      resource,
-      { action: this.props.actionSelected },
-      APIFetch.POST
-    ).then(() => {
-      console.log(this.props)
-      APIFetch.fetchRuralisAPI(
-        'api/public/game/' + this.props.idGame + '/scoring',
-        { production: this.props.production, environnement: this.props.environnement, ancrageSocial: this.props.ancrageSocial, tempsTravail: this.props.tempsTravail },
-        APIFetch.PUT)
-    })
-
-      .catch(err => console.log(err))
+    this.props.applyAction(this.props.game._id, this.props.actionSelected)
   }
 
   render () {
     return (
       <GameStep
         handleValidateIAEs={this.onValidateIAEs}
-        currentStep={this.props.currentStep}
-        numTour={this.props.numTour}
         timerLaunched={this.props.timerLaunched}
-        actionsDone={this.props.actionsDone}
         actionSelected={this.props.actionSelected}
         onChangeAction={this.props.onChangeAction}
         handleValidateAction={this.onValidateAction}
-        ancrageSocial={this.props.ancrageSocial}
-        environnement={this.props.environnement}
-        production={this.props.production}
-        tempsTravail={this.props.tempsTravail}
       />
     )
   }
 }
 
 GameStepContainer.propTypes = {
-  idGame: PropTypes.string.isRequired,
-  numTour: PropTypes.number.isRequired,
-  currentStep: PropTypes.number.isRequired,
+  game: PropTypes.object.isRequired,
+  addIAE: PropTypes.func.isRequired,
+  updateScore: PropTypes.func.isRequired,
+  applyAction: PropTypes.func.isRequired,
   // STEP 1
   timerLaunched: PropTypes.bool.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
   circleIaeImplemented: PropTypes.array.isRequired,
   // STEP 2
-  actionsDone: PropTypes.array.isRequired,
   actionSelected: PropTypes.number.isRequired,
-  onChangeAction: PropTypes.func.isRequired,
-  // SCORING
-  production: PropTypes.number.isRequired,
-  environnement: PropTypes.number.isRequired,
-  tempsTravail: PropTypes.number.isRequired,
-  ancrageSocial: PropTypes.number.isRequired
+  onChangeAction: PropTypes.func.isRequired
 }
 
-export default GameStepContainer
+const mapStateToProps = state => ({
+  game: state.game
+})
+
+export default connect(
+  mapStateToProps,
+  { addIAE, updateScore, applyAction }
+)(GameStepContainer)

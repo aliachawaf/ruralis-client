@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import 'leaflet-draw/dist/leaflet.draw.css'
-import GameMap from './GameMap'
+import GameMap from './GameMap/GameMap'
 import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'

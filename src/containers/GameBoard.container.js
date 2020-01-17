@@ -37,7 +37,9 @@ class GameBoardContainer extends React.Component {
 
   onStartGame () {
     const idGame = this.props.match.params.idGame
-
+    this.setState({
+      openedStartGameModal: false
+    })
     this.props.startGame(idGame)
   }
 

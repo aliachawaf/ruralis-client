@@ -3,7 +3,7 @@ import GameStep from '../components/GameBoard/GameSteps/GameStep'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addIAE, updateScore, applyAction } from '../actions/gameActions'
+import { addIAE, applyAction, updateScore } from '../actions/gameActions'
 
 class GameStepContainer extends React.Component {
   constructor (props) {
@@ -13,17 +13,15 @@ class GameStepContainer extends React.Component {
   }
 
   onValidateIAEs () {
+    this.props.updateScore(this.props.game._id, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
     // Send IAEs implemented to Server
     this.props.addIAE(this.props.game._id, this.props.iaeImplemented, this.props.circleIaeImplemented)
-
-    this.props.updateScore(this.props.game._id, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
   }
 
   onValidateAction () {
+    this.props.updateScore(this.props.game._id, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
     // Send Action selected to server
     this.props.applyAction(this.props.game._id, this.props.actionSelected)
-
-    this.props.updateScore(this.props.game._id, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
   }
 
   render () {

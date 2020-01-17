@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import PolylineDecorator from './PolylineDecorator' // eslint-disable-line
 import L from 'leaflet'
 import { FeatureGroup, ImageOverlay, Map, ScaleControl } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
@@ -11,7 +13,6 @@ import mapLegend from '../../../config/mapLegend'
 import { connect } from 'react-redux'
 import IaeDrawing from './IaeDrawing'
 import CircleIaeDrawing from './CircleIaeDrawing'
-import PolylineDecorator from './PolylineDecorator' // eslint-disable-line
 
 const GameMap = React.forwardRef((props, ref) => {
   const {

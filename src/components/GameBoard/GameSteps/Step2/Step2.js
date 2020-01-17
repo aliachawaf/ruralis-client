@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Checkbox, Container, Divider, Form, Header, Image, Popup, Segment } from 'semantic-ui-react'
 import actions from '../../../../config/actionsCards'
+import { connect } from 'react-redux'
 
 const Step2 = (props) => {
   return (
@@ -25,7 +26,7 @@ const Step2 = (props) => {
                   trigger={
                     <Checkbox
                       radio
-                      disabled={props.actionsDone.includes(a.numCard)}
+                      disabled={props.game.actionsDone.includes(a.numCard)}
                       label={a.numCard + '. ' + a.title}
                       value={a.numCard}
                       checked={props.actionSelected === a.numCard}
@@ -50,14 +51,16 @@ const Step2 = (props) => {
 }
 
 Step2.propTypes = {
-  actionsDone: PropTypes.array.isRequired,
+  game: PropTypes.object.isRequired,
   onChangeAction: PropTypes.func.isRequired,
   actionSelected: PropTypes.number.isRequired,
   onValidateActions: PropTypes.func.isRequired
 }
 
-Step2.defaultProps = {
-  actionsDone: []
-}
+const mapStateToProps = state => ({
+  game: state.game
+})
 
-export default Step2
+export default connect(
+  mapStateToProps
+)(Step2)

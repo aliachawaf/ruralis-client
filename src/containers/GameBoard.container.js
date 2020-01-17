@@ -2,14 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import GameBoard from '../components/GameBoard/GameBoard'
 import PropTypes from 'prop-types'
-import * as APIFetch from '../helpers/APIFetch'
 
 import mapLegend from '../config/mapLegend'
 
-import { fetchGame } from '../actions/gameActions'
+import { fetchGame, startGame, tmpScore } from '../actions/gameActions'
 
 const bounds = [[0, 0], [3330, 3825]]
-const mapRef = React.createRef()
 
 class GameBoardContainer extends React.Component {
   constructor (props) {
@@ -20,12 +18,9 @@ class GameBoardContainer extends React.Component {
       circleIaeImplemented: [],
       iaeGroupSelected: 0,
       iaeTypeSelected: 0,
-      actionSelected: -1,
-      production: 0,
-      tempsTravail: 70,
-      environnement: 0,
-      ancrageSocial: 0
+      actionSelected: -1
     }
+    this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
@@ -33,9 +28,8 @@ class GameBoardContainer extends React.Component {
   }
 
   componentDidMount () {
-    mapRef.current.leafletElement.fitBounds(bounds)
+    this.mapRef.current.leafletElement.fitBounds(bounds)
 
-    // Get game info
     const idGame = this.props.match.params.idGame
 
     this.props.fetchGame(idGame)
@@ -43,14 +37,8 @@ class GameBoardContainer extends React.Component {
 
   onStartGame () {
     const idGame = this.props.match.params.idGame
-    const resource = 'api/public/game/' + idGame + '/start'
-    APIFetch.fetchRuralisAPI(resource, {}, APIFetch.PUT)
-      .then(() => {
-        this.setState({
-          openedStartGameModal: false
-        })
-      })
-      .catch(err => console.log(err))
+
+    this.props.startGame(idGame)
   }
 
   onCreatedIAE (e) {
@@ -65,8 +53,7 @@ class GameBoardContainer extends React.Component {
       this.setState({
         circleIaeImplemented: this.state.circleIaeImplemented.concat(newIAE)
       })
-      this.updateScore(newIAE, e.layerType)
-      console.log(this.state)
+      this.updateScore(newIAE)
     } else {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
@@ -79,30 +66,26 @@ class GameBoardContainer extends React.Component {
         iaeImplemented: this.state.iaeImplemented.concat(newIAE)
       })
       this.updateScore(newIAE)
-
-      console.log(this.state)
     }
   }
 
   updateScore (newIAE) {
     const nbUnite = newIAE.unity
 
-    const newEnv = mapLegend[newIAE.IAEGroup].environment
-    const newTempsTravail = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].workingTime
-    const newProduction = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].production
+    const envPerUnit = mapLegend[newIAE.IAEGroup].environment
+    const tempsTravailPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].workingTime
+    const productionPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].production
 
-    if (newIAE) {
-      this.setState({
-        production: Math.round((this.state.production + (nbUnite * newProduction)) * 10) / 10,
-        tempsTravail: Math.round((this.state.tempsTravail + (nbUnite * newTempsTravail)) * 10) / 10,
-        environnement: Math.round((this.state.environnement + (nbUnite * newEnv)) * 10) / 10
-      })
-    }
+    const newProduction = Math.round((this.props.game.production + (nbUnite * productionPerUnit)) * 10) / 10
+    const newTempsTravail = Math.round((this.props.game.tempsTravail + (nbUnite * tempsTravailPerUnit)) * 10) / 10
+    const newEnv = Math.round((this.props.game.environnement + (nbUnite * envPerUnit)) * 10) / 10
+
+    this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
   }
 
   calculNbUnite (iaeCoords) {
     if (iaeCoords.length === 2) {
-      const unity = (mapRef.current.leafletElement.distance(iaeCoords[0], iaeCoords[1]) / 150)
+      const unity = (this.mapRef.current.leafletElement.distance(iaeCoords[0], iaeCoords[1]) / 150)
       return Math.round(unity * 10) / 10
     }
   }
@@ -127,28 +110,18 @@ class GameBoardContainer extends React.Component {
   render () {
     return (
       <GameBoard
-        ref={mapRef}
-        idGame={this.props.match.params.idGame}
-        currentStep={this.state.currentStep}
-        numTour={this.state.numTour}
+        ref={this.mapRef}
         bounds={bounds}
         handleStartGame={this.onStartGame}
         opened={this.state.openedStartGameModal}
         handleIAETypeChange={this.onChangeIAEType}
-        gamePlayers={this.state.players}
-        scenario={this.state.scenario}
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
         circleIaeImplemented={this.state.circleIaeImplemented}
         iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}
-        actionsDone={this.state.actionsDone}
         actionSelected={this.state.actionSelected}
         handleOnChangeAction={this.onChangeAction}
-        production={this.state.production}
-        tempsTravail={this.state.tempsTravail}
-        environnement={this.state.environnement}
-        ancrageSocial={this.state.ancrageSocial}
       />
     )
   }
@@ -156,7 +129,9 @@ class GameBoardContainer extends React.Component {
 
 GameBoardContainer.propTypes = {
   game: PropTypes.object.isRequired,
-  fetchGame: PropTypes.func.isRequired
+  fetchGame: PropTypes.func.isRequired,
+  startGame: PropTypes.func.isRequired,
+  tmpScore: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -165,5 +140,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchGame }
+  { fetchGame, startGame, tmpScore }
 )(GameBoardContainer)

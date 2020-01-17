@@ -1,7 +1,10 @@
 import React from 'react'
 
 import NewGame from '../components/NewGame/NewGame'
-import * as APIFetch from '../helpers/APIFetch'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
+import { createGame } from '../actions/gameActions'
 
 class NewGameContainer extends React.Component {
   constructor (props) {
@@ -19,9 +22,6 @@ class NewGameContainer extends React.Component {
   }
 
   onClickNewGame () {
-    console.log(this.state.nbPlayers)
-    console.log(this.state.playersSelected.length)
-    console.log(this.state.playersSelected)
     const error = (this.state.nbPlayers !== this.state.playersSelected.length || this.state.scenario === -1)
 
     console.log(this.state.nbPlayers !== this.state.playersSelected.length)
@@ -30,15 +30,8 @@ class NewGameContainer extends React.Component {
       this.setState({ error: true })
     } else {
       this.setState({ error: false })
-      // Send game data to server and redirect to game board
-      const params = {
-        players: this.state.playersSelected,
-        scenario: this.state.scenario
-      }
-      const resource = 'api/public/game'
-      APIFetch.fetchRuralisAPI(resource, params, APIFetch.POST)
-        .then(res => this.props.history.push('/game/board/' + res.data.game._id))
-        .catch(err => console.log(err))
+
+      this.props.createGame(this.state.playersSelected, this.state.scenario, this.props.history)
     }
   }
 
@@ -87,4 +80,16 @@ class NewGameContainer extends React.Component {
   }
 }
 
-export default NewGameContainer
+NewGameContainer.propTypes = {
+  game: PropTypes.object.isRequired,
+  createGame: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  game: state.game
+})
+
+export default connect(
+  mapStateToProps,
+  { createGame }
+)(NewGameContainer)

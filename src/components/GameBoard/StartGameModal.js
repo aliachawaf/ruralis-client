@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import playersList from '../../config/playersList'
 import { connect } from 'react-redux'
+import scenarii from '../../config/scenarii'
 
 const StartGameModal = (props) => {
   const { game, opened, handleStartGame } = props
@@ -18,7 +19,7 @@ const StartGameModal = (props) => {
       onClose={handleStartGame}
 
     >
-      <Modal.Header>Début du jeu</Modal.Header>
+      <Modal.Header>Récapitulatif de la partie</Modal.Header>
       <Modal.Content>
 
         <Header as='h3' color='red' content={game.players.length + ' Joueurs'} dividing />
@@ -47,6 +48,9 @@ const StartGameModal = (props) => {
 
         <Header as='h3' color='red' content={'Scénario ' + game.scenario} dividing />
         <p>Présentation du scénario de départ ainsi que l'objectif commun à atteindre.</p>
+
+        <Image src={scenarii[game.scenario].description} size='big' centered />
+        <Image src={scenarii[game.scenario].map} centered />
 
       </Modal.Content>
       <Modal.Actions>

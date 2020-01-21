@@ -25,7 +25,8 @@ const playersList = [
     name: 'Jonathan Rêveur',
     description: 'Agriculteur et observateur de la nature',
     picture: ReveurPic,
-    card: ReveurCard
+    card: ReveurCard,
+    color: '#B11117'
   },
   {
     number: 2,
@@ -33,7 +34,8 @@ const playersList = [
     name: 'Marguerite Convention',
     description: 'Agricultrice - " Toujours produire pour ne manquer de rien "',
     picture: ConventionPic,
-    card: ConventionCard
+    card: ConventionCard,
+    color: '#B11117'
   },
   {
     number: 3,
@@ -41,7 +43,8 @@ const playersList = [
     name: 'Clément Buisson',
     description: 'Agriculteur et chasseur dans les broussailles',
     picture: BuissonPic,
-    card: BuissonCard
+    card: BuissonCard,
+    color: '#B11117'
   },
   {
     number: 4,
@@ -49,7 +52,8 @@ const playersList = [
     name: 'Mme Waters',
     description: 'Experte agriculture et environnement à l\'Agence de l\'eau',
     picture: WatersPic,
-    card: WatersCard
+    card: WatersCard,
+    color: '#F59430'
   },
   {
     number: 5,
@@ -57,7 +61,8 @@ const playersList = [
     name: 'M. Tourdeplaine',
     description: 'Responsable-environnement au bureau d\'étude chargé du SCOT',
     picture: TourdeplainePic,
-    card: TourdeplaineCard
+    card: TourdeplaineCard,
+    color: '#F59430'
   },
   {
     number: 6,
@@ -65,7 +70,8 @@ const playersList = [
     name: 'Mme Solamour',
     description: 'Conseillère " le sol est la base de la vie "',
     picture: SolamourPic,
-    card: SolamourCard
+    card: SolamourCard,
+    color: '#F1592A'
   },
   {
     number: 7,
@@ -73,7 +79,8 @@ const playersList = [
     name: 'M. Cérécope',
     description: 'Conseiller " In céréales we trust! "',
     picture: CerecopePic,
-    card: CerecopeCard
+    card: CerecopeCard,
+    color: '#F1592A'
   }
 ]
 

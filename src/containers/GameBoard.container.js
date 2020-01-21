@@ -25,6 +25,7 @@ class GameBoardContainer extends React.Component {
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
     this.onChangeAction = this.onChangeAction.bind(this)
+    this.clearAllIAEs = this.clearAllIAEs.bind(this)
   }
 
   componentDidMount () {
@@ -130,6 +131,10 @@ class GameBoardContainer extends React.Component {
     }
   }
 
+  clearAllIAEs () {
+    this.setState({ iaeImplemented: [], circleIaeImplemented: [] })
+  }
+
   render () {
     return (
       <GameBoard
@@ -141,6 +146,7 @@ class GameBoardContainer extends React.Component {
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
         circleIaeImplemented={this.state.circleIaeImplemented}
+        clearAllIAEs={this.clearAllIAEs}
         iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}
         actionSelected={this.state.actionSelected}

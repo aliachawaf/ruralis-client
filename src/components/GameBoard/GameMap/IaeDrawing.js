@@ -14,7 +14,7 @@ const IaeDrawing = (props) => {
       color={mapLegend[iae.IAEGroup].color}
       fill
       patterns={mapLegend[iae.IAEGroup].iaeList[iae.IAEType].decorator}
-      positions={iae.coords}
+      positions={iae.layerType === 'polyline' ? iae.coords : [iae.coords.concat(iae.coords[0])]}
     >
 
       <Tooltip direction='top'>

@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import PolylineDecorator from './PolylineDecorator' // eslint-disable-line
 import L from 'leaflet'
 import { FeatureGroup, ImageOverlay, Map, ScaleControl } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'

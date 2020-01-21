@@ -104,11 +104,12 @@ export const addIAEAction = game => ({
   }
 })
 
-export const addIAE = (idGame, IAEs, circleIAEs) => dispatch => {
+export const addIAE = (idGame, IAEs, circleIAEs, production, environnement, ancrageSocial, tempsTravail) => dispatch => {
   const resource = 'api/public/game/' + idGame + '/IAE'
 
   APIFetch.fetchRuralisAPI(resource, { IAEs: IAEs, circleIAEs: circleIAEs }, APIFetch.POST)
     .then(res => {
+      dispatch(updateScore(idGame, production, environnement, ancrageSocial, tempsTravail))
       dispatch(addIAEAction(res.data.game))
     })
     .catch(err =>
@@ -158,7 +159,7 @@ export const applyActionAction = game => ({
   }
 })
 
-export const applyAction = (idGame, numAction) => dispatch => {
+export const applyAction = (idGame, numAction, production, environnement, ancrageSocial, tempsTravail) => dispatch => {
   // Send Action selected to server
   const resource = 'api/public/game/' + idGame + '/action'
   APIFetch.fetchRuralisAPI(
@@ -167,6 +168,7 @@ export const applyAction = (idGame, numAction) => dispatch => {
     APIFetch.POST
   )
     .then(res => {
+      dispatch(updateScore(idGame, production, environnement, ancrageSocial, tempsTravail))
       dispatch(applyActionAction(res.data.game))
     })
     .catch(err =>

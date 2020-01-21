@@ -94,7 +94,7 @@ class GameBoardContainer extends React.Component {
       const X = []
       const Y = []
       arr.forEach(coord => { X.push(coord.lng); Y.push(coord.lat) })
-      return Math.abs(this.polygonArea(X, Y, arr.length)) / 22500
+      return Math.round((Math.abs(this.polygonArea(X, Y, arr.length)) / 22500) * 10) / 10
     }
   }
 

@@ -44,6 +44,9 @@ class GameBoardContainer extends React.Component {
   }
 
   onCreatedIAE (e) {
+    // Remove the layer drawn from map, then add it in state, then display it from state
+    this.mapRef.current.leafletElement.removeLayer(e.layer)
+
     if (e.layerType === 'circlemarker') {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,

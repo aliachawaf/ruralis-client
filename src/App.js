@@ -7,6 +7,7 @@ import NewGameContainer from './containers/NewGame.container'
 import { Provider } from 'react-redux'
 import store from './store'
 import PlayerRoleContainer from './containers/Player/PlayerRole.container'
+import ListIAEContainer from './containers/Player/ListIAE.container'
 
 function App () {
   return (
@@ -19,6 +20,8 @@ function App () {
             <Route exact path='/game/new' component={NewGameContainer} />
             <Route exact path='/game/rules' component={GameRules} />
             <Route exact path='/player/:playerNumber/role' component={PlayerRoleContainer} />
+            <Route exact path='/player/:playerNumber/IAE' component={ListIAEContainer} />
+            <Route exact path='/player/:playerNumber/GEA' component={ListIAEContainer} />
             <Redirect from='/*' to='/home' />
           </Switch>
         </div>

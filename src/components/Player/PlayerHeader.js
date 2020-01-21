@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom'
 import playersList from '../../config/playersList'
 
 const PlayerHeader = (props) => {
-  console.log(typeof props.playerNumber)
   const playerInfos = playersList.find(p => p.number === props.playerNumber)
-
   const color = playerInfos.color
   const isFarmer = playerInfos.role === 'agriculteur'
 
@@ -22,14 +20,14 @@ const PlayerHeader = (props) => {
         </Link>
       </Menu.Item>
 
-      <Link to={'/player/role/' + props.playerNumber}>
+      <Link to={'/player/' + props.playerNumber + '/role'}>
         <Menu.Item link active={props.activeTab === 'role'}>
           <Icon name='user' />
           Mon rôle
         </Menu.Item>
       </Link>
 
-      <Link to='/player/IAE'>
+      <Link to={'/player/' + props.playerNumber + '/IAE'}>
         <Menu.Item link active={props.activeTab === 'IAE'}>
           <Icon name='tree' />
           IAE
@@ -38,7 +36,7 @@ const PlayerHeader = (props) => {
 
       {
         isFarmer &&
-          <Link to='/player/GEA'>
+          <Link to={'/player/' + props.playerNumber + '/GEA'}>
             <Menu.Item link active={props.activeTab === 'GEA'}>
               <Icon name='book' />
             GEA

@@ -4,7 +4,6 @@ import GameBoard from '../components/GameBoard/GameBoard'
 import PropTypes from 'prop-types'
 
 import mapLegend from '../config/mapLegend'
-import L from 'leaflet'
 
 import { fetchGame, startGame, tmpScore } from '../actions/gameActions'
 

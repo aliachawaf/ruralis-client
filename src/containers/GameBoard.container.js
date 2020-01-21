@@ -4,6 +4,7 @@ import GameBoard from '../components/GameBoard/GameBoard'
 import PropTypes from 'prop-types'
 
 import mapLegend from '../config/mapLegend'
+import L from 'leaflet'
 
 import { fetchGame, startGame, tmpScore } from '../actions/gameActions'
 
@@ -89,7 +90,24 @@ class GameBoardContainer extends React.Component {
     if (iaeCoords.length === 2) {
       const unity = (this.mapRef.current.leafletElement.distance(iaeCoords[0], iaeCoords[1]) / 150)
       return Math.round(unity * 10) / 10
+    } else {
+      const arr = iaeCoords[0]
+      const X = []
+      const Y = []
+      arr.forEach(coord => { X.push(coord.lng); Y.push(coord.lat) })
+      return Math.abs(this.polygonArea(X, Y, arr.length)) / 22500
     }
+  }
+
+  polygonArea (X, Y, numPoints) {
+    let area = 0 // Accumulates area
+    let j = numPoints - 1
+
+    for (var i = 0; i < numPoints; i++) {
+      area += (X[j] + X[i]) * (Y[j] - Y[i])
+      j = i // j is previous vertex to i
+    }
+    return area / 2
   }
 
   onChangeIAEType = (group, type) => {

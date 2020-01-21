@@ -34,7 +34,6 @@ const GameMap = React.forwardRef((props, ref) => {
       crs={L.CRS.Simple}
       minZoom={-5}
       attributionControl={false}
-      dragging={false}
     >
 
       {/* GAME MAP IMAGE */}

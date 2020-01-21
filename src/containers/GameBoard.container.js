@@ -61,7 +61,8 @@ class GameBoardContainer extends React.Component {
         IAEGroup: this.state.iaeGroupSelected,
         IAEType: this.state.iaeTypeSelected,
         coords: (e.layerType === 'polyline') ? e.layer._latlngs : e.layer._latlngs[0],
-        unity: this.calculNbUnite(e.layer._latlngs)
+        unity: this.calculNbUnite(e.layer._latlngs),
+        layerType: e.layerType
       }
 
       this.setState({

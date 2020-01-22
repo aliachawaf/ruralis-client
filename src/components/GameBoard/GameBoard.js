@@ -20,6 +20,10 @@ const GameBoard = React.forwardRef((props, ref) => {
     iaeImplemented,
     circleIaeImplemented,
     clearAllIAEs,
+    handleonChangeDeleting,
+    handleDeleteIAE,
+    handleValidateDeletingIAE,
+    handleCancelDeletingIAE,
     iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
@@ -53,6 +57,10 @@ const GameBoard = React.forwardRef((props, ref) => {
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
               clearAllIAEs={clearAllIAEs}
+              handleDeleteIAE={handleDeleteIAE}
+              handleonChangeDeleting={handleonChangeDeleting}
+              handleValidateDeletingIAE={handleValidateDeletingIAE}
+              handleCancelDeletingIAE={handleCancelDeletingIAE}
             />
           </Grid.Column>
 
@@ -94,6 +102,10 @@ GameBoard.propTypes = {
   iaeImplemented: PropTypes.array.isRequired,
   circleIaeImplemented: PropTypes.array.isRequired,
   clearAllIAEs: PropTypes.func.isRequired,
+  handleonChangeDeleting: PropTypes.func.isRequired,
+  handleDeleteIAE: PropTypes.func.isRequired,
+  handleValidateDeletingIAE: PropTypes.func.isRequired,
+  handleCancelDeletingIAE: PropTypes.func.isRequired,
   // IAE Type Select
   iaeGroupSelected: PropTypes.number.isRequired,
   iaeTypeSelected: PropTypes.number.isRequired,

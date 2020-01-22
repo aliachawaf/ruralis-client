@@ -7,7 +7,7 @@ import { Header, Statistic } from 'semantic-ui-react'
 import PolylineDecorator from './PolylineDecorator'
 
 const IaeDrawing = (props) => {
-  const { iae } = props
+  const { iae, handleDeleteIAE } = props
 
   return (
     <PolylineDecorator
@@ -15,6 +15,7 @@ const IaeDrawing = (props) => {
       fill
       patterns={mapLegend[iae.IAEGroup].iaeList[iae.IAEType].decorator}
       positions={iae.layerType === 'polyline' ? iae.coords : [iae.coords.concat(iae.coords[0])]}
+      onClick={(e) => handleDeleteIAE(e, iae)}
     >
 
       <Tooltip direction='top'>
@@ -32,7 +33,8 @@ const IaeDrawing = (props) => {
 }
 
 IaeDrawing.propTypes = {
-  iae: PropTypes.object.isRequired
+  iae: PropTypes.object.isRequired,
+  handleDeleteIAE: PropTypes.func.isRequired
 }
 
 export default IaeDrawing

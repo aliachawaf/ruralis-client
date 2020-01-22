@@ -23,7 +23,11 @@ const GameMap = React.forwardRef((props, ref) => {
     iaeGroupSelected,
     iaeAlreadyImplemented,
     circleIaeAlreadyImplemented,
-    clearAllIAEs
+    clearAllIAEs,
+    handleonChangeDeleting,
+    handleDeleteIAE,
+    handleValidateDeletingIAE,
+    handleCancelDeletingIAE
   } = props
 
   const iaeSelectedDrawingType = mapLegend[iaeGroupSelected].drawingType
@@ -61,9 +65,11 @@ const GameMap = React.forwardRef((props, ref) => {
       <FeatureGroup>
         <EditControl
           position='topright'
-          onCreated={e => {
-            onCreatedIAE(e)
-          }}
+          onCreated={e => { onCreatedIAE(e) }}
+          onDrawStart={() => handleonChangeDeleting(false)}
+          onDeleteStart={() => handleonChangeDeleting(true)}
+          onDeleteStop={() => handleCancelDeletingIAE()}
+          onDeleted={() => handleValidateDeletingIAE()}
           draw={{
             marker: false,
             circle: false,
@@ -77,18 +83,18 @@ const GameMap = React.forwardRef((props, ref) => {
 
       {/* IAE ALREADY IMPLEMENTED DRAWINGS */}
       {
-        iaeAlreadyImplemented.map((iae, index) => <IaeDrawing key={index} iae={iae} />)
+        iaeAlreadyImplemented.map((iae, index) => <IaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
       {
-        circleIaeAlreadyImplemented.map((iae, index) => <CircleIaeDrawing key={index} iae={iae} />)
+        circleIaeAlreadyImplemented.map((iae, index) => <CircleIaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
 
       {/* NEW IAE IMPLEMENTED DRAWINGS */}
       {
-        iaeImplemented.map((iae, index) => <IaeDrawing key={index} iae={iae} />)
+        iaeImplemented.map((iae, index) => <IaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
       {
-        circleIaeImplemented.map((iae, index) => <CircleIaeDrawing key={index} iae={iae} />)
+        circleIaeImplemented.map((iae, index) => <CircleIaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
 
     </Map>
@@ -104,7 +110,11 @@ GameMap.propTypes = {
   iaeGroupSelected: PropTypes.number.isRequired,
   iaeAlreadyImplemented: PropTypes.array.isRequired,
   circleIaeAlreadyImplemented: PropTypes.array.isRequired,
-  clearAllIAEs: PropTypes.func.isRequired
+  clearAllIAEs: PropTypes.func.isRequired,
+  handleonChangeDeleting: PropTypes.func.isRequired,
+  handleDeleteIAE: PropTypes.func.isRequired,
+  handleValidateDeletingIAE: PropTypes.func.isRequired,
+  handleCancelDeletingIAE: PropTypes.func.isRequired
 }
 
 GameMap.defaultProps = {

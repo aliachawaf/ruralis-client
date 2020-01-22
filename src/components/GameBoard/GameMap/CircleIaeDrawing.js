@@ -8,7 +8,7 @@ import cross from '../../../assets/mapLegend/mares/cross.png'
 import { Header } from 'semantic-ui-react'
 
 const CircleIaeDrawing = (props) => {
-  const { iae } = props
+  const { iae, handleDeleteIAE } = props
 
   const withCross = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName === 'abreuvement animaux'
 
@@ -19,6 +19,7 @@ const CircleIaeDrawing = (props) => {
       center={iae.center}
       radius={20}
       fill={false}
+      onClick={(e) => handleDeleteIAE(e, iae)}
     >
       <Tooltip direction='top'>
         <Header content={mapLegend[iae.IAEGroup].iaeGroup} />
@@ -34,7 +35,8 @@ const CircleIaeDrawing = (props) => {
 }
 
 CircleIaeDrawing.propTypes = {
-  iae: PropTypes.object.isRequired
+  iae: PropTypes.object.isRequired,
+  handleDeleteIAE: PropTypes.func.isRequired
 }
 
 export default CircleIaeDrawing

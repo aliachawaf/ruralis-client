@@ -110,6 +110,10 @@ export const addIAE = (idGame, IAEs, circleIAEs, production, environnement, ancr
   APIFetch.fetchRuralisAPI(resource, { IAEs: IAEs, circleIAEs: circleIAEs }, APIFetch.POST)
     .then(res => {
       dispatch(updateScore(idGame, production, environnement, ancrageSocial, tempsTravail))
+      res.data.game.production = production
+      res.data.game.environnement = environnement
+      res.data.game.ancrageSocial = ancrageSocial
+      res.data.game.tempsTravail = tempsTravail
       dispatch(addIAEAction(res.data.game))
     })
     .catch(err =>
@@ -169,6 +173,10 @@ export const applyAction = (idGame, numAction, production, environnement, ancrag
   )
     .then(res => {
       dispatch(updateScore(idGame, production, environnement, ancrageSocial, tempsTravail))
+      res.data.game.production = production
+      res.data.game.environnement = environnement
+      res.data.game.ancrageSocial = ancrageSocial
+      res.data.game.tempsTravail = tempsTravail
       dispatch(applyActionAction(res.data.game))
     })
     .catch(err =>

@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import { addIAE, applyAction, updateScore } from '../actions/gameActions'
 
+import actions from '../config/actionsCards'
+
 class GameStepContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -19,7 +21,12 @@ class GameStepContainer extends React.Component {
 
   onValidateAction () {
     // Send Action selected to server
-    this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
+    const card = actions.find(card => card.numCard === this.props.actionSelected)
+    const newProduction = this.props.game.production + card.productionEffect
+    const newEnvironnement = this.props.game.environnement + card.environnementEffect
+    const newAncrageSocial = this.props.game.ancrageSocial + card.ancrageSocialEffect
+    const newTempsTravail = this.props.game.tempsTravail + card.tempsTravailEffect
+    this.props.applyAction(this.props.game._id, this.props.actionSelected, newProduction, newEnvironnement, newAncrageSocial, newTempsTravail)
   }
 
   render () {

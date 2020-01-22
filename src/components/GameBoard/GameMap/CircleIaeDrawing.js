@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import mapLegend from '../../../config/mapLegend'
-import { CircleMarker, Marker } from 'react-leaflet'
+import { Circle, Marker, Tooltip } from 'react-leaflet'
 import L from 'leaflet'
 import cross from '../../../assets/mapLegend/mares/cross.png'
+import { Header } from 'semantic-ui-react'
 
 const CircleIaeDrawing = (props) => {
   const { iae } = props
@@ -12,13 +13,18 @@ const CircleIaeDrawing = (props) => {
   const withCross = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName === 'abreuvement animaux'
 
   return ([
-    <CircleMarker
+    <Circle
       key={iae.IAEGroup + '' + iae.IAEType}
       color={mapLegend[iae.IAEGroup].color}
       center={iae.center}
-      weight={2}
+      radius={20}
       fill={false}
-    />,
+    >
+      <Tooltip direction='top'>
+        <Header content={mapLegend[iae.IAEGroup].iaeGroup} />
+        {mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName}
+      </Tooltip>
+    </Circle>,
     withCross &&
       <Marker
         position={iae.center}

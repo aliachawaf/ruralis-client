@@ -25,6 +25,7 @@ class GameBoardContainer extends React.Component {
     this.onCreatedIAE = this.onCreatedIAE.bind(this)
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
     this.onChangeAction = this.onChangeAction.bind(this)
+    this.clearAllIAEs = this.clearAllIAEs.bind(this)
   }
 
   componentDidMount () {
@@ -44,6 +45,9 @@ class GameBoardContainer extends React.Component {
   }
 
   onCreatedIAE (e) {
+    // Remove the layer drawn from map, then add it in state, then display it from state
+    this.mapRef.current.leafletElement.removeLayer(e.layer)
+
     if (e.layerType === 'circlemarker') {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
@@ -60,8 +64,9 @@ class GameBoardContainer extends React.Component {
       const newIAE = {
         IAEGroup: this.state.iaeGroupSelected,
         IAEType: this.state.iaeTypeSelected,
-        coords: e.layer._latlngs,
-        unity: this.calculNbUnite(e.layer._latlngs)
+        coords: (e.layerType === 'polyline') ? e.layer._latlngs : e.layer._latlngs[0],
+        unity: this.calculNbUnite(e.layer._latlngs),
+        layerType: e.layerType
       }
 
       this.setState({
@@ -89,7 +94,24 @@ class GameBoardContainer extends React.Component {
     if (iaeCoords.length === 2) {
       const unity = (this.mapRef.current.leafletElement.distance(iaeCoords[0], iaeCoords[1]) / 150)
       return Math.round(unity * 10) / 10
+    } else {
+      const arr = iaeCoords[0]
+      const X = []
+      const Y = []
+      arr.forEach(coord => { X.push(coord.lng); Y.push(coord.lat) })
+      return Math.round((Math.abs(this.polygonArea(X, Y, arr.length)) / 22500) * 10) / 10
     }
+  }
+
+  polygonArea (X, Y, numPoints) {
+    let area = 0 // Accumulates area
+    let j = numPoints - 1
+
+    for (var i = 0; i < numPoints; i++) {
+      area += (X[j] + X[i]) * (Y[j] - Y[i])
+      j = i // j is previous vertex to i
+    }
+    return area / 2
   }
 
   onChangeIAEType = (group, type) => {
@@ -109,6 +131,10 @@ class GameBoardContainer extends React.Component {
     }
   }
 
+  clearAllIAEs () {
+    this.setState({ iaeImplemented: [], circleIaeImplemented: [] })
+  }
+
   render () {
     return (
       <GameBoard
@@ -120,6 +146,7 @@ class GameBoardContainer extends React.Component {
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
         circleIaeImplemented={this.state.circleIaeImplemented}
+        clearAllIAEs={this.clearAllIAEs}
         iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}
         actionSelected={this.state.actionSelected}

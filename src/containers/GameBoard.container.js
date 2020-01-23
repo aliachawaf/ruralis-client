@@ -18,7 +18,10 @@ class GameBoardContainer extends React.Component {
       circleIaeImplemented: [],
       iaeGroupSelected: 0,
       iaeTypeSelected: 0,
-      actionSelected: -1
+      actionSelected: -1,
+      deletingIAE: false,
+      IAEtoDelete: [],
+      circleIAEtoDelete: []
     }
     this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
@@ -26,6 +29,10 @@ class GameBoardContainer extends React.Component {
     this.onChangeIAEType = this.onChangeIAEType.bind(this)
     this.onChangeAction = this.onChangeAction.bind(this)
     this.clearAllIAEs = this.clearAllIAEs.bind(this)
+    this.onDeleteIAE = this.onDeleteIAE.bind(this)
+    this.onChangeDeletingIAE = this.onChangeDeletingIAE.bind(this)
+    this.onValidateDeletingIAE = this.onValidateDeletingIAE.bind(this)
+    this.onCancelDeletingIAE = this.onCancelDeletingIAE.bind(this)
   }
 
   componentDidMount () {
@@ -53,7 +60,8 @@ class GameBoardContainer extends React.Component {
         IAEGroup: this.state.iaeGroupSelected,
         IAEType: this.state.iaeTypeSelected,
         center: e.layer._latlng,
-        unity: 1
+        unity: 1,
+        layerType: e.layerType
       }
 
       this.setState({
@@ -83,9 +91,9 @@ class GameBoardContainer extends React.Component {
     const tempsTravailPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].workingTime
     const productionPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].production
 
-    const newProduction = Math.round((this.props.game.production + (nbUnite * productionPerUnit)) * 10) / 10
-    const newTempsTravail = Math.round((this.props.game.tempsTravail + (nbUnite * tempsTravailPerUnit)) * 10) / 10
-    const newEnv = Math.round((this.props.game.environnement + (nbUnite * envPerUnit)) * 10) / 10
+    const newProduction = Math.round(this.props.game.production + nbUnite * productionPerUnit)
+    const newTempsTravail = Math.round(this.props.game.tempsTravail + nbUnite * tempsTravailPerUnit)
+    const newEnv = Math.round(this.props.game.environnement + nbUnite * envPerUnit)
 
     this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
   }
@@ -135,6 +143,48 @@ class GameBoardContainer extends React.Component {
     this.setState({ iaeImplemented: [], circleIaeImplemented: [] })
   }
 
+  onChangeDeletingIAE (deletingIAE) { this.setState({ deletingIAE: deletingIAE }) }
+
+  onDeleteIAE (e, iae) {
+    if (this.state.deletingIAE) {
+      if (iae.layerType === 'circlemarker') {
+        const indexIaeToRemove = this.state.circleIaeImplemented.indexOf(iae)
+
+        this.setState({
+          circleIAEtoDelete: this.state.circleIAEtoDelete.concat(iae),
+          circleIaeImplemented: this.state.circleIaeImplemented.filter((_, i) => i !== indexIaeToRemove)
+        })
+      } else {
+        const indexIaeToRemove = this.state.iaeImplemented.indexOf(iae)
+
+        this.setState({
+          IAEtoDelete: this.state.IAEtoDelete.concat(iae),
+          iaeImplemented: this.state.iaeImplemented.filter((_, i) => i !== indexIaeToRemove)
+        })
+      }
+    }
+  }
+
+  onValidateDeletingIAE () {
+    this.setState({
+      IAEtoDelete: [],
+      circleIAEtoDelete: []
+    })
+
+    this.onChangeDeletingIAE(false)
+  }
+
+  onCancelDeletingIAE () {
+    this.setState({
+      iaeImplemented: this.state.iaeImplemented.concat(this.state.IAEtoDelete),
+      circleIaeImplemented: this.state.circleIaeImplemented.concat(this.state.circleIAEtoDelete),
+      IAEtoDelete: [],
+      circleIAEtoDelete: []
+    })
+
+    this.onChangeDeletingIAE(false)
+  }
+
   render () {
     return (
       <GameBoard
@@ -151,6 +201,11 @@ class GameBoardContainer extends React.Component {
         iaeTypeSelected={this.state.iaeTypeSelected}
         actionSelected={this.state.actionSelected}
         handleOnChangeAction={this.onChangeAction}
+
+        handleonChangeDeleting={this.onChangeDeletingIAE}
+        handleDeleteIAE={this.onDeleteIAE}
+        handleValidateDeletingIAE={this.onValidateDeletingIAE}
+        handleCancelDeletingIAE={this.onCancelDeletingIAE}
       />
     )
   }

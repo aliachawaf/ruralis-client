@@ -37,7 +37,6 @@ class GameStepContainer extends React.Component {
     return (
       <GameStep
         handleValidateIAEs={this.onValidateIAEs}
-        timerLaunched={this.props.timerLaunched}
         actionSelected={this.props.actionSelected}
         onChangeAction={this.props.onChangeAction}
         handleValidateAction={this.onValidateAction}
@@ -52,8 +51,6 @@ GameStepContainer.propTypes = {
   updateScore: PropTypes.func.isRequired,
   applyAction: PropTypes.func.isRequired,
   // STEP 1
-  timerLaunched: PropTypes.bool.isRequired,
-  iaeImplemented: PropTypes.array.isRequired,
   circleIaeImplemented: PropTypes.array.isRequired,
   // STEP 2
   actionSelected: PropTypes.number.isRequired,

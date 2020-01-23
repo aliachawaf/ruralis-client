@@ -1,9 +1,8 @@
 import React from 'react'
 import { Button, Divider, Header, Icon, Modal, Statistic } from 'semantic-ui-react'
 import Timer from 'react-compound-timer'
-import PropTypes from 'prop-types'
 
-let timerPaused = false
+let timerPaused = true
 
 const TimerStep1 = (props) => (
   <Timer
@@ -15,11 +14,9 @@ const TimerStep1 = (props) => (
   >
     {({ start, resume, pause, reset, getTime }) => (
       <>
-        {props.timerLaunched && start()}
-
         <Statistic>
           <Statistic.Value>
-            <Icon name={getTime() > 301000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'} />
+            <Icon size='small' name={getTime() > 301000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'} />
             <Timer.Minutes />
             :
             <Timer.Seconds formatValue={value => `${(value < 10 ? `0${value}` : value)}`} />
@@ -57,13 +54,5 @@ const TimerStep1 = (props) => (
     )}
   </Timer>
 )
-
-TimerStep1.propTypes = {
-  timerLaunched: PropTypes.bool.isRequired
-}
-
-TimerStep1.defaultProps = {
-  timerLaunched: false
-}
 
 export default TimerStep1

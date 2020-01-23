@@ -21,12 +21,16 @@ class GameStepContainer extends React.Component {
 
   onValidateAction () {
     // Send Action selected to server
-    const card = actions.find(card => card.numCard === this.props.actionSelected)
-    const newProduction = this.props.game.production + card.productionEffect
-    const newEnvironnement = this.props.game.environnement + card.environnementEffect
-    const newAncrageSocial = this.props.game.ancrageSocial + card.ancrageSocialEffect
-    const newTempsTravail = this.props.game.tempsTravail + card.tempsTravailEffect
-    this.props.applyAction(this.props.game._id, this.props.actionSelected, newProduction, newEnvironnement, newAncrageSocial, newTempsTravail)
+    if (this.props.actionSelected !== -1) {
+      const card = actions.find(card => card.numCard === this.props.actionSelected)
+      const newProduction = this.props.game.production + card.productionEffect
+      const newEnvironnement = this.props.game.environnement + card.environnementEffect
+      const newAncrageSocial = this.props.game.ancrageSocial + card.ancrageSocialEffect
+      const newTempsTravail = this.props.game.tempsTravail + card.tempsTravailEffect
+      this.props.applyAction(this.props.game._id, this.props.actionSelected, newProduction, newEnvironnement, newAncrageSocial, newTempsTravail)
+    } else {
+      this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.tempsTravail, this.props.game.tempsTravail)
+    }
   }
 
   render () {

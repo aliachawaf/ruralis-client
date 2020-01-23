@@ -18,23 +18,42 @@ const Step2 = (props) => {
       <Container textAlign='left'>
         <Form>
           {
-            actions.map(a =>
-              <Form.Field key={a.numCard}>
-                <Popup
-                  wide
-                  content={<Image src={a.cardPicture} />}
-                  trigger={
-                    <Checkbox
-                      radio
-                      disabled={props.game.actionsDone.includes(a.numCard)}
-                      label={a.numCard + '. ' + a.title}
-                      value={a.numCard}
-                      checked={props.actionSelected === a.numCard}
-                      onClick={props.onChangeAction}
+            actions.filter(a => !props.game.actionsDone.includes(a.numCard)
+            )
+              .map(a => {
+                const conditionsNotRespected =
+                    props.game.environnement < a.environnementCondition ||
+                    props.game.production < a.productionCondition ||
+                    props.game.ancrageSocial < a.ancrageSocialCondition ||
+                    props.game.tempsTravail < a.tempsTravailCondition
+
+                const finalScoreNegative =
+                    (props.game.environnement + a.environnementEffect) < 0 ||
+                    (props.game.production + a.productionEffect) < 0 ||
+                    (props.game.ancrageSocial + a.ancrageSocialEffect) < 0 ||
+                    (props.game.tempsTravail + a.tempsTravailEffect) < 0
+
+                return (
+                  <Form.Field key={a.numCard}>
+                    <Popup
+                      wide
+                      position='top left'
+                      content={<Image src={a.cardPicture} />}
+                      trigger={
+                        <Checkbox
+                          radio
+                          disabled={conditionsNotRespected || finalScoreNegative}
+                          label={a.numCard + '. ' + a.title}
+                          value={a.numCard}
+                          checked={props.actionSelected === a.numCard}
+                          onClick={!conditionsNotRespected && !finalScoreNegative && props.onChangeAction}
+                        />
+                      }
                     />
-                  }
-                />
-              </Form.Field>)
+                  </Form.Field>
+                )
+              }
+              )
           }
         </Form>
       </Container>

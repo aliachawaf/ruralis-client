@@ -91,9 +91,9 @@ class GameBoardContainer extends React.Component {
     const tempsTravailPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].workingTime
     const productionPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].production
 
-    const newProduction = Math.round((this.props.game.production + (nbUnite * productionPerUnit)) * 10) / 10
-    const newTempsTravail = Math.round((this.props.game.tempsTravail + (nbUnite * tempsTravailPerUnit)) * 10) / 10
-    const newEnv = Math.round((this.props.game.environnement + (nbUnite * envPerUnit)) * 10) / 10
+    const newProduction = Math.round(this.props.game.production + nbUnite * productionPerUnit)
+    const newTempsTravail = Math.round(this.props.game.tempsTravail + nbUnite * tempsTravailPerUnit)
+    const newEnv = Math.round(this.props.game.environnement + nbUnite * envPerUnit)
 
     this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
   }

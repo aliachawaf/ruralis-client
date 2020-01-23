@@ -6,11 +6,12 @@ import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'
 
-import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
 import GameStepContainer from '../../containers/GameStep.container'
+import scenarii from '../../config/scenarii'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
@@ -20,6 +21,10 @@ const GameBoard = React.forwardRef((props, ref) => {
     iaeImplemented,
     circleIaeImplemented,
     clearAllIAEs,
+    handleonChangeDeleting,
+    handleDeleteIAE,
+    handleValidateDeletingIAE,
+    handleCancelDeletingIAE,
     iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
@@ -28,6 +33,8 @@ const GameBoard = React.forwardRef((props, ref) => {
     opened,
     handleStartGame
   } = props
+
+  const scenarioInfos = scenarii.find(s => s.number === game.scenario)
 
   return (
     <div>
@@ -53,6 +60,10 @@ const GameBoard = React.forwardRef((props, ref) => {
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
               clearAllIAEs={clearAllIAEs}
+              handleDeleteIAE={handleDeleteIAE}
+              handleonChangeDeleting={handleonChangeDeleting}
+              handleValidateDeletingIAE={handleValidateDeletingIAE}
+              handleCancelDeletingIAE={handleCancelDeletingIAE}
             />
           </Grid.Column>
 
@@ -66,6 +77,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             />
 
             <Divider hidden />
+            <Message color='yellow' header='OBJECTIFS' content={scenarioInfos && scenarioInfos.objectives} />
 
             <Image src={mapInfoLegend} />
           </Grid.Column>
@@ -74,7 +86,6 @@ const GameBoard = React.forwardRef((props, ref) => {
             <GameStepContainer
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
-              timerLaunched={!opened}
               actionSelected={actionSelected}
               onChangeAction={handleOnChangeAction}
             />
@@ -94,6 +105,10 @@ GameBoard.propTypes = {
   iaeImplemented: PropTypes.array.isRequired,
   circleIaeImplemented: PropTypes.array.isRequired,
   clearAllIAEs: PropTypes.func.isRequired,
+  handleonChangeDeleting: PropTypes.func.isRequired,
+  handleDeleteIAE: PropTypes.func.isRequired,
+  handleValidateDeletingIAE: PropTypes.func.isRequired,
+  handleCancelDeletingIAE: PropTypes.func.isRequired,
   // IAE Type Select
   iaeGroupSelected: PropTypes.number.isRequired,
   iaeTypeSelected: PropTypes.number.isRequired,

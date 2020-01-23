@@ -37,7 +37,7 @@ const GameStep = (props) => (
       <Divider />
 
       {props.game.step === 1 &&
-        <Step1 onValidateIAEs={props.handleValidateIAEs} timerLaunched={props.timerLaunched} />}
+        <Step1 onValidateIAEs={props.handleValidateIAEs} />}
 
       {props.game.step === 2 &&
         <Step2
@@ -61,7 +61,6 @@ GameStep.propTypes = {
   game: PropTypes.object.isRequired,
   // Step 1
   handleValidateIAEs: PropTypes.func.isRequired,
-  timerLaunched: PropTypes.bool.isRequired,
   // Step 2
   actionSelected: PropTypes.number.isRequired,
   onChangeAction: PropTypes.func.isRequired,

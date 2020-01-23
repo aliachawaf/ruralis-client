@@ -1,4 +1,4 @@
-import { FETCH_GAME, GET_ERRORS, START_GAME, TMP_SCORE, ADD_IAE, UPDATE_SCORE, APPLY_ACTION, CREATE_GAME } from './types'
+import { FETCH_GAME, GET_ERRORS, START_GAME, TMP_SCORE, ADD_IAE, UPDATE_SCORE, APPLY_ACTION, CREATE_GAME, FETCH_ALL_GAMES } from './types'
 import * as APIFetch from '../helpers/APIFetch'
 
 // _______ FETCH ONE GAME _______
@@ -16,6 +16,30 @@ export const fetchGame = (idGame) => dispatch => {
   APIFetch.fetchRuralisAPI(resource, {}, APIFetch.GET)
     .then(res => {
       dispatch(fetchGameAction(res.data.game))
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
+
+// _______ FETCH ALL GAMES _______
+
+export const fetchAllGamesAction = games => ({
+  type: FETCH_ALL_GAMES,
+  payload: {
+    games
+  }
+})
+
+export const fetchAllGames = () => dispatch => {
+  const resource = 'api/public/game'
+
+  APIFetch.fetchRuralisAPI(resource, {}, APIFetch.GET)
+    .then(res => {
+      dispatch(fetchAllGamesAction(res.data.games))
     })
     .catch(err =>
       dispatch({

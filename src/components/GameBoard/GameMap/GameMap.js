@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import 'leaflet-polylinedecorator'
 import L from 'leaflet'
 import { FeatureGroup, ImageOverlay, Map, ScaleControl } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
@@ -77,6 +79,9 @@ const GameMap = React.forwardRef((props, ref) => {
             polygon: (iaeSelectedDrawingType === 'polygon') ? { showLength: true } : false,
             rectangle: (iaeSelectedDrawingType === 'polygon'),
             circlemarker: (iaeSelectedDrawingType === 'circlemarker')
+          }}
+          edit={{
+            edit: false
           }}
         />
       </FeatureGroup>

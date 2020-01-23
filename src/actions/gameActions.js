@@ -1,4 +1,4 @@
-import { FETCH_GAME, GET_ERRORS, START_GAME, TMP_SCORE, ADD_IAE, UPDATE_SCORE, APPLY_ACTION, CREATE_GAME } from './types'
+import { FETCH_GAME, GET_ERRORS, START_GAME, TMP_SCORE, ADD_IAE, UPDATE_SCORE, APPLY_ACTION, CREATE_GAME, FETCH_ALL_GAMES } from './types'
 import * as APIFetch from '../helpers/APIFetch'
 
 // _______ FETCH ONE GAME _______
@@ -16,6 +16,30 @@ export const fetchGame = (idGame) => dispatch => {
   APIFetch.fetchRuralisAPI(resource, {}, APIFetch.GET)
     .then(res => {
       dispatch(fetchGameAction(res.data.game))
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
+
+// _______ FETCH ALL GAMES _______
+
+export const fetchAllGamesAction = games => ({
+  type: FETCH_ALL_GAMES,
+  payload: {
+    games
+  }
+})
+
+export const fetchAllGames = () => dispatch => {
+  const resource = 'api/public/game'
+
+  APIFetch.fetchRuralisAPI(resource, {}, APIFetch.GET)
+    .then(res => {
+      dispatch(fetchAllGamesAction(res.data.games))
     })
     .catch(err =>
       dispatch({
@@ -104,11 +128,16 @@ export const addIAEAction = game => ({
   }
 })
 
-export const addIAE = (idGame, IAEs, circleIAEs) => dispatch => {
+export const addIAE = (idGame, IAEs, circleIAEs, production, environnement, ancrageSocial, tempsTravail) => dispatch => {
   const resource = 'api/public/game/' + idGame + '/IAE'
 
   APIFetch.fetchRuralisAPI(resource, { IAEs: IAEs, circleIAEs: circleIAEs }, APIFetch.POST)
     .then(res => {
+      dispatch(updateScore(idGame, production, environnement, ancrageSocial, tempsTravail))
+      res.data.game.production = production
+      res.data.game.environnement = environnement
+      res.data.game.ancrageSocial = ancrageSocial
+      res.data.game.tempsTravail = tempsTravail
       dispatch(addIAEAction(res.data.game))
     })
     .catch(err =>
@@ -158,7 +187,7 @@ export const applyActionAction = game => ({
   }
 })
 
-export const applyAction = (idGame, numAction) => dispatch => {
+export const applyAction = (idGame, numAction, production, environnement, ancrageSocial, tempsTravail) => dispatch => {
   // Send Action selected to server
   const resource = 'api/public/game/' + idGame + '/action'
   APIFetch.fetchRuralisAPI(
@@ -167,6 +196,11 @@ export const applyAction = (idGame, numAction) => dispatch => {
     APIFetch.POST
   )
     .then(res => {
+      dispatch(updateScore(idGame, production, environnement, ancrageSocial, tempsTravail))
+      res.data.game.production = production
+      res.data.game.environnement = environnement
+      res.data.game.ancrageSocial = ancrageSocial
+      res.data.game.tempsTravail = tempsTravail
       dispatch(applyActionAction(res.data.game))
     })
     .catch(err =>

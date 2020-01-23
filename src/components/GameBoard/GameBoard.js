@@ -6,11 +6,12 @@ import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'
 
-import { Divider, Grid, Header, Image, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
 import GameStepContainer from '../../containers/GameStep.container'
+import scenarii from '../../config/scenarii'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
@@ -32,6 +33,8 @@ const GameBoard = React.forwardRef((props, ref) => {
     opened,
     handleStartGame
   } = props
+
+  const scenarioInfos = scenarii.find(s => s.number === game.scenario)
 
   return (
     <div>
@@ -74,6 +77,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             />
 
             <Divider hidden />
+            <Message color='yellow' header='OBJECTIFS' content={scenarioInfos && scenarioInfos.objectives} />
 
             <Image src={mapInfoLegend} />
           </Grid.Column>

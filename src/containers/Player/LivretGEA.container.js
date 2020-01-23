@@ -1,8 +1,8 @@
 import React from 'react'
-import ListIAE from '../../components/Player/ListIAE'
+import LivretGEA from '../../components/Player/LivretGEA'
 import actions from '../../config/actionsCards'
 
-class ListIAEContainer extends React.Component {
+class LivretGEAContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -50,7 +50,7 @@ class ListIAEContainer extends React.Component {
     const playerNumber = Number(this.props.match.params.playerNumber)
 
     return (
-      <ListIAE
+      <LivretGEA
         playerNumber={playerNumber}
         activeCardsIndex={this.state.activeCardsIndex}
         handleOnChangeAccordion={this.onChangeAccordion}
@@ -61,4 +61,4 @@ class ListIAEContainer extends React.Component {
   }
 }
 
-export default ListIAEContainer
+export default LivretGEAContainer

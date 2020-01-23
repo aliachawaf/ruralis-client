@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import PlayerHeader from './PlayerHeader'
 import { Accordion, Checkbox, Container, Divider, Image } from 'semantic-ui-react'
-import mapLegend from '../../config/mapLegend'
+import actions from '../../config/actionsCards'
 
-const ListIAE = (props) => {
+const LivretGEA = (props) => {
   return (
     <div>
-      <PlayerHeader playerNumber={props.playerNumber} activeTab='IAE' />
+      <PlayerHeader playerNumber={props.playerNumber} activeTab='GEA' />
 
       <Container style={{ marginTop: '7em' }}>
 
@@ -21,14 +21,15 @@ const ListIAE = (props) => {
           exclusive={false}
           activeIndex={props.activeCardsIndex}
           panels={
-            mapLegend
-              .map((group, index) => ({
-                key: index,
-                title: group.iaeGroup,
+            actions
+              .map(action => ({
+                key: action.numCard,
+                value: action.numCard,
+                title: action.numCard + '. ' + action.title,
                 content: {
                   content:
   <div>
-    <Image src={group.iaeCard} centered />
+    <Image src={action.cardPicture} centered />
   </div>
                 }
               }))
@@ -43,7 +44,7 @@ const ListIAE = (props) => {
   )
 }
 
-ListIAE.propTypes = {
+LivretGEA.propTypes = {
   playerNumber: PropTypes.number.isRequired,
   activeCardsIndex: PropTypes.array.isRequired,
   handleOnChangeAccordion: PropTypes.func.isRequired,
@@ -51,9 +52,9 @@ ListIAE.propTypes = {
   allCardsOpened: PropTypes.bool.isRequired
 }
 
-ListIAE.defaultProps = {
+LivretGEA.defaultProps = {
   activeCardsIndex: [],
   allCardsOpened: false
 }
 
-export default ListIAE
+export default LivretGEA

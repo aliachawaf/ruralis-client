@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Container, Dropdown, Image } from 'semantic-ui-react'
+import { Container, Dropdown, Header, Image } from 'semantic-ui-react'
 import mapLegend from '../../config/mapLegend'
 
 const IAETypeSelect = (props) => {
@@ -11,11 +11,12 @@ const IAETypeSelect = (props) => {
   return (
     <Container>
       <Dropdown
+        item
         fluid
         button
-        scrolling
         trigger={
           <span>
+            <Header as='h4' content={mapLegend[iaeGroupSelected].iaeGroup} />
             <Image
               src={iaeSelected.iaeLegend}
               verticalAlign='middle'
@@ -25,26 +26,26 @@ const IAETypeSelect = (props) => {
           </span>
         }
       >
-        <Dropdown.Menu style={{ maxHeight: '80vh' }}>
+        <Dropdown.Menu>
           {
-            mapLegend.map((group, groupIndex) => ([
-
-              <Dropdown.Header key={groupIndex} icon='pencil' content={group.iaeGroup} />,
-
-              group.iaeList.map((iae, iaeIndex) => (
-                <Dropdown.Item
-                  key={groupIndex + '' + iaeIndex}
-                  value={groupIndex + '' + iaeIndex}
-                  image={{ src: iae.iaeLegend, size: 'mini' }}
-                  text={iae.iaeName}
-                  active={iaeGroupSelected === groupIndex && iaeTypeSelected === iaeIndex}
-                  selected={iaeGroupSelected === groupIndex && iaeTypeSelected === iaeIndex}
-                  onClick={() => onIAETypeChange(groupIndex, iaeIndex)}
-                />
-              )
-              ),
-              groupIndex !== mapLegend.length - 1 && <Dropdown.Divider />
-            ])
+            mapLegend.map((group, groupIndex) => (
+              <Dropdown item key={groupIndex} text={group.iaeGroup} style={{ color: group.color }}>
+                <Dropdown.Menu>
+                  {group.iaeList.map((iae, iaeIndex) => (
+                    <Dropdown.Item
+                      key={groupIndex + '' + iaeIndex}
+                      value={groupIndex + '' + iaeIndex}
+                      image={{ src: iae.iaeLegend, size: 'mini' }}
+                      text={iae.iaeName}
+                      active={iaeGroupSelected === groupIndex && iaeTypeSelected === iaeIndex}
+                      selected={iaeGroupSelected === groupIndex && iaeTypeSelected === iaeIndex}
+                      onClick={() => onIAETypeChange(groupIndex, iaeIndex)}
+                    />
+                  )
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
+            )
             )
           }
         </Dropdown.Menu>

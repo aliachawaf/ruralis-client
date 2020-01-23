@@ -82,7 +82,6 @@ const GameBoard = React.forwardRef((props, ref) => {
             <GameStepContainer
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
-              timerLaunched={!opened}
               actionSelected={actionSelected}
               onChangeAction={handleOnChangeAction}
             />

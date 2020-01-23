@@ -35,6 +35,7 @@ import {
   MareAbreveument,
   MareEntretien
 } from '../assets/mapLegend'
+import { AICard, BECard, BFCard, BosquetCard, HMCard, HPCard, MareCard, PrairieCard } from '../assets/iaeCards'
 
 /**
  * @type {*[]}
@@ -85,6 +86,7 @@ const mapLegend = [
     drawingType: 'polyline',
     color: '#E06A35',
     environment: 1,
+    iaeCard: HMCard,
     iaeList: [
       {
         iaeName: 'entretien seul',
@@ -138,6 +140,7 @@ const mapLegend = [
     drawingType: 'polyline',
     color: '#C02B2D',
     environment: 2,
+    iaeCard: HPCard,
     iaeList: [
       {
         iaeName: 'entretien seul',
@@ -211,6 +214,7 @@ const mapLegend = [
     drawingType: 'polyline',
     color: '#99ccff',
     environment: 1,
+    iaeCard: BECard,
     iaeList: [
       {
         iaeName: 'entretien seul',
@@ -304,6 +308,7 @@ const mapLegend = [
     drawingType: 'polyline',
     color: '#312C67',
     environment: 2,
+    iaeCard: BFCard,
     iaeList: [
       {
         iaeName: 'entretien seul',
@@ -408,6 +413,7 @@ const mapLegend = [
     drawingType: 'polygon',
     color: '#34996F',
     environment: 2,
+    iaeCard: PrairieCard,
     iaeList: [
       {
         iaeName: 'énergie',
@@ -446,6 +452,7 @@ const mapLegend = [
     drawingType: 'polygon',
     color: '#1A1919',
     environment: 3,
+    iaeCard: BosquetCard,
     iaeList: [
       {
         iaeName: 'entretien seul',
@@ -484,6 +491,7 @@ const mapLegend = [
     drawingType: 'polygon',
     color: '#49275A',
     environment: 1,
+    iaeCard: AICard,
     iaeList: [
       {
         iaeName: 'énergie',
@@ -515,6 +523,7 @@ const mapLegend = [
     drawingType: 'circlemarker',
     color: '#64372F',
     environment: 3,
+    iaeCard: MareCard,
     iaeList: [
       {
         iaeName: 'entretien seul',

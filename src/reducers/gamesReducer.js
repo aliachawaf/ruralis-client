@@ -11,4 +11,5 @@ const gamesReducer = (state = [], action) => {
   }
 }
 
-export default gamesReducer()
+export default gamesReducer
+gamesReducer

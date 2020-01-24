@@ -22,7 +22,8 @@ class GameBoardContainer extends React.Component {
       deletingIAE: false,
       IAEtoDelete: [],
       circleIAEtoDelete: [],
-      errorPrairie: false
+      errorPrairie: false,
+      errorZero: false
     }
     this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
@@ -78,10 +79,14 @@ class GameBoardContainer extends React.Component {
           layerType: e.layerType
         }
 
-        this.setState({
-          circleIaeImplemented: this.state.circleIaeImplemented.concat(newIAE)
-        })
-        this.updateScore(newIAE)
+        if (this.updateScore(newIAE)) {
+          this.setState({
+            circleIaeImplemented: this.state.circleIaeImplemented.concat(newIAE)
+          })
+        } else {
+          this.setState({ errorZero: true })
+          console.log('errorZero')
+        }
       } else {
         const newIAE = {
           IAEGroup: this.state.iaeGroupSelected,
@@ -91,10 +96,14 @@ class GameBoardContainer extends React.Component {
           layerType: e.layerType
         }
 
-        this.setState({
-          iaeImplemented: this.state.iaeImplemented.concat(newIAE)
-        })
-        this.updateScore(newIAE)
+        if (this.updateScore(newIAE)) {
+          this.setState({
+            iaeImplemented: this.state.iaeImplemented.concat(newIAE)
+          })
+        } else {
+          this.setState({ errorZero: true })
+          console.log('errorZero')
+        }
       }
     }
   }
@@ -110,7 +119,12 @@ class GameBoardContainer extends React.Component {
     const newTempsTravail = Math.round(this.props.game.tempsTravail + nbUnite * tempsTravailPerUnit)
     const newEnv = Math.round(this.props.game.environnement + nbUnite * envPerUnit)
 
-    this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
+    if (newTempsTravail > 0) {
+      this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
+      return true
+    } else {
+      return false
+    }
   }
 
   calculNbUnite (iaeCoords) {

@@ -12,4 +12,3 @@ const gamesReducer = (state = [], action) => {
 }
 
 export default gamesReducer
-gamesReducer

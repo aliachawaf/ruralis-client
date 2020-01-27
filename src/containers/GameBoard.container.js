@@ -63,6 +63,7 @@ class GameBoardContainer extends React.Component {
       let nbPrairie = 0
       this.props.game.implementedIAE.forEach(iae => { if (iae.IAEGroup === this.state.iaeGroupSelected) { nbPrairie += iae.unity } })
       this.state.iaeImplemented.forEach(iae => { if (iae.IAEGroup === this.state.iaeGroupSelected) { nbPrairie += iae.unity } })
+      nbPrairie += this.calculNbUnite(e.layer._latlngs)
 
       if (nbPrairie >= 5 && !this.props.game.actionsDone.includes(3)) {
         this.setState({ errorPrairie: true })

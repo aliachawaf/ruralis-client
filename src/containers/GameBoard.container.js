@@ -23,7 +23,8 @@ class GameBoardContainer extends React.Component {
       IAEtoDelete: [],
       circleIAEtoDelete: [],
       errorPrairie: false,
-      errorZero: false
+      errorZero: false,
+      erroTypesIAE: false
     }
     this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
@@ -70,6 +71,23 @@ class GameBoardContainer extends React.Component {
         stop = true
       }
     }
+
+    // check 2 types IAE
+    if (this.state.iaeImplemented.length > 0) {
+      if (this.state.iaeImplemented[0].IAEGroup !== this.state.iaeGroupSelected) {
+        this.setState({ errorTypesIAE: true })
+        stop = true
+      }
+    }
+
+    // check 2 types IAE
+    if (this.state.circleIaeImplemented.length > 0) {
+      if (this.state.circleIaeImplemented[0].IAEGroup !== this.state.iaeGroupSelected) {
+        this.setState({ errorTypesIAE: true })
+        stop = true
+      }
+    }
+
     if (!stop) {
       if (e.layerType === 'circlemarker') {
         const newIAE = {

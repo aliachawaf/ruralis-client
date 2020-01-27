@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
-import mapInfoLegend from '../../assets/mapInfoLegend.png'
+import mapInfoLegend from '../../assets/mapLegend/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
 import GameStepContainer from '../../containers/GameStep.container'
 import scenarii from '../../config/scenarii'

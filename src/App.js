@@ -10,6 +10,7 @@ import PlayerRoleContainer from './containers/Player/PlayerRole.container'
 import ListIAEContainer from './containers/Player/ListIAE.container'
 import LivretGEAContainer from './containers/Player/LivretGEA.container'
 import GameHistoryContainer from './containers/GameHistory.container'
+import AllGamesHistoryContainer from './containers/AllGamesHistory.container'
 
 function App () {
   return (
@@ -24,7 +25,8 @@ function App () {
             <Route exact path='/player/:playerNumber/role' component={PlayerRoleContainer} />
             <Route exact path='/player/:playerNumber/IAE' component={ListIAEContainer} />
             <Route exact path='/player/:playerNumber/GEA' component={LivretGEAContainer} />
-            <Route exact path='/game/history/:idGame' component={GameHistoryContainer} />
+            <Route exact path='/history/games' component={AllGamesHistoryContainer} />
+            <Route exact path='/history/game/:idGame' component={GameHistoryContainer} />
             <Redirect from='/*' to='/home' />
           </Switch>
         </div>

@@ -24,7 +24,7 @@ class GameBoardContainer extends React.Component {
       circleIAEtoDelete: [],
       errorPrairie: false,
       errorZero: false,
-      erroTypesIAE: false
+      errorTypesIAE: false
     }
     this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
@@ -236,6 +236,7 @@ class GameBoardContainer extends React.Component {
 
   onCloseErrorPrairie = () => { this.setState({ errorPrairie: false }) }
   onCloseErrorZero = () => { this.setState({ errorZero: false }) }
+  onCloseErrorTypesIAE = () => { this.setState({ errorTypesIAE: false }) }
 
   clearIAEsimplemented = () => { this.setState({ iaeImplemented: [], circleIaeImplemented: [] }) }
 
@@ -266,6 +267,8 @@ class GameBoardContainer extends React.Component {
         handleOnCloseErrorPrairie={this.onCloseErrorPrairie}
         errorScore={this.state.errorZero}
         handleOnCloseErrorScore={this.onCloseErrorZero}
+        errorTypesIAE={this.state.errorTypesIAE}
+        handleOnCloseErrorTypesIAE={this.onCloseErrorTypesIAE}
       />
     )
   }

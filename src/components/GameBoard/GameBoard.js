@@ -36,7 +36,9 @@ const GameBoard = React.forwardRef((props, ref) => {
     errorPrairie,
     handleOnCloseErrorPrairie,
     errorScore,
-    handleOnCloseErrorScore
+    handleOnCloseErrorScore,
+    errorTypesIAE,
+    handleOnCloseErrorTypesIAE
   } = props
 
   const scenarioInfos = scenarii.find(s => s.number === game.scenario)
@@ -117,6 +119,14 @@ const GameBoard = React.forwardRef((props, ref) => {
         />
       </Modal>
 
+      <Modal open={errorTypesIAE} closeIcon size='large' onClose={handleOnCloseErrorTypesIAE}>
+        <Header
+          as='h1'
+          icon='warning'
+          content={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'}
+        />
+      </Modal>
+
     </div>
   )
 })
@@ -148,7 +158,9 @@ GameBoard.propTypes = {
   errorPrairie: PropTypes.bool.isRequired,
   handleOnCloseErrorPrairie: PropTypes.func.isRequired,
   errorScore: PropTypes.bool.isRequired,
-  handleOnCloseErrorScore: PropTypes.func.isRequired
+  handleOnCloseErrorScore: PropTypes.func.isRequired,
+  errorTypesIAE: PropTypes.bool.isRequired,
+  handleOnCloseErrorTypesIAE: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {

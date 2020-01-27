@@ -86,7 +86,6 @@ class GameBoardContainer extends React.Component {
           })
         } else {
           this.setState({ errorZero: true })
-          console.log('errorZero')
         }
       } else {
         const newIAE = {
@@ -103,7 +102,6 @@ class GameBoardContainer extends React.Component {
           })
         } else {
           this.setState({ errorZero: true })
-          console.log('errorZero')
         }
       }
     }
@@ -221,6 +219,8 @@ class GameBoardContainer extends React.Component {
   onCloseErrorPrairie = () => { this.setState({ errorPrairie: false }) }
   onCloseErrorZero = () => { this.setState({ errorZero: false }) }
 
+  clearIAEsimplemented = () => { this.setState({ iaeImplemented: [], circleIaeImplemented: [] }) }
+
   render () {
     return (
       <GameBoard
@@ -237,6 +237,7 @@ class GameBoardContainer extends React.Component {
         iaeTypeSelected={this.state.iaeTypeSelected}
         actionSelected={this.state.actionSelected}
         handleOnChangeAction={this.onChangeAction}
+        clearIAEsimplemented={this.clearIAEsimplemented}
 
         handleonChangeDeleting={this.onChangeDeletingIAE}
         handleDeleteIAE={this.onDeleteIAE}

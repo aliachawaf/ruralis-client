@@ -30,6 +30,7 @@ const GameBoard = React.forwardRef((props, ref) => {
     handleIAETypeChange,
     actionSelected,
     handleOnChangeAction,
+    clearIAEsimplemented,
     opened,
     handleStartGame,
     errorPrairie,
@@ -90,6 +91,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             <GameStepContainer
               iaeImplemented={iaeImplemented}
               circleIaeImplemented={circleIaeImplemented}
+              clearIAEsimplemented={clearIAEsimplemented}
               actionSelected={actionSelected}
               onChangeAction={handleOnChangeAction}
             />
@@ -98,6 +100,7 @@ const GameBoard = React.forwardRef((props, ref) => {
         </Grid>
       </Segment>
 
+      {/* MODALS FOR MESSAGE ERROR */}
       <Modal open={errorPrairie} closeIcon size='large' onClose={handleOnCloseErrorPrairie}>
         <Header
           as='h1'
@@ -137,6 +140,7 @@ GameBoard.propTypes = {
   // Game Step
   actionSelected: PropTypes.number.isRequired,
   handleOnChangeAction: PropTypes.func.isRequired,
+  clearIAEsimplemented: PropTypes.func.isRequired,
   // Start Game Modal
   opened: PropTypes.bool.isRequired,
   handleStartGame: PropTypes.func.isRequired,

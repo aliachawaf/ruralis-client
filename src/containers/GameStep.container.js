@@ -15,8 +15,22 @@ class GameStepContainer extends React.Component {
   }
 
   onValidateIAEs () {
+    const iaeImplemented = [...this.props.iaeImplemented]
+    const circleIaeImplemented = [...this.props.circleIaeImplemented]
+
     // Send IAEs implemented to Server
-    this.props.addIAE(this.props.game._id, this.props.iaeImplemented, this.props.circleIaeImplemented, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
+    this.props.addIAE(
+      this.props.game._id,
+      iaeImplemented,
+      circleIaeImplemented,
+      this.props.game.production,
+      this.props.game.environnement,
+      this.props.game.ancrageSocial,
+      this.props.game.tempsTravail
+    )
+
+    // Clear iae implemented array for next tour
+    this.props.clearIAEsimplemented()
   }
 
   onValidateAction () {
@@ -52,6 +66,7 @@ GameStepContainer.propTypes = {
   applyAction: PropTypes.func.isRequired,
   // STEP 1
   circleIaeImplemented: PropTypes.array.isRequired,
+  clearIAEsimplemented: PropTypes.func.isRequired,
   // STEP 2
   actionSelected: PropTypes.number.isRequired,
   onChangeAction: PropTypes.func.isRequired

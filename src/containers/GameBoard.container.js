@@ -119,7 +119,7 @@ class GameBoardContainer extends React.Component {
     const newTempsTravail = Math.round(this.props.game.tempsTravail + nbUnite * tempsTravailPerUnit)
     const newEnv = Math.round(this.props.game.environnement + nbUnite * envPerUnit)
 
-    if (newTempsTravail > 0) {
+    if (newTempsTravail >= 0) {
       this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
       return true
     } else {
@@ -217,6 +217,9 @@ class GameBoardContainer extends React.Component {
     this.onChangeDeletingIAE(false)
   }
 
+  onCloseErrorPrairie = () => { this.setState({ errorPrairie: false }) }
+  onCloseErrorZero = () => { this.setState({ errorZero: false }) }
+
   render () {
     return (
       <GameBoard
@@ -238,6 +241,11 @@ class GameBoardContainer extends React.Component {
         handleDeleteIAE={this.onDeleteIAE}
         handleValidateDeletingIAE={this.onValidateDeletingIAE}
         handleCancelDeletingIAE={this.onCancelDeletingIAE}
+
+        errorPrairie={this.state.errorPrairie}
+        handleOnCloseErrorPrairie={this.onCloseErrorPrairie}
+        errorScore={this.state.errorZero}
+        handleOnCloseErrorScore={this.onCloseErrorZero}
       />
     )
   }

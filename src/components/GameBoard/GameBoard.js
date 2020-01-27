@@ -6,7 +6,7 @@ import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'
 
-import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Image, Message, Modal, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
@@ -31,7 +31,11 @@ const GameBoard = React.forwardRef((props, ref) => {
     actionSelected,
     handleOnChangeAction,
     opened,
-    handleStartGame
+    handleStartGame,
+    errorPrairie,
+    handleOnCloseErrorPrairie,
+    errorScore,
+    handleOnCloseErrorScore
   } = props
 
   const scenarioInfos = scenarii.find(s => s.number === game.scenario)
@@ -93,6 +97,23 @@ const GameBoard = React.forwardRef((props, ref) => {
 
         </Grid>
       </Segment>
+
+      <Modal open={errorPrairie} closeIcon size='large' onClose={handleOnCloseErrorPrairie}>
+        <Header
+          as='h1'
+          icon='warning'
+          content='Vous ne pouvez pas implanter plus de 5 unités de prairies'
+        />
+      </Modal>
+
+      <Modal open={errorScore} closeIcon size='large' onClose={handleOnCloseErrorScore}>
+        <Header
+          as='h1'
+          icon='warning'
+          content='Le temps de travail ne peut pas être inférieur à 0.'
+        />
+      </Modal>
+
     </div>
   )
 })
@@ -118,7 +139,12 @@ GameBoard.propTypes = {
   handleOnChangeAction: PropTypes.func.isRequired,
   // Start Game Modal
   opened: PropTypes.bool.isRequired,
-  handleStartGame: PropTypes.func.isRequired
+  handleStartGame: PropTypes.func.isRequired,
+  // Errors
+  errorPrairie: PropTypes.bool.isRequired,
+  handleOnCloseErrorPrairie: PropTypes.func.isRequired,
+  errorScore: PropTypes.bool.isRequired,
+  handleOnCloseErrorScore: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {

@@ -25,7 +25,7 @@ const HomeRuralis = () => (
         </Grid.Column>
 
         <Grid.Column>
-          <Link to='/game/history'>
+          <Link to='/history/games'>
             <Button className='homeBtn' color='red' fluid content='Historique Parties' size='huge' />
           </Link>
         </Grid.Column>

@@ -1,22 +1,26 @@
 import React from 'react'
-import { Header, Image, Segment } from 'semantic-ui-react'
+import { Breadcrumb, Header, Image, Segment } from 'semantic-ui-react'
 import logo from '../../assets/ruralisLogo.png'
 import PropTypes from 'prop-types'
 
+const homeSection = [{ key: 'home', content: 'Home', link: true, href: '/home', style: { color: '#FFFFFF' } }]
+
 const RuralisHeader = (props) => {
-  const { title } = props
   return (
     <Segment color='red' inverted basic>
       <Header>
-        <Image as='a' src={logo} href='/home' />
-        {title}
+        <Image as='a' src={logo} href='/home' spaced='right' />
+        <Breadcrumb
+          icon='right angle'
+          sections={homeSection.concat(props.breadcrumbSections)}
+        />
       </Header>
     </Segment>
   )
 }
 
 RuralisHeader.propTypes = {
-  title: PropTypes.string.isRequired
+  breadcrumbSections: PropTypes.array.isRequired
 }
 
 export default RuralisHeader

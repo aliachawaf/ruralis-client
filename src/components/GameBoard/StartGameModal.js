@@ -10,6 +10,7 @@ const StartGameModal = (props) => {
   const { game, opened, handleStartGame } = props
 
   const gamePlayersInfos = playersList.filter(p => game.players.includes(p.number))
+  const scenario = scenarii.find(s => s.number === game.scenario)
 
   return (
     <Modal
@@ -49,8 +50,8 @@ const StartGameModal = (props) => {
         <Header as='h3' color='red' content={'Scénario ' + game.scenario} dividing />
         <p>Présentation du scénario de départ ainsi que l'objectif commun à atteindre.</p>
 
-        <Image src={scenarii[game.scenario].description} size='big' centered />
-        <Image src={scenarii[game.scenario].map} centered />
+        <Image src={scenario.description} size='big' centered />
+        <Image src={scenario.map} centered />
 
       </Modal.Content>
       <Modal.Actions>

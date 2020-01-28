@@ -34,7 +34,7 @@ const IaeDrawing = (props) => {
 
 IaeDrawing.propTypes = {
   iae: PropTypes.object.isRequired,
-  handleDeleteIAE: PropTypes.func.isRequired
+  handleDeleteIAE: PropTypes.func
 }
 
 export default IaeDrawing

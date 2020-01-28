@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
-import mapInfoLegend from '../../assets/mapInfoLegend.png'
+import mapInfoLegend from '../../assets/mapLegend/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
 import GameStepContainer from '../../containers/GameStep.container'
 import scenarii from '../../config/scenarii'
@@ -34,11 +34,15 @@ const GameBoard = React.forwardRef((props, ref) => {
     handleStartGame
   } = props
 
+  const breadcrumbSections = [
+    { key: game._id, content: 'Partie ' + game._id, active: true, as: 'h3' }
+  ]
+
   const scenarioInfos = scenarii.find(s => s.number === game.scenario)
 
   return (
     <div>
-      <RuralisHeader title={'Partie ' + game._id} />
+      <RuralisHeader breadcrumbSections={breadcrumbSections} />
       <Segment basic>
 
         {

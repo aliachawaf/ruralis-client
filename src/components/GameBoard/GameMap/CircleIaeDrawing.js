@@ -36,7 +36,7 @@ const CircleIaeDrawing = (props) => {
 
 CircleIaeDrawing.propTypes = {
   iae: PropTypes.object.isRequired,
-  handleDeleteIAE: PropTypes.func.isRequired
+  handleDeleteIAE: PropTypes.func
 }
 
 export default CircleIaeDrawing

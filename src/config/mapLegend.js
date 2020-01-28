@@ -449,7 +449,7 @@ const mapLegend = [
   /** **************************************** GROUP BOSQUET  ******************************************/
   {
     iaeGroup: 'Bosquet',
-    drawingType: 'polygon',
+    drawingType: 'circlemarker',
     color: '#1A1919',
     environment: 3,
     iaeCard: BosquetCard,

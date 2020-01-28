@@ -15,13 +15,13 @@ class GameBoardContainer extends React.Component {
     this.state = {
       openedStartGameModal: true,
       iaeImplemented: [],
-      circleIaeImplemented: [],
+      iaeMarkerImplemented: [],
       iaeGroupSelected: 0,
       iaeTypeSelected: 0,
       actionSelected: -1,
       deletingIAE: false,
       IAEtoDelete: [],
-      circleIAEtoDelete: []
+      IAEmarkerToDelete: []
     }
     this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
@@ -65,7 +65,7 @@ class GameBoardContainer extends React.Component {
       }
 
       this.setState({
-        circleIaeImplemented: this.state.circleIaeImplemented.concat(newIAE)
+        iaeMarkerImplemented: this.state.iaeMarkerImplemented.concat(newIAE)
       })
       this.updateScore(newIAE)
     } else {
@@ -140,7 +140,7 @@ class GameBoardContainer extends React.Component {
   }
 
   clearAllIAEs () {
-    this.setState({ iaeImplemented: [], circleIaeImplemented: [] })
+    this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] })
   }
 
   onChangeDeletingIAE (deletingIAE) { this.setState({ deletingIAE: deletingIAE }) }
@@ -148,11 +148,11 @@ class GameBoardContainer extends React.Component {
   onDeleteIAE (e, iae) {
     if (this.state.deletingIAE) {
       if (iae.layerType === 'circlemarker') {
-        const indexIaeToRemove = this.state.circleIaeImplemented.indexOf(iae)
+        const indexIaeToRemove = this.state.iaeMarkerImplemented.indexOf(iae)
 
         this.setState({
-          circleIAEtoDelete: this.state.circleIAEtoDelete.concat(iae),
-          circleIaeImplemented: this.state.circleIaeImplemented.filter((_, i) => i !== indexIaeToRemove)
+          IAEmarkerToDelete: this.state.IAEmarkerToDelete.concat(iae),
+          iaeMarkerImplemented: this.state.iaeMarkerImplemented.filter((_, i) => i !== indexIaeToRemove)
         })
       } else {
         const indexIaeToRemove = this.state.iaeImplemented.indexOf(iae)
@@ -168,7 +168,7 @@ class GameBoardContainer extends React.Component {
   onValidateDeletingIAE () {
     this.setState({
       IAEtoDelete: [],
-      circleIAEtoDelete: []
+      IAEmarkerToDelete: []
     })
 
     this.onChangeDeletingIAE(false)
@@ -177,9 +177,9 @@ class GameBoardContainer extends React.Component {
   onCancelDeletingIAE () {
     this.setState({
       iaeImplemented: this.state.iaeImplemented.concat(this.state.IAEtoDelete),
-      circleIaeImplemented: this.state.circleIaeImplemented.concat(this.state.circleIAEtoDelete),
+      iaeMarkerImplemented: this.state.iaeMarkerImplemented.concat(this.state.IAEmarkerToDelete),
       IAEtoDelete: [],
-      circleIAEtoDelete: []
+      IAEmarkerToDelete: []
     })
 
     this.onChangeDeletingIAE(false)
@@ -195,7 +195,7 @@ class GameBoardContainer extends React.Component {
         handleIAETypeChange={this.onChangeIAEType}
         handleCreatedIAE={this.onCreatedIAE}
         iaeImplemented={this.state.iaeImplemented}
-        circleIaeImplemented={this.state.circleIaeImplemented}
+        iaeMarkerImplemented={this.state.iaeMarkerImplemented}
         clearAllIAEs={this.clearAllIAEs}
         iaeGroupSelected={this.state.iaeGroupSelected}
         iaeTypeSelected={this.state.iaeTypeSelected}

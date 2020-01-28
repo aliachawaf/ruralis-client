@@ -1,0 +1,13 @@
+export const Description1 = require('./description1.png')
+export const Description2 = require('./description2.png')
+export const Description3 = require('./description3.png')
+export const Description4 = require('./description4.png')
+export const Description5 = require('./description5.png')
+export const Description6 = require('./description6.png')
+
+export const Map1 = require('./map1.png')
+export const Map2 = require('./map2.png')
+export const Map3 = require('./map3.png')
+export const Map4 = require('./map4.png')
+export const Map5 = require('./map5.png')
+export const Map6 = require('./map6.png')

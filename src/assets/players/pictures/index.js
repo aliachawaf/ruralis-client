@@ -1,0 +1,7 @@
+export const ReveurPic = require('./1.png')
+export const ConventionPic = require('./2.png')
+export const BuissonPic = require('./3.png')
+export const WatersPic = require('./4.png')
+export const TourdeplainePic = require('./5.png')
+export const SolamourPic = require('./6.png')
+export const CerecopePic = require('./7.png')

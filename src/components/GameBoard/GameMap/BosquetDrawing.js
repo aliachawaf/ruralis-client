@@ -12,23 +12,29 @@ const bosquetSize = 66
 const BosquetDrawing = (props) => {
   const { iae, handleDeleteIAE } = props
 
+  const iaeGroupInfos = mapLegend[iae.IAEGroup]
+  const iaeTypeInfos = iaeGroupInfos.iaeList[iae.IAEType]
+
   return (
     <Rectangle
       bounds={[
         [iae.center.lat - bosquetSize / 2, iae.center.lng - bosquetSize / 2],
         [iae.center.lat + bosquetSize / 2, iae.center.lng + bosquetSize / 2]
       ]}
-      color={mapLegend[iae.IAEGroup].color}
+      color={iaeGroupInfos.color}
       onClick={(e) => handleDeleteIAE(e, iae)}
     >
+
       <Tooltip direction='top'>
-        <Header content={mapLegend[iae.IAEGroup].iaeGroup} />
-        {mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName}
+        <Header content={iaeGroupInfos.iaeGroup} />
+        {iaeTypeInfos.iaeName}
       </Tooltip>
+
       <Marker
         position={iae.center}
-        icon={L.divIcon({ className: 'TO DO', html: 'TO DO' })}
+        icon={L.divIcon({ className: 'iaeLabel', html: iaeTypeInfos.label })}
       />
+
     </Rectangle>
   )
 }

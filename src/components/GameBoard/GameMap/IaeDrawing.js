@@ -2,25 +2,30 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import mapLegend from '../../../config/mapLegend'
-import { Tooltip } from 'react-leaflet'
+import { Marker, Tooltip } from 'react-leaflet'
 import { Header, Statistic } from 'semantic-ui-react'
 import PolylineDecorator from './PolylineDecorator'
+import L from 'leaflet'
+import './index.css'
 
 const IaeDrawing = (props) => {
   const { iae, handleDeleteIAE } = props
 
+  const iaeGroupInfos = mapLegend[iae.IAEGroup]
+  const iaeTypeInfos = iaeGroupInfos.iaeList[iae.IAEType]
+
   return (
     <PolylineDecorator
-      color={mapLegend[iae.IAEGroup].color}
+      color={iaeGroupInfos.color}
       fill
-      patterns={mapLegend[iae.IAEGroup].iaeList[iae.IAEType].decorator}
+      patterns={iaeTypeInfos.decorator}
       positions={iae.layerType === 'polyline' ? iae.coords : [iae.coords.concat(iae.coords[0])]}
       onClick={(e) => handleDeleteIAE(e, iae)}
     >
 
       <Tooltip direction='top'>
-        <Header content={mapLegend[iae.IAEGroup].iaeGroup} />
-        {mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName}
+        <Header content={iaeGroupInfos.iaeGroup} />
+        {iaeTypeInfos.iaeName}
         <br />
         <Statistic
           value={iae.unity}
@@ -28,6 +33,14 @@ const IaeDrawing = (props) => {
           size='mini'
         />
       </Tooltip>
+
+      {iae.layerType !== 'polyline' &&
+
+        <Marker
+          position={L.latLngBounds(iae.coords).getCenter()}
+          icon={L.divIcon({ className: 'iaeLabel', html: iaeTypeInfos.label })}
+        />}
+
     </PolylineDecorator>
   )
 }

@@ -10,10 +10,11 @@ class AllGamesHistoryContainer extends React.Component {
     this.props.fetchAllGames()
   }
 
+  redirectToGameHistory = (idGame) => { this.props.history.push('/history/game/' + idGame) }
+
   render () {
-    console.log('la')
     return (
-      <AllGamesHistory />
+      <AllGamesHistory redirectToGameHistory={this.redirectToGameHistory} />
     )
   }
 }

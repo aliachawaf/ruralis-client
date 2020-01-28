@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Divider, Header, Icon, Image, List, Message, Popup, Segment } from 'semantic-ui-react'
-import score from '../../assets/score.png'
 import { connect } from 'react-redux'
 import scenarii from '../../config/scenarii'
 import playersList from '../../config/playersList'
+import GameScore from '../common/GameScore'
 
 const GameInfosHistory = (props) => {
   const gamePlayersInfos = playersList.filter(p => props.gamePlayers.includes(p.number))
@@ -35,15 +35,12 @@ const GameInfosHistory = (props) => {
 
         <Divider />
 
-        <Segment basic style={{ position: 'relative' }}>
-          <Image src={score} />
-
-          <Header style={{ position: 'absolute', left: '13%', top: '10%' }} content={props.game.production} />
-          <Header style={{ position: 'absolute', left: '35%', top: '10%' }} content={props.game.tempsTravail} />
-          <Header style={{ position: 'absolute', left: '58%', top: '10%' }} content={props.game.environnement} />
-          <Header style={{ position: 'absolute', left: '80%', top: '10%' }} content={props.game.ancrageSocial} />
-
-        </Segment>
+        <GameScore
+          production={props.game.production}
+          tempsTravail={props.game.tempsTravail}
+          environnement={props.game.environnement}
+          ancrageSocial={props.game.ancrageSocial}
+        />
 
         <Divider />
 

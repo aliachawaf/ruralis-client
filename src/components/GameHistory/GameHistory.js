@@ -11,7 +11,7 @@ import GameInfosHistory from './GameInfosHistory'
 const GameHistory = React.forwardRef((props, ref) => {
   return (
     <div>
-      <RuralisHeader title='Historique des parties' />
+      <RuralisHeader title={'Historique de la partie ' + props.game._id} />
 
       <Segment basic>
 

@@ -9,9 +9,14 @@ import { connect } from 'react-redux'
 import GameInfosHistory from './GameInfosHistory'
 
 const GameHistory = React.forwardRef((props, ref) => {
+  const breadcrumbSections = [
+    { key: 'history', content: 'Historique', link: true, href: '/history/games', style: { color: '#FFFFFF' } },
+    { key: props.game._id, content: 'Partie ' + props.game._id, active: true, as: 'h3' }
+  ]
+
   return (
     <div>
-      <RuralisHeader title={'Historique de la partie ' + props.game._id} />
+      <RuralisHeader breadcrumbSections={breadcrumbSections} />
 
       <Segment basic>
 

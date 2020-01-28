@@ -5,6 +5,10 @@ import PropTypes from 'prop-types'
 import PlayersSelect from './Players/PlayersSelect'
 import ScenarioSelect from './Scenario/ScenarioSelect'
 
+const breadcrumbSections = [
+  { key: 'newGame', content: 'Nouvelle Partie', active: true, as: 'h3' }
+]
+
 const NewGame = (props) => {
   const {
     handleOnClick,
@@ -19,7 +23,7 @@ const NewGame = (props) => {
 
   return (
     <div>
-      <RuralisHeader title='Nouvelle Partie' />
+      <RuralisHeader breadcrumbSections={breadcrumbSections} />
 
       <Container>
         <Header as='h3' icon='users' content='Choix des joueurs' dividing />

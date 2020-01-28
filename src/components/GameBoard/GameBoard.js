@@ -34,11 +34,15 @@ const GameBoard = React.forwardRef((props, ref) => {
     handleStartGame
   } = props
 
+  const breadcrumbSections = [
+    { key: game._id, content: 'Partie ' + game._id, active: true, as: 'h3' }
+  ]
+
   const scenarioInfos = scenarii.find(s => s.number === game.scenario)
 
   return (
     <div>
-      <RuralisHeader title={'Partie ' + game._id} />
+      <RuralisHeader breadcrumbSections={breadcrumbSections} />
       <Segment basic>
 
         {

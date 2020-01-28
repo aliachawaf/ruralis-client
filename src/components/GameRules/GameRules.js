@@ -3,9 +3,13 @@ import { PDFReader } from 'reactjs-pdf-reader'
 import rules from '../../assets/gameRules.pdf'
 import RuralisHeader from '../common/RuralisHeader'
 
+const breadcrumbSections = [
+  { key: 'rules', content: 'Règles du jeu', active: true, as: 'h3' }
+]
+
 const GameRules = () => (
   <div>
-    <RuralisHeader title='Règles du jeu' />
+    <RuralisHeader breadcrumbSections={breadcrumbSections} />
     <PDFReader
       url={rules}
       showAllPage

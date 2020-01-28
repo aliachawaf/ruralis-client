@@ -4,10 +4,14 @@ import { connect } from 'react-redux'
 import RuralisHeader from '../common/RuralisHeader'
 import { Container, Divider, Icon, Statistic, Table } from 'semantic-ui-react'
 
+const breadcrumbSections = [
+  { key: 'history', content: 'Historique des parties', active: true, as: 'h3' }
+]
+
 const AllGamesHistory = (props) => {
   return (
     <div>
-      <RuralisHeader title='Historique des parties' />
+      <RuralisHeader breadcrumbSections={breadcrumbSections} />
 
       <Container>
         <Statistic.Group>

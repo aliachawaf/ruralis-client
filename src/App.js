@@ -22,6 +22,7 @@ function App () {
             <Route exact path='/game/board/:idGame' component={GameBoardContainer} />
             <Route exact path='/game/new' component={NewGameContainer} />
             <Route exact path='/game/rules' component={GameRules} />
+            <Route exact path='/player/:playerNumber' component={PlayerRoleContainer} />
             <Route exact path='/player/:playerNumber/role' component={PlayerRoleContainer} />
             <Route exact path='/player/:playerNumber/IAE' component={ListIAEContainer} />
             <Route exact path='/player/:playerNumber/GEA' component={LivretGEAContainer} />

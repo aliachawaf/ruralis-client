@@ -81,7 +81,6 @@ class GameBoardContainer extends React.Component {
 
       if (nbMares === 5) {
         this.setState({ errorMare: true })
-        console.log('error Mare')
         stop = true
       }
     }
@@ -248,6 +247,7 @@ class GameBoardContainer extends React.Component {
   onCloseErrorPrairie = () => { this.setState({ errorPrairie: false }) }
   onCloseErrorZero = () => { this.setState({ errorZero: false }) }
   onCloseErrorTypesIAE = () => { this.setState({ errorTypesIAE: false }) }
+  onCloseErrorMare = () => { this.setState({ errorMare: false }) }
 
   clearIAEsimplemented = () => { this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] }) }
 
@@ -280,6 +280,8 @@ class GameBoardContainer extends React.Component {
         handleOnCloseErrorScore={this.onCloseErrorZero}
         errorTypesIAE={this.state.errorTypesIAE}
         handleOnCloseErrorTypesIAE={this.onCloseErrorTypesIAE}
+        errorMare={this.state.errorMare}
+        handleOnCloseErrorMare={this.onCloseErrorMare}
       />
     )
   }

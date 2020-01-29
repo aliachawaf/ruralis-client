@@ -38,7 +38,9 @@ const GameBoard = React.forwardRef((props, ref) => {
     errorScore,
     handleOnCloseErrorScore,
     errorTypesIAE,
-    handleOnCloseErrorTypesIAE
+    handleOnCloseErrorTypesIAE,
+    errorMare,
+    handleOnCloseErrorMare
   } = props
 
   const breadcrumbSections = [
@@ -131,6 +133,14 @@ const GameBoard = React.forwardRef((props, ref) => {
         />
       </Modal>
 
+      <Modal open={errorMare} closeIcon size='large' onClose={handleOnCloseErrorMare}>
+        <Header
+          as='h1'
+          icon='warning'
+          content='Vous ne pouvez pas implanter plus de 5 mares.'
+        />
+      </Modal>
+
     </div>
   )
 })
@@ -164,7 +174,9 @@ GameBoard.propTypes = {
   errorScore: PropTypes.bool.isRequired,
   handleOnCloseErrorScore: PropTypes.func.isRequired,
   errorTypesIAE: PropTypes.bool.isRequired,
-  handleOnCloseErrorTypesIAE: PropTypes.func.isRequired
+  handleOnCloseErrorTypesIAE: PropTypes.func.isRequired,
+  errorMare: PropTypes.bool.isRequired,
+  handleOnCloseErrorMare: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {

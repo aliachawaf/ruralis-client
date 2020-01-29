@@ -9,7 +9,9 @@ import gameMap from '../../assets/gameMap.png'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import { connect } from 'react-redux'
 import IaeDrawing from '../GameBoard/GameMap/IaeDrawing'
-import CircleIaeDrawing from '../GameBoard/GameMap/CircleIaeDrawing'
+import mapLegend from '../../config/mapLegend'
+import BosquetDrawing from '../GameBoard/GameMap/BosquetDrawing'
+import MareDrawing from '../GameBoard/GameMap/MareDrawing'
 
 const GameMapHistory = React.forwardRef((props, ref) => {
   const {
@@ -41,7 +43,14 @@ const GameMapHistory = React.forwardRef((props, ref) => {
         iaeAlreadyImplemented.map((iae, index) => <IaeDrawing key={index} iae={iae} />)
       }
       {
-        circleIaeAlreadyImplemented.map((iae, index) => <CircleIaeDrawing key={index} iae={iae} />)
+        circleIaeAlreadyImplemented
+          .filter(iae => mapLegend[iae.IAEGroup].iaeGroup === 'Bosquet')
+          .map((iae, index) => <BosquetDrawing key={index} iae={iae} />)
+      }
+      {
+        circleIaeAlreadyImplemented
+          .filter(iae => mapLegend[iae.IAEGroup].iaeGroup === 'Mares')
+          .map((iae, index) => <MareDrawing key={index} iae={iae} />)
       }
 
     </Map>

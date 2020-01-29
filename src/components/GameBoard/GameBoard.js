@@ -19,7 +19,7 @@ const GameBoard = React.forwardRef((props, ref) => {
     bounds,
     handleCreatedIAE,
     iaeImplemented,
-    circleIaeImplemented,
+    iaeMarkerImplemented,
     clearAllIAEs,
     handleonChangeDeleting,
     handleDeleteIAE,
@@ -62,7 +62,7 @@ const GameBoard = React.forwardRef((props, ref) => {
               onCreatedIAE={handleCreatedIAE}
               iaeGroupSelected={iaeGroupSelected}
               iaeImplemented={iaeImplemented}
-              circleIaeImplemented={circleIaeImplemented}
+              iaeMarkerImplemented={iaeMarkerImplemented}
               clearAllIAEs={clearAllIAEs}
               handleDeleteIAE={handleDeleteIAE}
               handleonChangeDeleting={handleonChangeDeleting}
@@ -89,7 +89,7 @@ const GameBoard = React.forwardRef((props, ref) => {
           <Grid.Column width={4}>
             <GameStepContainer
               iaeImplemented={iaeImplemented}
-              circleIaeImplemented={circleIaeImplemented}
+              iaeMarkerImplemented={iaeMarkerImplemented}
               actionSelected={actionSelected}
               onChangeAction={handleOnChangeAction}
             />
@@ -107,7 +107,7 @@ GameBoard.propTypes = {
   bounds: PropTypes.array.isRequired,
   handleCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
-  circleIaeImplemented: PropTypes.array.isRequired,
+  iaeMarkerImplemented: PropTypes.array.isRequired,
   clearAllIAEs: PropTypes.func.isRequired,
   handleonChangeDeleting: PropTypes.func.isRequired,
   handleDeleteIAE: PropTypes.func.isRequired,
@@ -127,7 +127,7 @@ GameBoard.propTypes = {
 
 GameBoard.defaultProps = {
   iaeImplemented: [],
-  circleIaeImplemented: [],
+  iaeMarkerImplemented: [],
   iaeGroupSelected: 0,
   iaeTypeSelected: 0
 }

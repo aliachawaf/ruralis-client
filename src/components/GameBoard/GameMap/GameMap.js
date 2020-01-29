@@ -12,19 +12,20 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import mapLegend from '../../../config/mapLegend'
 import { connect } from 'react-redux'
 import IaeDrawing from './IaeDrawing'
-import CircleIaeDrawing from './CircleIaeDrawing'
 import Control from 'react-leaflet-control'
 import { Button } from 'semantic-ui-react'
+import BosquetDrawing from './BosquetDrawing'
+import MareDrawing from './MareDrawing'
 
 const GameMap = React.forwardRef((props, ref) => {
   const {
     bounds,
     onCreatedIAE,
     iaeImplemented,
-    circleIaeImplemented,
+    iaeMarkerImplemented,
     iaeGroupSelected,
     iaeAlreadyImplemented,
-    circleIaeAlreadyImplemented,
+    iaeMarkerAlreadyImplemented,
     clearAllIAEs,
     handleonChangeDeleting,
     handleDeleteIAE,
@@ -91,15 +92,32 @@ const GameMap = React.forwardRef((props, ref) => {
         iaeAlreadyImplemented.map((iae, index) => <IaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
       {
-        circleIaeAlreadyImplemented.map((iae, index) => <CircleIaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
+        iaeMarkerAlreadyImplemented
+          .filter(iae => mapLegend[iae.IAEGroup].iaeGroup === 'Bosquet')
+          .map((iae, index) => <BosquetDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
+      }
+
+      {
+        iaeMarkerAlreadyImplemented
+          .filter(iae => mapLegend[iae.IAEGroup].iaeGroup === 'Mares')
+          .map((iae, index) => <MareDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
 
       {/* NEW IAE IMPLEMENTED DRAWINGS */}
       {
         iaeImplemented.map((iae, index) => <IaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
+
       {
-        circleIaeImplemented.map((iae, index) => <CircleIaeDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
+        iaeMarkerImplemented
+          .filter(iae => mapLegend[iae.IAEGroup].iaeGroup === 'Bosquet')
+          .map((iae, index) => <BosquetDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
+      }
+
+      {
+        iaeMarkerImplemented
+          .filter(iae => mapLegend[iae.IAEGroup].iaeGroup === 'Mares')
+          .map((iae, index) => <MareDrawing key={index} iae={iae} handleDeleteIAE={handleDeleteIAE} />)
       }
 
     </Map>
@@ -111,10 +129,10 @@ GameMap.propTypes = {
   bounds: PropTypes.array.isRequired,
   onCreatedIAE: PropTypes.func.isRequired,
   iaeImplemented: PropTypes.array.isRequired,
-  circleIaeImplemented: PropTypes.array.isRequired,
+  iaeMarkerImplemented: PropTypes.array.isRequired,
   iaeGroupSelected: PropTypes.number.isRequired,
   iaeAlreadyImplemented: PropTypes.array.isRequired,
-  circleIaeAlreadyImplemented: PropTypes.array.isRequired,
+  iaeMarkerAlreadyImplemented: PropTypes.array.isRequired,
   clearAllIAEs: PropTypes.func.isRequired,
   handleonChangeDeleting: PropTypes.func.isRequired,
   handleDeleteIAE: PropTypes.func.isRequired,
@@ -124,16 +142,16 @@ GameMap.propTypes = {
 
 GameMap.defaultProps = {
   iaeImplemented: [],
-  circleIaeImplemented: [],
+  iaeMarkerImplemented: [],
   iaeGroupSelected: 0,
   iaeAlreadyImplemented: [],
-  circleIaeAlreadyImplemented: []
+  iaeMarkerAlreadyImplemented: []
 }
 
 const mapStateToProps = state => ({
   game: state.game,
   iaeAlreadyImplemented: state.game.implementedIAE,
-  circleIaeAlreadyImplemented: state.game.circleIAEs
+  iaeMarkerAlreadyImplemented: state.game.circleIAEs
 })
 
 export default connect(

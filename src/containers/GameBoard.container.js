@@ -21,7 +21,10 @@ class GameBoardContainer extends React.Component {
       actionSelected: -1,
       deletingIAE: false,
       IAEtoDelete: [],
-      IAEmarkerToDelete: []
+      IAEmarkerToDelete: [],
+      errorPrairie: false,
+      errorZero: false,
+      errorTypesIAE: false
     }
     this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
@@ -54,33 +57,68 @@ class GameBoardContainer extends React.Component {
   onCreatedIAE (e) {
     // Remove the layer drawn from map, then add it in state, then display it from state
     this.mapRef.current.leafletElement.removeLayer(e.layer)
+    let stop = false
 
-    if (e.layerType === 'circlemarker') {
-      const newIAE = {
-        IAEGroup: this.state.iaeGroupSelected,
-        IAEType: this.state.iaeTypeSelected,
-        center: e.layer._latlng,
-        unity: 1,
-        layerType: e.layerType
+    // check the rule of 5 prairie
+    if (mapLegend[this.state.iaeGroupSelected].iaeGroup === 'Prairie Permanente') {
+      let nbPrairie = 0
+      this.props.game.implementedIAE.forEach(iae => { if (iae.IAEGroup === this.state.iaeGroupSelected) { nbPrairie += iae.unity } })
+      this.state.iaeImplemented.forEach(iae => { if (iae.IAEGroup === this.state.iaeGroupSelected) { nbPrairie += iae.unity } })
+      nbPrairie += this.calculNbUnite(e.layer._latlngs)
+
+      if (nbPrairie >= 5 && !this.props.game.actionsDone.includes(3)) {
+        this.setState({ errorPrairie: true })
+        stop = true
       }
+    }
 
-      this.setState({
-        iaeMarkerImplemented: this.state.iaeMarkerImplemented.concat(newIAE)
-      })
-      this.updateScore(newIAE)
-    } else {
-      const newIAE = {
-        IAEGroup: this.state.iaeGroupSelected,
-        IAEType: this.state.iaeTypeSelected,
-        coords: (e.layerType === 'polyline') ? e.layer._latlngs : e.layer._latlngs[0],
-        unity: this.calculNbUnite(e.layer._latlngs),
-        layerType: e.layerType
+    // check 2 types IAE
+    if (this.state.iaeImplemented.length > 0) {
+      if (this.state.iaeImplemented[0].IAEGroup !== this.state.iaeGroupSelected) {
+        this.setState({ errorTypesIAE: true })
+        stop = true
       }
+    }
 
-      this.setState({
-        iaeImplemented: this.state.iaeImplemented.concat(newIAE)
-      })
-      this.updateScore(newIAE)
+    // check 2 types IAE
+    if (this.state.iaeMarkerImplemented.length > 0) {
+      if (this.state.iaeMarkerImplemented[0].IAEGroup !== this.state.iaeGroupSelected) {
+        this.setState({ errorTypesIAE: true })
+        stop = true
+      }
+    }
+
+    if (!stop) {
+      if (e.layerType === 'circlemarker') {
+        const newIAE = {
+          IAEGroup: this.state.iaeGroupSelected,
+          IAEType: this.state.iaeTypeSelected,
+          center: e.layer._latlng,
+          unity: 1,
+          layerType: e.layerType
+        }
+
+        this.setState({
+          iaeMarkerImplemented: this.state.iaeMarkerImplemented.concat(newIAE)
+        })
+        this.updateScore(newIAE)
+      } else {
+        const newIAE = {
+          IAEGroup: this.state.iaeGroupSelected,
+          IAEType: this.state.iaeTypeSelected,
+          coords: (e.layerType === 'polyline') ? e.layer._latlngs : e.layer._latlngs[0],
+          unity: this.calculNbUnite(e.layer._latlngs),
+          layerType: e.layerType
+        }
+
+        if (this.updateScore(newIAE)) {
+          this.setState({
+            iaeImplemented: this.state.iaeImplemented.concat(newIAE)
+          })
+        } else {
+          this.setState({ errorZero: true })
+        }
+      }
     }
   }
 
@@ -95,7 +133,12 @@ class GameBoardContainer extends React.Component {
     const newTempsTravail = Math.round(this.props.game.tempsTravail + nbUnite * tempsTravailPerUnit)
     const newEnv = Math.round(this.props.game.environnement + nbUnite * envPerUnit)
 
-    this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
+    if (newTempsTravail >= 0) {
+      this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
+      return true
+    } else {
+      return false
+    }
   }
 
   calculNbUnite (iaeCoords) {
@@ -106,7 +149,10 @@ class GameBoardContainer extends React.Component {
       const arr = iaeCoords[0]
       const X = []
       const Y = []
-      arr.forEach(coord => { X.push(coord.lng); Y.push(coord.lat) })
+      arr.forEach(coord => {
+        X.push(coord.lng)
+        Y.push(coord.lat)
+      })
       return Math.round((Math.abs(this.polygonArea(X, Y, arr.length)) / 22500) * 10) / 10
     }
   }
@@ -185,6 +231,12 @@ class GameBoardContainer extends React.Component {
     this.onChangeDeletingIAE(false)
   }
 
+  onCloseErrorPrairie = () => { this.setState({ errorPrairie: false }) }
+  onCloseErrorZero = () => { this.setState({ errorZero: false }) }
+  onCloseErrorTypesIAE = () => { this.setState({ errorTypesIAE: false }) }
+
+  clearIAEsimplemented = () => { this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] }) }
+
   render () {
     return (
       <GameBoard
@@ -201,11 +253,19 @@ class GameBoardContainer extends React.Component {
         iaeTypeSelected={this.state.iaeTypeSelected}
         actionSelected={this.state.actionSelected}
         handleOnChangeAction={this.onChangeAction}
+        clearIAEsimplemented={this.clearIAEsimplemented}
 
         handleonChangeDeleting={this.onChangeDeletingIAE}
         handleDeleteIAE={this.onDeleteIAE}
         handleValidateDeletingIAE={this.onValidateDeletingIAE}
         handleCancelDeletingIAE={this.onCancelDeletingIAE}
+
+        errorPrairie={this.state.errorPrairie}
+        handleOnCloseErrorPrairie={this.onCloseErrorPrairie}
+        errorScore={this.state.errorZero}
+        handleOnCloseErrorScore={this.onCloseErrorZero}
+        errorTypesIAE={this.state.errorTypesIAE}
+        handleOnCloseErrorTypesIAE={this.onCloseErrorTypesIAE}
       />
     )
   }

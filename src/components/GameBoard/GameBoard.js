@@ -6,7 +6,7 @@ import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'
 
-import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Image, Message, Modal, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapLegend/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
@@ -30,8 +30,15 @@ const GameBoard = React.forwardRef((props, ref) => {
     handleIAETypeChange,
     actionSelected,
     handleOnChangeAction,
+    clearIAEsimplemented,
     opened,
-    handleStartGame
+    handleStartGame,
+    errorPrairie,
+    handleOnCloseErrorPrairie,
+    errorScore,
+    handleOnCloseErrorScore,
+    errorTypesIAE,
+    handleOnCloseErrorTypesIAE
   } = props
 
   const breadcrumbSections = [
@@ -90,6 +97,7 @@ const GameBoard = React.forwardRef((props, ref) => {
             <GameStepContainer
               iaeImplemented={iaeImplemented}
               iaeMarkerImplemented={iaeMarkerImplemented}
+              clearIAEsimplemented={clearIAEsimplemented}
               actionSelected={actionSelected}
               onChangeAction={handleOnChangeAction}
             />
@@ -97,6 +105,32 @@ const GameBoard = React.forwardRef((props, ref) => {
 
         </Grid>
       </Segment>
+
+      {/* MODALS FOR MESSAGE ERROR */}
+      <Modal open={errorPrairie} closeIcon size='large' onClose={handleOnCloseErrorPrairie}>
+        <Header
+          as='h1'
+          icon='warning'
+          content='Vous ne pouvez pas implanter plus de 5 unités de prairies'
+        />
+      </Modal>
+
+      <Modal open={errorScore} closeIcon size='large' onClose={handleOnCloseErrorScore}>
+        <Header
+          as='h1'
+          icon='warning'
+          content='Le temps de travail ne peut pas être inférieur à 0.'
+        />
+      </Modal>
+
+      <Modal open={errorTypesIAE} closeIcon size='large' onClose={handleOnCloseErrorTypesIAE}>
+        <Header
+          as='h1'
+          icon='warning'
+          content={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'}
+        />
+      </Modal>
+
     </div>
   )
 })
@@ -120,9 +154,17 @@ GameBoard.propTypes = {
   // Game Step
   actionSelected: PropTypes.number.isRequired,
   handleOnChangeAction: PropTypes.func.isRequired,
+  clearIAEsimplemented: PropTypes.func.isRequired,
   // Start Game Modal
   opened: PropTypes.bool.isRequired,
-  handleStartGame: PropTypes.func.isRequired
+  handleStartGame: PropTypes.func.isRequired,
+  // Errors
+  errorPrairie: PropTypes.bool.isRequired,
+  handleOnCloseErrorPrairie: PropTypes.func.isRequired,
+  errorScore: PropTypes.bool.isRequired,
+  handleOnCloseErrorScore: PropTypes.func.isRequired,
+  errorTypesIAE: PropTypes.bool.isRequired,
+  handleOnCloseErrorTypesIAE: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {

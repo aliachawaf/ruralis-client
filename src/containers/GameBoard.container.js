@@ -24,7 +24,8 @@ class GameBoardContainer extends React.Component {
       IAEmarkerToDelete: [],
       errorPrairie: false,
       errorZero: false,
-      errorTypesIAE: false
+      errorTypesIAE: false,
+      errorMare: false
     }
     this.mapRef = React.createRef()
     this.onStartGame = this.onStartGame.bind(this)
@@ -68,6 +69,19 @@ class GameBoardContainer extends React.Component {
 
       if (nbPrairie >= 5 && !this.props.game.actionsDone.includes(3)) {
         this.setState({ errorPrairie: true })
+        stop = true
+      }
+    }
+
+    // check the rule of 5 mares
+    if (mapLegend[this.state.iaeGroupSelected].iaeGroup === 'Mares') {
+      let nbMares = 0
+      this.props.game.circleIAEs.forEach(iae => { if (iae.IAEGroup === this.state.iaeGroupSelected) { nbMares++ } })
+      this.state.iaeMarkerImplemented.forEach(iae => { if (iae.IAEGroup === this.state.iaeGroupSelected) { nbMares++ } })
+
+      if (nbMares === 5) {
+        this.setState({ errorMare: true })
+        console.log('error Mare')
         stop = true
       }
     }

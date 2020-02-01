@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import GameBoard from '../components/GameBoard/GameBoard'
 import PropTypes from 'prop-types'
+import L from 'leaflet'
 
 import mapLegend from '../config/mapLegend'
 
@@ -21,6 +22,7 @@ class GameBoardContainer extends React.Component {
       actionSelected: -1,
       deletingIAE: false,
       IAEtoDelete: [],
+      decoratorMarkersToDelete: [],
       IAEmarkerToDelete: [],
       errorPrairie: false,
       errorZero: false,
@@ -198,6 +200,7 @@ class GameBoardContainer extends React.Component {
     }
   }
 
+  /** *************** IAE DELETING  *****************/
   clearAllIAEs () {
     this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] })
   }
@@ -220,13 +223,43 @@ class GameBoardContainer extends React.Component {
           IAEtoDelete: this.state.IAEtoDelete.concat(iae),
           iaeImplemented: this.state.iaeImplemented.filter((_, i) => i !== indexIaeToRemove)
         })
+
+        this.setDecoratorMarkersToDelete(iae)
       }
+    }
+  }
+
+  // Get the markers used to decorate the iae in order to delete them
+  setDecoratorMarkersToDelete (iae) {
+    // Get all the markers present on the map
+    let markers = []
+    this.mapRef.current.leafletElement.eachLayer(function (layer) {
+      if (layer instanceof L.Marker) {
+        markers = markers.concat(layer)
+      }
+    })
+
+    // Only iae lines containes decorator markers (not polygons)
+    if (iae.layerType === 'polyline') {
+      const iaeBounds = L.latLngBounds(iae.coords[0], iae.coords[1])
+
+      markers.map((marker, index) => {
+        if (iaeBounds.contains(marker._latlng)) {
+          // Set marker in state in order to add again on map if deletion is canceled
+          this.setState({ decoratorMarkersToDelete: this.state.decoratorMarkersToDelete.concat(marker) })
+
+          // Remove marker from map
+          this.mapRef.current.leafletElement.removeLayer(marker)
+        }
+      }
+      )
     }
   }
 
   onValidateDeletingIAE () {
     this.setState({
       IAEtoDelete: [],
+      decoratorMarkersToDelete: [],
       IAEmarkerToDelete: []
     })
 
@@ -234,16 +267,23 @@ class GameBoardContainer extends React.Component {
   }
 
   onCancelDeletingIAE () {
+    // Add decorator markers removed
+    this.state.decoratorMarkersToDelete.map(marker => this.mapRef.current.leafletElement.addLayer(marker))
+
     this.setState({
       iaeImplemented: this.state.iaeImplemented.concat(this.state.IAEtoDelete),
       iaeMarkerImplemented: this.state.iaeMarkerImplemented.concat(this.state.IAEmarkerToDelete),
       IAEtoDelete: [],
+      decoratorMarkersToDelete: [],
       IAEmarkerToDelete: []
     })
 
     this.onChangeDeletingIAE(false)
   }
 
+  /*************************************************/
+
+  /** *************** ERRORS HANDLERS  *****************/
   onCloseErrorPrairie = () => { this.setState({ errorPrairie: false }) }
   onCloseErrorZero = () => { this.setState({ errorZero: false }) }
   onCloseErrorTypesIAE = () => { this.setState({ errorTypesIAE: false }) }

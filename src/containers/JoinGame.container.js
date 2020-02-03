@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { fetchAllGames } from '../actions/gameActions'
-import JoinGame from '../components/JoinGame/JoinGame'
+import JoinGame from '../components/Join/JoinGame'
 
 class JoinGameContainer extends React.Component {
   componentDidMount () {

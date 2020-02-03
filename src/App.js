@@ -6,6 +6,7 @@ import store from './store'
 /** Components **/
 import HomeRuralis from './components/Home/HomeRuralis'
 import GameRules from './components/GameRules/GameRules'
+import JoinPlayerCards from './components/Join/JoinPlayerCards'
 /** Containers **/
 import GameBoardContainer from './containers/GameBoard.container'
 import NewGameContainer from './containers/NewGame.container'
@@ -26,6 +27,7 @@ function App () {
             <Route exact path='/game/board/:idGame' component={GameBoardContainer} />
             <Route exact path='/new/game' component={NewGameContainer} />
             <Route exact path='/join/game' component={JoinGameContainer} />
+            <Route exact path='/join/playerCards' component={JoinPlayerCards} />
             <Route exact path='/game/rules' component={GameRules} />
             <Route exact path='/player/:playerNumber' component={PlayerRoleContainer} />
             <Route exact path='/player/:playerNumber/role' component={PlayerRoleContainer} />

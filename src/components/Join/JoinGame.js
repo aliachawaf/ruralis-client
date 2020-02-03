@@ -5,7 +5,7 @@ import RuralisHeader from '../common/RuralisHeader'
 import { Container, Divider, Icon, Statistic, Table } from 'semantic-ui-react'
 
 const breadcrumbSections = [
-  { key: 'join', content: 'Rejoindre une partie', active: true, as: 'h3' }
+  { key: 'joinGame', content: 'Rejoindre une partie', active: true, as: 'h3' }
 ]
 
 const JoinGame = (props) => {

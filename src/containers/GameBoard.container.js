@@ -243,7 +243,7 @@ class GameBoardContainer extends React.Component {
     if (iae.layerType === 'polyline') {
       const iaeBounds = L.latLngBounds(iae.coords[0], iae.coords[1])
 
-      markers.map((marker, index) => {
+      markers.map(marker => {
         if (iaeBounds.contains(marker._latlng)) {
           // Set marker in state in order to add again on map if deletion is canceled
           this.setState({ decoratorMarkersToDelete: this.state.decoratorMarkersToDelete.concat(marker) })
@@ -281,13 +281,14 @@ class GameBoardContainer extends React.Component {
     this.onChangeDeletingIAE(false)
   }
 
-  /*************************************************/
-
-  /** *************** ERRORS HANDLERS  *****************/
-  onCloseErrorPrairie = () => { this.setState({ errorPrairie: false }) }
-  onCloseErrorZero = () => { this.setState({ errorZero: false }) }
-  onCloseErrorTypesIAE = () => { this.setState({ errorTypesIAE: false }) }
-  onCloseErrorMare = () => { this.setState({ errorMare: false }) }
+  onCloseError = () => {
+    this.setState({
+      errorPrairie: false,
+      errorZero: false,
+      errorTypesIAE: false,
+      errorMare: false
+    })
+  }
 
   clearIAEsimplemented = () => { this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] }) }
 
@@ -315,13 +316,10 @@ class GameBoardContainer extends React.Component {
         handleCancelDeletingIAE={this.onCancelDeletingIAE}
 
         errorPrairie={this.state.errorPrairie}
-        handleOnCloseErrorPrairie={this.onCloseErrorPrairie}
         errorScore={this.state.errorZero}
-        handleOnCloseErrorScore={this.onCloseErrorZero}
         errorTypesIAE={this.state.errorTypesIAE}
-        handleOnCloseErrorTypesIAE={this.onCloseErrorTypesIAE}
         errorMare={this.state.errorMare}
-        handleOnCloseErrorMare={this.onCloseErrorMare}
+        handleOnCloseError={this.onCloseError}
       />
     )
   }

@@ -35,13 +35,10 @@ const GameBoard = React.forwardRef((props, ref) => {
     opened,
     handleStartGame,
     errorPrairie,
-    handleOnCloseErrorPrairie,
     errorScore,
-    handleOnCloseErrorScore,
     errorTypesIAE,
-    handleOnCloseErrorTypesIAE,
     errorMare,
-    handleOnCloseErrorMare
+    handleOnCloseError
   } = props
 
   const breadcrumbSections = [
@@ -110,10 +107,10 @@ const GameBoard = React.forwardRef((props, ref) => {
       </Segment>
 
       {/* MODALS FOR MESSAGE ERROR */}
-      <MessageErrorModal opened={errorPrairie} message='Vous ne pouvez pas implanter plus de 5 unités de prairies' handleOnClose={handleOnCloseErrorPrairie} />
-      <MessageErrorModal opened={errorScore} message='Le temps de travail ne peut pas être inférieur à 0.' handleOnClose={handleOnCloseErrorScore} />
-      <MessageErrorModal opened={errorTypesIAE} message={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'} handleOnClose={handleOnCloseErrorTypesIAE} />
-      <MessageErrorModal opened={errorMare} message='Vous ne pouvez pas implanter plus de 5 mares.' handleOnClose={handleOnCloseErrorMare} />
+      <MessageErrorModal opened={errorPrairie} message='Vous ne pouvez pas implanter plus de 5 unités de prairies' handleOnClose={handleOnCloseError} />
+      <MessageErrorModal opened={errorScore} message='Le temps de travail ne peut pas être inférieur à 0.' handleOnClose={handleOnCloseError} />
+      <MessageErrorModal opened={errorTypesIAE} message={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'} handleOnClose={handleOnCloseError} />
+      <MessageErrorModal opened={errorMare} message='Vous ne pouvez pas implanter plus de 5 mares.' handleOnClose={handleOnCloseError} />
 
     </div>
   )
@@ -144,13 +141,10 @@ GameBoard.propTypes = {
   handleStartGame: PropTypes.func.isRequired,
   // Errors
   errorPrairie: PropTypes.bool.isRequired,
-  handleOnCloseErrorPrairie: PropTypes.func.isRequired,
   errorScore: PropTypes.bool.isRequired,
-  handleOnCloseErrorScore: PropTypes.func.isRequired,
   errorTypesIAE: PropTypes.bool.isRequired,
-  handleOnCloseErrorTypesIAE: PropTypes.func.isRequired,
   errorMare: PropTypes.bool.isRequired,
-  handleOnCloseErrorMare: PropTypes.func.isRequired
+  handleOnCloseError: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {

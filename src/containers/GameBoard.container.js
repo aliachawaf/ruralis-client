@@ -116,7 +116,7 @@ class GameBoardContainer extends React.Component {
         this.setState({
           iaeMarkerImplemented: this.state.iaeMarkerImplemented.concat(newIAE)
         })
-        this.updateScore(newIAE)
+        this.updateScore(newIAE, true)
       } else {
         const newIAE = {
           IAEGroup: this.state.iaeGroupSelected,
@@ -126,7 +126,7 @@ class GameBoardContainer extends React.Component {
           layerType: e.layerType
         }
 
-        if (this.updateScore(newIAE)) {
+        if (this.updateScore(newIAE, true)) {
           this.setState({
             iaeImplemented: this.state.iaeImplemented.concat(newIAE)
           })
@@ -137,16 +137,25 @@ class GameBoardContainer extends React.Component {
     }
   }
 
-  updateScore (newIAE) {
-    const nbUnite = newIAE.unity
+  // Update the score with an IAE depending if it is added or deleted
+  updateScore (IAE, iaeAdded) {
+    const nbUnite = IAE.unity
 
-    const envPerUnit = mapLegend[newIAE.IAEGroup].environment
-    const tempsTravailPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].workingTime
-    const productionPerUnit = mapLegend[newIAE.IAEGroup].iaeList[newIAE.IAEType].production
+    const envPerUnit = mapLegend[IAE.IAEGroup].environment
+    const tempsTravailPerUnit = mapLegend[IAE.IAEGroup].iaeList[IAE.IAEType].workingTime
+    const productionPerUnit = mapLegend[IAE.IAEGroup].iaeList[IAE.IAEType].production
 
-    const newProduction = Math.round(this.props.game.production + nbUnite * productionPerUnit)
-    const newTempsTravail = Math.round(this.props.game.tempsTravail + nbUnite * tempsTravailPerUnit)
-    const newEnv = Math.round(this.props.game.environnement + nbUnite * envPerUnit)
+    const newProduction = iaeAdded
+      ? Math.round(this.props.game.production + nbUnite * productionPerUnit)
+      : Math.round(this.props.game.production - nbUnite * productionPerUnit)
+
+    const newTempsTravail = iaeAdded
+      ? Math.round(this.props.game.tempsTravail + nbUnite * tempsTravailPerUnit)
+      : Math.round(this.props.game.tempsTravail - nbUnite * tempsTravailPerUnit)
+
+    const newEnv = iaeAdded
+      ? Math.round(this.props.game.environnement + nbUnite * envPerUnit)
+      : Math.round(this.props.game.environnement - nbUnite * envPerUnit)
 
     if (newTempsTravail >= 0) {
       this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
@@ -203,15 +212,28 @@ class GameBoardContainer extends React.Component {
   /** *************** IAE DELETING  *****************/
   clearAllIAEs () {
     this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] })
+
+    // Decorator marker are independent from iae polyline, so we have to delete them separately
+    this.state.iaeImplemented.map(iae => this.setDecoratorMarkersToDelete(iae))
   }
 
   onChangeDeletingIAE (deletingIAE) { this.setState({ deletingIAE: deletingIAE }) }
 
+  /**
+   *
+   * Deleting iae could be canceled, so we save the iaes to delete in the state (IAEtoDelete and IAEmarkerToDelete)
+   *
+   * We remove directly the iae to delete from iaes implemented in state,
+   * If deleting is canceled, we add iaes to delete again on the map
+   *
+   */
   onDeleteIAE (e, iae) {
+    // Check if we are in deleting mode
     if (this.state.deletingIAE) {
       if (iae.layerType === 'circlemarker') {
         const indexIaeToRemove = this.state.iaeMarkerImplemented.indexOf(iae)
 
+        // We save the iae to delete in IAEmarkerToDelete and we remove it from iae implemented
         this.setState({
           IAEmarkerToDelete: this.state.IAEmarkerToDelete.concat(iae),
           iaeMarkerImplemented: this.state.iaeMarkerImplemented.filter((_, i) => i !== indexIaeToRemove)
@@ -219,17 +241,22 @@ class GameBoardContainer extends React.Component {
       } else {
         const indexIaeToRemove = this.state.iaeImplemented.indexOf(iae)
 
+        // We save the iae to delete in IAEmarkerToDelete and we remove it from iae implemented
         this.setState({
           IAEtoDelete: this.state.IAEtoDelete.concat(iae),
           iaeImplemented: this.state.iaeImplemented.filter((_, i) => i !== indexIaeToRemove)
         })
 
+        // Decorator marker are independent from iae polyline, so we have to delete them separately
         this.setDecoratorMarkersToDelete(iae)
       }
+
+      // Update score by removing the points of the iae deleted
+      this.updateScore(iae, false)
     }
   }
 
-  // Get the markers used to decorate the iae in order to delete them
+  // Get the markers used to decorate an iae in order to delete them
   setDecoratorMarkersToDelete (iae) {
     // Get all the markers present on the map
     let markers = []
@@ -239,7 +266,7 @@ class GameBoardContainer extends React.Component {
       }
     })
 
-    // Only iae lines containes decorator markers (not polygons)
+    // Only iae polylines contains decorator markers (not polygons)
     if (iae.layerType === 'polyline') {
       const iaeBounds = L.latLngBounds(iae.coords[0], iae.coords[1])
 
@@ -256,31 +283,40 @@ class GameBoardContainer extends React.Component {
     }
   }
 
+  // Called when iae deleting is validate (when SAVE button is clicked)
   onValidateDeletingIAE () {
+    /** iaes to delete are already removed from the iae implemented array
+     * So we only need to clear arrays of deleting
+     */
     this.setState({
       IAEtoDelete: [],
       decoratorMarkersToDelete: [],
-      IAEmarkerToDelete: []
+      IAEmarkerToDelete: [],
+      deletingIAE: false
     })
-
-    this.onChangeDeletingIAE(false)
   }
 
+  // Called when iae deleting is canceled (when CANCEL button is clicked)
   onCancelDeletingIAE () {
-    // Add decorator markers removed
+    // Add on the map the decorator markers removed
     this.state.decoratorMarkersToDelete.map(marker => this.mapRef.current.leafletElement.addLayer(marker))
 
+    // Update score by adding the points removed
+    this.state.IAEtoDelete.map(iae => this.updateScore(iae, true))
+    this.state.IAEmarkerToDelete.map(iae => this.updateScore(iae, true))
+
+    // Add on the map the iaes removed, clear toDelete arrays, remove deleting mode
     this.setState({
       iaeImplemented: this.state.iaeImplemented.concat(this.state.IAEtoDelete),
       iaeMarkerImplemented: this.state.iaeMarkerImplemented.concat(this.state.IAEmarkerToDelete),
       IAEtoDelete: [],
       decoratorMarkersToDelete: [],
-      IAEmarkerToDelete: []
+      IAEmarkerToDelete: [],
+      deletingIAE: false
     })
-
-    this.onChangeDeletingIAE(false)
   }
 
+  // Close message error modal
   onCloseError = () => {
     this.setState({
       errorPrairie: false,

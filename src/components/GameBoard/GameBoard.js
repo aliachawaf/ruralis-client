@@ -6,12 +6,13 @@ import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'
 
-import { Divider, Grid, Header, Image, Message, Modal, Segment } from 'semantic-ui-react'
+import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapLegend/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
 import GameStepContainer from '../../containers/GameStep.container'
 import scenarii from '../../config/scenarii'
+import MessageErrorModal from './MessageErrorModal'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
@@ -34,13 +35,10 @@ const GameBoard = React.forwardRef((props, ref) => {
     opened,
     handleStartGame,
     errorPrairie,
-    handleOnCloseErrorPrairie,
     errorScore,
-    handleOnCloseErrorScore,
     errorTypesIAE,
-    handleOnCloseErrorTypesIAE,
     errorMare,
-    handleOnCloseErrorMare
+    handleOnCloseError
   } = props
 
   const breadcrumbSections = [
@@ -109,37 +107,10 @@ const GameBoard = React.forwardRef((props, ref) => {
       </Segment>
 
       {/* MODALS FOR MESSAGE ERROR */}
-      <Modal open={errorPrairie} closeIcon size='large' onClose={handleOnCloseErrorPrairie}>
-        <Header
-          as='h1'
-          icon='warning'
-          content='Vous ne pouvez pas implanter plus de 5 unités de prairies'
-        />
-      </Modal>
-
-      <Modal open={errorScore} closeIcon size='large' onClose={handleOnCloseErrorScore}>
-        <Header
-          as='h1'
-          icon='warning'
-          content='Le temps de travail ne peut pas être inférieur à 0.'
-        />
-      </Modal>
-
-      <Modal open={errorTypesIAE} closeIcon size='large' onClose={handleOnCloseErrorTypesIAE}>
-        <Header
-          as='h1'
-          icon='warning'
-          content={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'}
-        />
-      </Modal>
-
-      <Modal open={errorMare} closeIcon size='large' onClose={handleOnCloseErrorMare}>
-        <Header
-          as='h1'
-          icon='warning'
-          content='Vous ne pouvez pas implanter plus de 5 mares.'
-        />
-      </Modal>
+      <MessageErrorModal opened={errorPrairie} message='Vous ne pouvez pas implanter plus de 5 unités de prairies' handleOnClose={handleOnCloseError} />
+      <MessageErrorModal opened={errorScore} message='Le temps de travail ne peut pas être inférieur à 0.' handleOnClose={handleOnCloseError} />
+      <MessageErrorModal opened={errorTypesIAE} message={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'} handleOnClose={handleOnCloseError} />
+      <MessageErrorModal opened={errorMare} message='Vous ne pouvez pas implanter plus de 5 mares.' handleOnClose={handleOnCloseError} />
 
     </div>
   )
@@ -170,13 +141,10 @@ GameBoard.propTypes = {
   handleStartGame: PropTypes.func.isRequired,
   // Errors
   errorPrairie: PropTypes.bool.isRequired,
-  handleOnCloseErrorPrairie: PropTypes.func.isRequired,
   errorScore: PropTypes.bool.isRequired,
-  handleOnCloseErrorScore: PropTypes.func.isRequired,
   errorTypesIAE: PropTypes.bool.isRequired,
-  handleOnCloseErrorTypesIAE: PropTypes.func.isRequired,
   errorMare: PropTypes.bool.isRequired,
-  handleOnCloseErrorMare: PropTypes.func.isRequired
+  handleOnCloseError: PropTypes.func.isRequired
 }
 
 GameBoard.defaultProps = {

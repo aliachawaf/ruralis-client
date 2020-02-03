@@ -1,11 +1,15 @@
 import React from 'react'
-import GameBoardContainer from './containers/GameBoard.container'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
-import HomeRuralis from './components/Home/HomeRuralis'
-import GameRules from './components/GameRules/GameRules'
-import NewGameContainer from './containers/NewGame.container'
+
 import { Provider } from 'react-redux'
 import store from './store'
+/** Components **/
+import HomeRuralis from './components/Home/HomeRuralis'
+import GameRules from './components/GameRules/GameRules'
+/** Containers **/
+import GameBoardContainer from './containers/GameBoard.container'
+import NewGameContainer from './containers/NewGame.container'
+import JoinGameContainer from './containers/JoinGame.container'
 import PlayerRoleContainer from './containers/Player/PlayerRole.container'
 import ListIAEContainer from './containers/Player/ListIAE.container'
 import LivretGEAContainer from './containers/Player/LivretGEA.container'
@@ -20,7 +24,8 @@ function App () {
           <Switch>
             <Route exact path='/home' component={HomeRuralis} />
             <Route exact path='/game/board/:idGame' component={GameBoardContainer} />
-            <Route exact path='/game/new' component={NewGameContainer} />
+            <Route exact path='/new/game' component={NewGameContainer} />
+            <Route exact path='/join/game' component={JoinGameContainer} />
             <Route exact path='/game/rules' component={GameRules} />
             <Route exact path='/player/:playerNumber' component={PlayerRoleContainer} />
             <Route exact path='/player/:playerNumber/role' component={PlayerRoleContainer} />

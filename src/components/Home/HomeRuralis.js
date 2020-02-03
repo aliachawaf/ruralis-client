@@ -13,13 +13,13 @@ const HomeRuralis = () => (
     <Grid columns={3} stackable padded relaxed>
       <Grid.Row>
         <Grid.Column>
-          <Link to='/game/new'>
+          <Link to='/new/game'>
             <Button className='homeBtn' color='red' fluid content='Nouvelle Partie' size='huge' />
           </Link>
         </Grid.Column>
 
         <Grid.Column>
-          <Link to='/player/joinGame'>
+          <Link to='/join/game'>
             <Button className='homeBtn' color='red' fluid content='Rejoindre Partie' size='huge' />
           </Link>
         </Grid.Column>

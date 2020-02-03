@@ -21,15 +21,18 @@ const GameInfosHistory = (props) => {
 
         <Segment basic>
 
-          <Header as='h2'>
-            <Icon color='green' name='winner' />
-            <Header.Content>Partie Gagnée</Header.Content>
-          </Header>
+          {
+            props.game.victory
+              ? <Header as='h2'>
+                <Icon color='green' name='winner' />
+                <Header.Content>Partie Gagnée</Header.Content>
+                </Header>// eslint-disable-line
 
-          <Header as='h2'>
-            <Icon flipped='vertically' color='red' name='winner' />
-            <Header.Content>Partie Perdue</Header.Content>
-          </Header>
+              : <Header as='h2'>
+                <Icon flipped='vertically' color='red' name='winner' />
+                <Header.Content>Partie Perdue</Header.Content>
+                </Header>// eslint-disable-line
+          }
 
         </Segment>
 

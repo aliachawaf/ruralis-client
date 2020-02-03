@@ -5,11 +5,11 @@ import RuralisHeader from '../common/RuralisHeader'
 import { Container, Divider, Icon, Statistic, Table } from 'semantic-ui-react'
 
 const breadcrumbSections = [
-  { key: 'history', content: 'Historique des parties', active: true, as: 'h3' }
+  { key: 'join', content: 'Rejoindre une partie', active: true, as: 'h3' }
 ]
 
-const AllGamesHistory = (props) => {
-  const gamesEnded = props.games.filter(game => game.ended)
+const JoinGame = (props) => {
+  const gamesNotEnded = props.games.filter(game => !game.ended)
 
   return (
     <div>
@@ -17,9 +17,9 @@ const AllGamesHistory = (props) => {
 
       <Container>
         <Statistic.Group>
-          <Statistic label='Parties jouées' value={gamesEnded.length} />
-          <Statistic label='gagnées' value={gamesEnded.length} color='green' />
-          <Statistic label='perdues' value={gamesEnded.length} color='red' />
+          <Statistic label='Parties à jouer' value={gamesNotEnded.length} />
+          <Statistic label='entamées' value={gamesNotEnded.filter(g => g.numTour !== 0).length} color='green' />
+          <Statistic label='non entamées' value={gamesNotEnded.filter(g => g.numTour === 0).length} color='red' />
         </Statistic.Group>
       </Container>
 
@@ -30,7 +30,7 @@ const AllGamesHistory = (props) => {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Partie</Table.HeaderCell>
-              <Table.HeaderCell>Victoire</Table.HeaderCell>
+              <Table.HeaderCell>Numéro de tour</Table.HeaderCell>
               <Table.HeaderCell>Score</Table.HeaderCell>
               <Table.HeaderCell>Joueurs</Table.HeaderCell>
               <Table.HeaderCell>Scenario</Table.HeaderCell>
@@ -38,16 +38,14 @@ const AllGamesHistory = (props) => {
           </Table.Header>
 
           <Table.Body>
-            {gamesEnded
+            {gamesNotEnded
               .map(game =>
-                <Table.Row key={game._id} value={game._id} onClick={() => props.redirectToGameHistory(game._id)}>
+                <Table.Row key={game._id} value={game._id} onClick={() => props.redirectToGameBoard(game._id)}>
                   <Table.Cell content={'Partie ' + game._id} />
 
-                  {
-                    game.victory
-                      ? <Table.Cell positive><Icon color='green' name='winner' /> gagnée</Table.Cell>
-                      : <Table.Cell negative><Icon flipped='vertically' color='red' name='winner' /> perdue</Table.Cell>
-                  }
+                  <Table.Cell>
+                    {'Tour ' + game.numTour}
+                  </Table.Cell>
 
                   <Table.Cell>
                     <Statistic.Group size='mini'>
@@ -75,9 +73,9 @@ const AllGamesHistory = (props) => {
   )
 }
 
-AllGamesHistory.propTypes = {
+JoinGame.propTypes = {
   games: PropTypes.array.isRequired,
-  redirectToGameHistory: PropTypes.func.isRequired
+  redirectToGameBoard: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -86,4 +84,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps
-)(AllGamesHistory)
+)(JoinGame)

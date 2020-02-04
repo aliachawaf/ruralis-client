@@ -13,6 +13,7 @@ import RuralisHeader from '../common/RuralisHeader'
 import GameStepContainer from '../../containers/GameStep.container'
 import scenarii from '../../config/scenarii'
 import MessageErrorModal from './MessageErrorModal'
+import EndGameModal from './GameSteps/EndGame/EndGameModal'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
@@ -111,6 +112,8 @@ const GameBoard = React.forwardRef((props, ref) => {
       <MessageErrorModal opened={errorScore} message='Le temps de travail ne peut pas être inférieur à 0.' handleOnClose={handleOnCloseError} />
       <MessageErrorModal opened={errorTypesIAE} message={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'} handleOnClose={handleOnCloseError} />
       <MessageErrorModal opened={errorMare} message='Vous ne pouvez pas implanter plus de 5 mares.' handleOnClose={handleOnCloseError} />
+
+      <EndGameModal opened={game.ended} idGame={game._id} />
 
     </div>
   )

@@ -26,12 +26,12 @@ const GameInfosHistory = (props) => {
               ? <Header as='h2'>
                 <Icon color='green' name='winner' />
                 <Header.Content>Partie Gagnée</Header.Content>
-                </Header>// eslint-disable-line
+              </Header>// eslint-disable-line
 
               : <Header as='h2'>
                 <Icon flipped='vertically' color='red' name='winner' />
                 <Header.Content>Partie Perdue</Header.Content>
-                </Header>// eslint-disable-line
+              </Header>// eslint-disable-line
           }
 
         </Segment>
@@ -60,7 +60,9 @@ const GameInfosHistory = (props) => {
                 content={<Image src={player.card} />}
                 trigger={
                   <List.Item>
-                    <Icon color='green' name='winner' />
+                    {props.game.victoryPlayers.includes(player.number)
+                      ? <Icon color='green' name='winner' />
+                      : <Icon flipped='vertically' color='red' name='winner' />}
                     <Image avatar src={player.picture} />
                     <List.Content header={player.name} />
                   </List.Item>

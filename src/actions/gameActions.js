@@ -1,4 +1,4 @@
-import { FETCH_GAME, GET_ERRORS, START_GAME, TMP_SCORE, ADD_IAE, UPDATE_SCORE, APPLY_ACTION, CREATE_GAME, FETCH_ALL_GAMES } from './types'
+import { FETCH_GAME, GET_ERRORS, START_GAME, TMP_SCORE, ADD_IAE, UPDATE_SCORE, APPLY_ACTION, CREATE_GAME, FETCH_ALL_GAMES, END_GAME } from './types'
 import * as APIFetch from '../helpers/APIFetch'
 
 // _______ FETCH ONE GAME _______
@@ -202,6 +202,34 @@ export const applyAction = (idGame, numAction, production, environnement, ancrag
       res.data.game.ancrageSocial = ancrageSocial
       res.data.game.tempsTravail = tempsTravail
       dispatch(applyActionAction(res.data.game))
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+}
+
+// _______ ENDGAME ACTION _______
+
+export const endgameAction = game => ({
+  type: END_GAME,
+  payload: {
+    game
+  }
+})
+
+export const endgame = (idGame, victoryObjectif, victoryPlayers, victory) => dispatch => {
+  // Send Action selected to server
+  const resource = 'api/public/game/' + idGame + '/endgame'
+  APIFetch.fetchRuralisAPI(
+    resource,
+    { victory: victory, victoryObjectif: victoryObjectif, victoryPlayers: victoryPlayers },
+    APIFetch.PUT
+  )
+    .then(res => {
+      dispatch(endgameAction(res.data.game))
     })
     .catch(err =>
       dispatch({

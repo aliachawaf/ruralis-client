@@ -3,7 +3,7 @@ import GameStep from '../components/GameBoard/GameSteps/GameStep'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addIAE, applyAction, updateScore } from '../actions/gameActions'
+import { addIAE, applyAction, updateScore, endgame } from '../actions/gameActions'
 
 import actions from '../config/actionsCards'
 
@@ -100,6 +100,7 @@ class GameStepContainer extends React.Component {
 
   onValidateEndGame () {
     // Send victory and winners to server
+    this.props.endgame(this.props.game._id, this.state.isObjectiveAchieved, this.state.playersWinners, this.state.victory)
   }
 
   render () {
@@ -111,7 +112,7 @@ class GameStepContainer extends React.Component {
         handleValidateAction={this.onValidateAction}
         playersWinners={this.state.playersWinners}
         handleOnChangeObjectiveAchieved={this.onChangeObjectiveAchieved}
-        handlenChangePlayerWinner={this.onChangePlayerWinner}
+        handleOnChangePlayerWinner={this.onChangePlayerWinner}
         isObjectiveAchieved={this.state.isObjectiveAchieved}
         victory={this.state.victory}
         handleOnValidateEndGame={this.onValidateEndGame}
@@ -125,6 +126,7 @@ GameStepContainer.propTypes = {
   addIAE: PropTypes.func.isRequired,
   updateScore: PropTypes.func.isRequired,
   applyAction: PropTypes.func.isRequired,
+  endgame: PropTypes.func.isRequired,
   // STEP 1
   iaeImplemented: PropTypes.array.isRequired,
   iaeMarkerImplemented: PropTypes.array.isRequired,
@@ -140,5 +142,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addIAE, updateScore, applyAction }
+  { addIAE, updateScore, applyAction, endgame }
 )(GameStepContainer)

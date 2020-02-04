@@ -5,6 +5,7 @@ import Step1 from './Step1/Step1'
 import Step2 from './Step2/Step2'
 import { connect } from 'react-redux'
 import GameScore from '../../common/GameScore'
+import EndGame from './EndGame/EndGame'
 
 const GameStep = (props) => (
 
@@ -43,6 +44,16 @@ const GameStep = (props) => (
           onValidateActions={props.handleValidateAction}
         />}
 
+      {props.game.numTour === 7 && props.game.step === 4 &&
+        <EndGame
+          isObjectiveAchieved={props.isObjectiveAchieved}
+          onChangeObjectiveAchieved={props.handleOnChangeObjectiveAchieved}
+          onChangePlayerWinner={props.handleOnChangePlayerWinner}
+          playersWinners={props.playersWinners}
+          onValidateEndGame={props.handleOnValidateEndGame}
+          victory={props.victory}
+        />}
+
       <Divider />
 
       <Segment basic>
@@ -61,9 +72,15 @@ GameStep.propTypes = {
   // Step 2
   actionSelected: PropTypes.number.isRequired,
   onChangeAction: PropTypes.func.isRequired,
-  handleValidateAction: PropTypes.func.isRequired
+  handleValidateAction: PropTypes.func.isRequired,
   // Step 3
-  // Step 4
+  // End Game
+  victory: PropTypes.bool.isRequired,
+  isObjectiveAchieved: PropTypes.bool.isRequired,
+  playersWinners: PropTypes.array.isRequired,
+  handleOnChangeObjectiveAchieved: PropTypes.func.isRequired,
+  handleOnChangePlayerWinner: PropTypes.func.isRequired,
+  handleOnValidateEndGame: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

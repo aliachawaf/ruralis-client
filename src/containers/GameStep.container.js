@@ -10,19 +10,22 @@ import actions from '../config/actionsCards'
 class GameStepContainer extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {
+      playersWinners: [],
+      isObjectiveAchieved: false,
+      victory: false
+    }
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
     this.onValidateAction = this.onValidateAction.bind(this)
+    this.onValidateEndGame = this.onValidateEndGame.bind(this)
   }
 
+  /** STEP 1 **/
   onValidateIAEs () {
     const iaeImplemented = [...this.props.iaeImplemented]
     const iaeMarkerImplemented = [...this.props.iaeMarkerImplemented]
 
     // Send IAEs implemented to Server
-
-    console.log(this.props.iaeImplemented)
-    console.log(this.props.iaeMarkerImplemented)
-
     this.props.addIAE(
       this.props.game._id,
       iaeImplemented,
@@ -37,6 +40,7 @@ class GameStepContainer extends React.Component {
     this.props.clearIAEsimplemented()
   }
 
+  /** STEP 2 **/
   onValidateAction () {
     // Send Action selected to server
     if (this.props.actionSelected !== -1) {
@@ -51,6 +55,53 @@ class GameStepContainer extends React.Component {
     }
   }
 
+  /** END GAME **/
+  onChangeObjectiveAchieved = () => {
+    const newIsObjectiveAchieved = !this.state.isObjectiveAchieved
+    this.setState({ isObjectiveAchieved: newIsObjectiveAchieved })
+    this.calculateVictory(newIsObjectiveAchieved, this.state.playersWinners)
+  }
+
+  onChangePlayerWinner = (e, { value }) => {
+    if (this.state.playersWinners.includes(value)) {
+      // Remove player from winners
+      const playerIndex = this.state.playersWinners.indexOf(value)
+      const newPlayersWinners = this.state.playersWinners.filter((_, i) => i !== playerIndex)
+
+      this.setState({ playersWinners: newPlayersWinners })
+      this.calculateVictory(this.state.isObjectiveAchieved, newPlayersWinners)
+    } else {
+      // Add player as winner
+      const newPlayersWinners = this.state.playersWinners.concat(value)
+
+      this.setState({ playersWinners: newPlayersWinners })
+      this.calculateVictory(this.state.isObjectiveAchieved, newPlayersWinners)
+    }
+  }
+
+  calculateVictory = (isObjectiveAchieved, winners) => {
+    if (isObjectiveAchieved) {
+      const nbPlayers = this.props.game.players.length
+      const nbWinners = winners.length
+
+      if (nbPlayers === 5 && nbWinners >= 4) {
+        this.setState({ victory: true })
+      } else if (nbPlayers === 6 && nbWinners >= 5) {
+        this.setState({ victory: true })
+      } else if (nbPlayers === 7 && nbWinners >= 5) {
+        this.setState({ victory: true })
+      } else {
+        this.setState({ victory: false })
+      }
+    } else {
+      this.setState({ victory: false })
+    }
+  }
+
+  onValidateEndGame () {
+    // Send victory and winners to server
+  }
+
   render () {
     return (
       <GameStep
@@ -58,6 +109,12 @@ class GameStepContainer extends React.Component {
         actionSelected={this.props.actionSelected}
         onChangeAction={this.props.onChangeAction}
         handleValidateAction={this.onValidateAction}
+        playersWinners={this.state.playersWinners}
+        handleOnChangeObjectiveAchieved={this.onChangeObjectiveAchieved}
+        handlenChangePlayerWinner={this.onChangePlayerWinner}
+        isObjectiveAchieved={this.state.isObjectiveAchieved}
+        victory={this.state.victory}
+        handleOnValidateEndGame={this.onValidateEndGame}
       />
     )
   }

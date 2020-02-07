@@ -20,6 +20,9 @@ const gameReducer = (state = [], action) => {
     case types.END_GAME: {
       return action.payload.game
     }
+    case types.ADD_CARD_EVENTS: {
+      return action.payload.game
+    }
     case types.TMP_SCORE: {
       return Object.assign({}, state, {
         production: action.payload.newProduction,

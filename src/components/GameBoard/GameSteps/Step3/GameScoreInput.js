@@ -49,11 +49,4 @@ GameScoreInput.propTypes = {
   onChangeScore: PropTypes.func.isRequired
 }
 
-GameScoreInput.defaultProps = {
-  production: 0,
-  tempsTravail: 70,
-  environnement: 0,
-  ancrageSocial: 0
-}
-
 export default GameScoreInput

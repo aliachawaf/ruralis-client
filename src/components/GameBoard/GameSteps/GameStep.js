@@ -30,10 +30,10 @@ const GameStep = (props) => (
       {
         props.game.step === 3
           ? <GameScoreInput
-            production={props.production}
-            tempsTravail={props.tempsTravail}
-            environnement={props.environnement}
-            ancrageSocial={props.ancrageSocial}
+            production={props.game.production}
+            tempsTravail={props.game.tempsTravail}
+            environnement={props.game.environnement}
+            ancrageSocial={props.game.ancrageSocial}
             onChangeScore={props.handleOnChangeScore}
             /> // eslint-disable-line
           : <GameScore
@@ -61,7 +61,7 @@ const GameStep = (props) => (
         <Step3
           handleOnPickCard={props.pickCard}
           cardsPicked={props.cardsPicked}
-          onValidateEventCards={props.onValidateEventCards}
+          onValidateEventCards={props.handleOnValidateEventCards}
         />}
 
       {props.game.numTour === 7 && props.game.step === 4 &&
@@ -94,14 +94,10 @@ GameStep.propTypes = {
   onChangeAction: PropTypes.func.isRequired,
   handleValidateAction: PropTypes.func.isRequired,
   // Step 3
-  production: PropTypes.number.isRequired,
-  tempsTravail: PropTypes.number.isRequired,
-  environnement: PropTypes.number.isRequired,
-  ancrageSocial: PropTypes.number.isRequired,
   handleOnChangeScore: PropTypes.func.isRequired,
   pickCard: PropTypes.func.isRequired,
   cardsPicked: PropTypes.array.isRequired,
-  onValidateEventCards: PropTypes.func.isRequired,
+  handleOnValidateEventCards: PropTypes.func.isRequired,
   // End Game
   victory: PropTypes.bool.isRequired,
   isObjectiveAchieved: PropTypes.bool.isRequired,

@@ -3,7 +3,7 @@ import GameStep from '../components/GameBoard/GameSteps/GameStep'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addIAE, applyAction, endgame, updateScore } from '../actions/gameActions'
+import { addIAE, applyAction, endgame, updateScore, addEventCards, tmpScore } from '../actions/gameActions'
 
 import actions from '../config/actionsCards'
 import eventCards from '../config/eventCards'
@@ -12,11 +12,6 @@ class GameStepContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      // Step 3
-      production: this.props.game.production,
-      tempsTravail: this.props.game.environnement,
-      environnement: this.props.game.tempsTravail,
-      ancrageSocial: this.props.game.ancrageSocial,
       cardsPicked: [],
       // End Game
       playersWinners: [],
@@ -26,6 +21,7 @@ class GameStepContainer extends React.Component {
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
     this.onValidateAction = this.onValidateAction.bind(this)
     this.onValidateEndGame = this.onValidateEndGame.bind(this)
+    this.onValidateEventCards = this.onValidateEventCards.bind(this)
   }
 
   /** STEP 1 **/
@@ -59,18 +55,13 @@ class GameStepContainer extends React.Component {
       const newTempsTravail = this.props.game.tempsTravail + card.tempsTravailEffect
       this.props.applyAction(this.props.game._id, this.props.actionSelected, newProduction, newEnvironnement, newAncrageSocial, newTempsTravail)
     } else {
-      this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.tempsTravail, this.props.game.tempsTravail)
+      this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
     }
   }
 
   /** STEP 3 **/
-  onChangeScore = (production, environnement, tempsTravail, ancrageSocial) => {
-    this.setState({
-      production: production,
-      tempsTravail: environnement,
-      environnement: tempsTravail,
-      ancrageSocial: ancrageSocial
-    })
+  onChangeScore = (production, tempsTravail, environnement, ancrageSocial) => {
+    this.props.tmpScore(production, environnement, ancrageSocial, tempsTravail)
   }
 
   // Get a random event card not already picked before
@@ -88,7 +79,7 @@ class GameStepContainer extends React.Component {
   }
 
   onValidateEventCards () {
-    // Send Event Cards picked to server
+    this.props.addEventCards(this.props.game._id, this.state.cardsPicked, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
   }
 
   /** END GAME **/
@@ -149,10 +140,6 @@ class GameStepContainer extends React.Component {
         onChangeAction={this.props.onChangeAction}
         handleValidateAction={this.onValidateAction}
         // Step 3
-        production={this.state.production}
-        tempsTravail={this.state.tempsTravail}
-        environnement={this.state.environnement}
-        ancrageSocial={this.state.ancrageSocial}
         handleOnChangeScore={this.onChangeScore}
         pickCard={this.pickCard}
         cardsPicked={this.state.cardsPicked}
@@ -175,6 +162,8 @@ GameStepContainer.propTypes = {
   updateScore: PropTypes.func.isRequired,
   applyAction: PropTypes.func.isRequired,
   endgame: PropTypes.func.isRequired,
+  addEventCards: PropTypes.func.isRequired,
+  tmpScore: PropTypes.func.isRequired,
   // STEP 1
   iaeImplemented: PropTypes.array.isRequired,
   iaeMarkerImplemented: PropTypes.array.isRequired,
@@ -190,5 +179,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addIAE, updateScore, applyAction, endgame }
+  { addIAE, updateScore, applyAction, endgame, addEventCards, tmpScore }
 )(GameStepContainer)

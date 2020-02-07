@@ -6,6 +6,8 @@ import Step2 from './Step2/Step2'
 import { connect } from 'react-redux'
 import GameScore from '../../common/GameScore'
 import EndGame from './EndGame/EndGame'
+import GameScoreInput from './Step3/GameScoreInput'
+import Step3 from './Step3/Step3'
 
 const GameStep = (props) => (
 
@@ -16,24 +18,35 @@ const GameStep = (props) => (
         <Header content='Déroulement de la Partie' />
       </Segment>
 
+      {/** TOUR NUMBER SECTION **/}
       <Segment basic>
-        <Statistic>
+        <Statistic size='small'>
           <Statistic.Label>Tour</Statistic.Label>
           <Statistic.Value>{props.game.numTour} / 7</Statistic.Value>
         </Statistic>
       </Segment>
 
+      {/** SCORE SECTION **/}
+      {
+        props.game.step === 3
+          ? <GameScoreInput
+            production={props.production}
+            tempsTravail={props.tempsTravail}
+            environnement={props.environnement}
+            ancrageSocial={props.ancrageSocial}
+            onChangeScore={props.handleOnChangeScore}
+            /> // eslint-disable-line
+          : <GameScore
+            production={props.game.production}
+            tempsTravail={props.game.tempsTravail}
+            environnement={props.game.environnement}
+            ancrageSocial={props.game.ancrageSocial}
+            /> // eslint-disable-line
+      }
+
       <Divider />
 
-      <GameScore
-        production={props.game.production}
-        tempsTravail={props.game.tempsTravail}
-        environnement={props.game.environnement}
-        ancrageSocial={props.game.ancrageSocial}
-      />
-
-      <Divider />
-
+      {/** STEPS SECTION **/}
       {props.game.step === 1 &&
         <Step1 onValidateIAEs={props.handleValidateIAEs} />}
 
@@ -42,6 +55,13 @@ const GameStep = (props) => (
           actionSelected={props.actionSelected}
           onChangeAction={props.onChangeAction}
           onValidateActions={props.handleValidateAction}
+        />}
+
+      {props.game.step === 3 &&
+        <Step3
+          handleOnPickCard={props.pickCard}
+          cardsPicked={props.cardsPicked}
+          onValidateEventCards={props.onValidateEventCards}
         />}
 
       {props.game.numTour === 7 && props.game.step === 4 &&
@@ -74,6 +94,14 @@ GameStep.propTypes = {
   onChangeAction: PropTypes.func.isRequired,
   handleValidateAction: PropTypes.func.isRequired,
   // Step 3
+  production: PropTypes.number.isRequired,
+  tempsTravail: PropTypes.number.isRequired,
+  environnement: PropTypes.number.isRequired,
+  ancrageSocial: PropTypes.number.isRequired,
+  handleOnChangeScore: PropTypes.func.isRequired,
+  pickCard: PropTypes.func.isRequired,
+  cardsPicked: PropTypes.array.isRequired,
+  onValidateEventCards: PropTypes.func.isRequired,
   // End Game
   victory: PropTypes.bool.isRequired,
   isObjectiveAchieved: PropTypes.bool.isRequired,

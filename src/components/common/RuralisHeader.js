@@ -1,6 +1,6 @@
 import React from 'react'
 import { Breadcrumb, Header, Image, Segment } from 'semantic-ui-react'
-import logo from '../../assets/ruralisLogo.png'
+import logo from '../../assets/logos/ruralisLogo.png'
 import PropTypes from 'prop-types'
 
 const homeSection = [{ key: 'home', content: 'Home', href: '/home', style: { color: '#FFFFFF' } }]

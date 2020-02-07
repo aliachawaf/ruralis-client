@@ -53,6 +53,7 @@ const GameBoard = React.forwardRef((props, ref) => {
       <RuralisHeader breadcrumbSections={breadcrumbSections} />
       <Segment basic>
 
+        {/* MODALS TO START THE GAME */}
         {
           game.numTour === 0 &&
             <StartGameModal
@@ -113,6 +114,7 @@ const GameBoard = React.forwardRef((props, ref) => {
       <MessageErrorModal opened={errorTypesIAE} message={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'} handleOnClose={handleOnCloseError} />
       <MessageErrorModal opened={errorMare} message='Vous ne pouvez pas implanter plus de 5 mares.' handleOnClose={handleOnCloseError} />
 
+      {/* MODALS WHEN THE GAME IS ENDED */}
       <EndGameModal opened={game.ended} idGame={game._id} />
 
     </div>

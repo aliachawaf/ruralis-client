@@ -3,14 +3,22 @@ import GameStep from '../components/GameBoard/GameSteps/GameStep'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addIAE, applyAction, updateScore, endgame } from '../actions/gameActions'
+import { addIAE, applyAction, endgame, updateScore } from '../actions/gameActions'
 
 import actions from '../config/actionsCards'
+import eventCards from '../config/eventCards'
 
 class GameStepContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      // Step 3
+      production: this.props.game.production,
+      tempsTravail: this.props.game.environnement,
+      environnement: this.props.game.tempsTravail,
+      ancrageSocial: this.props.game.ancrageSocial,
+      cardsPicked: [],
+      // End Game
       playersWinners: [],
       isObjectiveAchieved: false,
       victory: false
@@ -53,6 +61,34 @@ class GameStepContainer extends React.Component {
     } else {
       this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.tempsTravail, this.props.game.tempsTravail)
     }
+  }
+
+  /** STEP 3 **/
+  onChangeScore = (production, environnement, tempsTravail, ancrageSocial) => {
+    this.setState({
+      production: production,
+      tempsTravail: environnement,
+      environnement: tempsTravail,
+      ancrageSocial: ancrageSocial
+    })
+  }
+
+  // Get a random event card not already picked before
+  pickCard = () => {
+    const min = 1
+    const max = eventCards.length
+    const random = Math.floor(Math.random() * (max - min + 1)) + min
+
+    // Check if the card is already picked in last tours or in this tour
+    if (this.props.game.cardsPicked.includes(random) || this.state.cardsPicked.includes(random)) {
+      this.pickCard()
+    } else {
+      this.setState({ cardsPicked: this.state.cardsPicked.concat(random) })
+    }
+  }
+
+  onValidateEventCards () {
+    // Send Event Cards picked to server
   }
 
   /** END GAME **/
@@ -106,10 +142,22 @@ class GameStepContainer extends React.Component {
   render () {
     return (
       <GameStep
+        // Step 1
         handleValidateIAEs={this.onValidateIAEs}
+        // Step 2
         actionSelected={this.props.actionSelected}
         onChangeAction={this.props.onChangeAction}
         handleValidateAction={this.onValidateAction}
+        // Step 3
+        production={this.state.production}
+        tempsTravail={this.state.tempsTravail}
+        environnement={this.state.environnement}
+        ancrageSocial={this.state.ancrageSocial}
+        handleOnChangeScore={this.onChangeScore}
+        pickCard={this.pickCard}
+        cardsPicked={this.state.cardsPicked}
+        handleOnValidateEventCards={this.onValidateEventCards}
+        // End Game
         playersWinners={this.state.playersWinners}
         handleOnChangeObjectiveAchieved={this.onChangeObjectiveAchieved}
         handleOnChangePlayerWinner={this.onChangePlayerWinner}

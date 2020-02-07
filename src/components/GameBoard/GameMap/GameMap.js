@@ -69,27 +69,28 @@ const GameMap = React.forwardRef((props, ref) => {
       }
 
       {/* DRAWING TOOLTIP */}
-      <FeatureGroup>
-        <EditControl
-          position='topright'
-          onCreated={e => { onCreatedIAE(e) }}
-          onDrawStart={() => handleonChangeDeleting(false)}
-          onDeleteStart={() => handleonChangeDeleting(true)}
-          onDeleteStop={() => handleCancelDeletingIAE()}
-          onDeleted={() => handleValidateDeletingIAE()}
-          draw={{
-            marker: false,
-            circle: false,
-            polyline: (iaeSelectedDrawingType === 'polyline'),
-            polygon: (iaeSelectedDrawingType === 'polygon') ? { showLength: true } : false,
-            rectangle: (iaeSelectedDrawingType === 'polygon'),
-            circlemarker: (iaeSelectedDrawingType === 'circlemarker')
-          }}
-          edit={{
-            edit: false
-          }}
-        />
-      </FeatureGroup>
+      {props.game.step === 1 &&
+        <FeatureGroup>
+          <EditControl
+            position='topright'
+            onCreated={e => { onCreatedIAE(e) }}
+            onDrawStart={() => handleonChangeDeleting(false)}
+            onDeleteStart={() => handleonChangeDeleting(true)}
+            onDeleteStop={() => handleCancelDeletingIAE()}
+            onDeleted={() => handleValidateDeletingIAE()}
+            draw={{
+              marker: false,
+              circle: false,
+              polyline: (iaeSelectedDrawingType === 'polyline'),
+              polygon: (iaeSelectedDrawingType === 'polygon') ? { showLength: true } : false,
+              rectangle: (iaeSelectedDrawingType === 'polygon'),
+              circlemarker: (iaeSelectedDrawingType === 'circlemarker')
+            }}
+            edit={{
+              edit: false
+            }}
+          />
+        </FeatureGroup>}
 
       {/* IAE ALREADY IMPLEMENTED DRAWINGS */}
       {

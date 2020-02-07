@@ -79,6 +79,7 @@ class GameStepContainer extends React.Component {
   }
 
   onValidateEventCards () {
+    this.setState({ cardsPicked: [] })
     this.props.addEventCards(this.props.game._id, this.state.cardsPicked, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
   }
 

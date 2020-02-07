@@ -6,7 +6,7 @@ import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'
 
-import { Divider, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Divider, Grid, Header, Image, Message, Modal, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapLegend/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
@@ -14,6 +14,7 @@ import GameStepContainer from '../../containers/GameStep.container'
 import scenarii from '../../config/scenarii'
 import MessageErrorModal from './MessageErrorModal'
 import EndGameModal from './GameSteps/EndGame/EndGameModal'
+import eventCards from '../../config/eventCards'
 
 const GameBoard = React.forwardRef((props, ref) => {
   const {
@@ -90,7 +91,31 @@ const GameBoard = React.forwardRef((props, ref) => {
             />
 
             <Divider hidden />
+
             <Message color='yellow' header='OBJECTIFS' content={scenarioInfos && scenarioInfos.objectives} />
+
+            <Modal
+              size='large' closeIcon
+              trigger={
+                <Button
+                  content='Cartes événement tirées' icon='eye'
+                  style={{ backgroundColor: '#52255D', color: 'white' }}
+                />
+              }
+            >
+              <Modal.Header>Cartes événement tirées</Modal.Header>
+              <Modal.Content>
+                <Image.Group size='medium'>
+                  {
+                    game.cardsPicked &&
+                    game.cardsPicked.map(cardNumber =>
+                      <Image key={cardNumber} src={eventCards.find(c => c.numCard === cardNumber).cardPicture} />)
+                  }
+                </Image.Group>
+              </Modal.Content>
+            </Modal>
+
+            <Divider hidden />
 
             <Image src={mapInfoLegend} />
           </Grid.Column>
@@ -109,10 +134,23 @@ const GameBoard = React.forwardRef((props, ref) => {
       </Segment>
 
       {/* MODALS FOR MESSAGE ERROR */}
-      <MessageErrorModal opened={errorPrairie} message='Vous ne pouvez pas implanter plus de 5 unités de prairies' handleOnClose={handleOnCloseError} />
-      <MessageErrorModal opened={errorScore} message='Le temps de travail ne peut pas être inférieur à 0.' handleOnClose={handleOnCloseError} />
-      <MessageErrorModal opened={errorTypesIAE} message={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'} handleOnClose={handleOnCloseError} />
-      <MessageErrorModal opened={errorMare} message='Vous ne pouvez pas implanter plus de 5 mares.' handleOnClose={handleOnCloseError} />
+      <MessageErrorModal
+        opened={errorPrairie} message='Vous ne pouvez pas implanter plus de 5 unités de prairies'
+        handleOnClose={handleOnCloseError}
+      />
+      <MessageErrorModal
+        opened={errorScore} message='Le temps de travail ne peut pas être inférieur à 0.'
+        handleOnClose={handleOnCloseError}
+      />
+      <MessageErrorModal
+        opened={errorTypesIAE}
+        message={'Vous ne pouvez pas implanter 2 types d\'IAE différents durant le même tour.'}
+        handleOnClose={handleOnCloseError}
+      />
+      <MessageErrorModal
+        opened={errorMare} message='Vous ne pouvez pas implanter plus de 5 mares.'
+        handleOnClose={handleOnCloseError}
+      />
 
       {/* MODALS WHEN THE GAME IS ENDED */}
       <EndGameModal opened={game.ended} idGame={game._id} />

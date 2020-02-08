@@ -16,7 +16,7 @@ const MessageErrorModal = (props) => (
 
 MessageErrorModal.propTypes = {
   opened: PropTypes.string.isRequired,
-  message: PropTypes.number.isRequired,
+  message: PropTypes.string.isRequired,
   handleOnClose: PropTypes.func.isRequired
 }
 

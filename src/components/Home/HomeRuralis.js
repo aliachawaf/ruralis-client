@@ -55,9 +55,9 @@ const HomeRuralis = () => (
 
     <Container textAlign='left'>
       <Image.Group>
-        <Image src={logoRMT} size='medium' />
-        <Image src={logoActa} size='tiny' />
-        <Image src={logoMinistere} size='tiny' />
+        <Image src={logoRMT} size='medium' as='a' href='http://www.rmt-biodiversite-agriculture.fr/' target='_blank' />
+        <Image src={logoActa} size='tiny' as='a' href='http://www.acta.asso.fr/' target='_blank' />
+        <Image src={logoMinistere} size='tiny' as='a' href='https://agriculture.gouv.fr/thematique-generale/ministere' target='_blank' />
       </Image.Group>
     </Container>
 

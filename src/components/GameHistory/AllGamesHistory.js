@@ -9,7 +9,7 @@ const breadcrumbSections = [
 ]
 
 const AllGamesHistory = (props) => {
-  const gamesEnded = props.games.filter(game => game.ended)
+  const gamesEnded = props.games.filter(game => game.ended).reverse()
 
   return (
     <div>
@@ -18,8 +18,8 @@ const AllGamesHistory = (props) => {
       <Container>
         <Statistic.Group>
           <Statistic label='Parties jouées' value={gamesEnded.length} />
-          <Statistic label='gagnées' value={gamesEnded.length} color='green' />
-          <Statistic label='perdues' value={gamesEnded.length} color='red' />
+          <Statistic label='gagnées' value={gamesEnded.filter(g => g.victory).length} color='green' />
+          <Statistic label='perdues' value={gamesEnded.filter(g => !g.victory).length} color='red' />
         </Statistic.Group>
       </Container>
 

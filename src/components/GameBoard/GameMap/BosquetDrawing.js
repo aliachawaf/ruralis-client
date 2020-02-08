@@ -31,7 +31,7 @@ const BosquetDrawing = (props) => {
       </Tooltip>
 
       <Marker
-        position={iae.center}
+        position={[iae.center.lat, iae.center.lng + 100]}
         icon={L.divIcon({ className: 'iaeLabel', html: iaeTypeInfos.label })}
       />
 

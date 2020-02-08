@@ -20,14 +20,14 @@ const PlayersRow = (props) => {
 
   return (
     <Grid.Row>
-      <Grid.Column width={3}>
+      <Grid.Column width={3} only='computer'>
         <Label circular>
           {nbPlayersRequired}
         </Label>
         {' ' + role}
       </Grid.Column>
       <Grid.Column width={13}>
-        <Card.Group itemsPerRow={3}>
+        <Card.Group itemsPerRow={3} stackable>
           {
             listPlayersRole.map(player =>
               <Card key={player.number}>

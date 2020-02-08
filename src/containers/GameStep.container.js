@@ -3,14 +3,17 @@ import GameStep from '../components/GameBoard/GameSteps/GameStep'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addIAE, applyAction, updateScore, endgame } from '../actions/gameActions'
+import { addIAE, applyAction, endgame, updateScore, addEventCards, tmpScore } from '../actions/gameActions'
 
 import actions from '../config/actionsCards'
+import eventCards from '../config/eventCards'
 
 class GameStepContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      cardsPicked: [],
+      // End Game
       playersWinners: [],
       isObjectiveAchieved: false,
       victory: false
@@ -18,6 +21,7 @@ class GameStepContainer extends React.Component {
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
     this.onValidateAction = this.onValidateAction.bind(this)
     this.onValidateEndGame = this.onValidateEndGame.bind(this)
+    this.onValidateEventCards = this.onValidateEventCards.bind(this)
   }
 
   /** STEP 1 **/
@@ -51,8 +55,32 @@ class GameStepContainer extends React.Component {
       const newTempsTravail = this.props.game.tempsTravail + card.tempsTravailEffect
       this.props.applyAction(this.props.game._id, this.props.actionSelected, newProduction, newEnvironnement, newAncrageSocial, newTempsTravail)
     } else {
-      this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.tempsTravail, this.props.game.tempsTravail)
+      this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
     }
+  }
+
+  /** STEP 3 **/
+  onChangeScore = (production, tempsTravail, environnement, ancrageSocial) => {
+    this.props.tmpScore(production, environnement, ancrageSocial, tempsTravail)
+  }
+
+  // Get a random event card not already picked before
+  pickCard = () => {
+    const min = 1
+    const max = eventCards.length
+    const random = Math.floor(Math.random() * (max - min + 1)) + min
+
+    // Check if the card is already picked in last tours or in this tour
+    if (this.props.game.cardsPicked.includes(random) || this.state.cardsPicked.includes(random)) {
+      this.pickCard()
+    } else {
+      this.setState({ cardsPicked: this.state.cardsPicked.concat(random) })
+    }
+  }
+
+  onValidateEventCards () {
+    this.setState({ cardsPicked: [] })
+    this.props.addEventCards(this.props.game._id, this.state.cardsPicked, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
   }
 
   /** END GAME **/
@@ -106,10 +134,18 @@ class GameStepContainer extends React.Component {
   render () {
     return (
       <GameStep
+        // Step 1
         handleValidateIAEs={this.onValidateIAEs}
+        // Step 2
         actionSelected={this.props.actionSelected}
         onChangeAction={this.props.onChangeAction}
         handleValidateAction={this.onValidateAction}
+        // Step 3
+        handleOnChangeScore={this.onChangeScore}
+        pickCard={this.pickCard}
+        cardsPicked={this.state.cardsPicked}
+        handleOnValidateEventCards={this.onValidateEventCards}
+        // End Game
         playersWinners={this.state.playersWinners}
         handleOnChangeObjectiveAchieved={this.onChangeObjectiveAchieved}
         handleOnChangePlayerWinner={this.onChangePlayerWinner}
@@ -127,6 +163,8 @@ GameStepContainer.propTypes = {
   updateScore: PropTypes.func.isRequired,
   applyAction: PropTypes.func.isRequired,
   endgame: PropTypes.func.isRequired,
+  addEventCards: PropTypes.func.isRequired,
+  tmpScore: PropTypes.func.isRequired,
   // STEP 1
   iaeImplemented: PropTypes.array.isRequired,
   iaeMarkerImplemented: PropTypes.array.isRequired,
@@ -142,5 +180,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addIAE, updateScore, applyAction, endgame }
+  { addIAE, updateScore, applyAction, endgame, addEventCards, tmpScore }
 )(GameStepContainer)

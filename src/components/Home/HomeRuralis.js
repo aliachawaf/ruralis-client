@@ -3,7 +3,7 @@ import './styleHome.css'
 
 import { Button, Container, Divider, Grid, Image, Label } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import ruralisLogo from '../../assets/ruralisLogo.png'
+import ruralisLogo from '../../assets/logos/ruralisLogo.png'
 import logoActa from '../../assets/logos/logoActa.jpg'
 import logoRMT from '../../assets/logos/logoRMT.jpeg'
 import logoMinistere from '../../assets/logos/logoMinistere.jpeg'

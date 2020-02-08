@@ -29,7 +29,7 @@ const StartGameModal = (props) => {
           ses intérêts, mais pas ses objectifs, qui doivent rester secrets !
         </p>
 
-        <Card.Group itemsPerRow={4}>
+        <Card.Group itemsPerRow={4} stackable>
           {
             gamePlayersInfos.map(player =>
               <Card key={player.number}>

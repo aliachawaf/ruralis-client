@@ -33,10 +33,7 @@ const GameInfosHistory = (props) => {
                 <Header.Content>Partie Perdue</Header.Content>
               </Header>// eslint-disable-line
           }
-
         </Segment>
-
-        <Divider />
 
         <GameScore
           production={props.game.production}

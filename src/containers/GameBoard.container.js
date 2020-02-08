@@ -210,7 +210,13 @@ class GameBoardContainer extends React.Component {
   }
 
   /** *************** IAE DELETING  *****************/
+  // Delete all iaes implemented in the tour
   clearAllIAEs () {
+    // Update score by adding the points of the iaes deleted
+    this.state.iaeImplemented.forEach(iae => this.updateScore(iae, false))
+    this.state.iaeMarkerImplemented.forEach(iae => this.updateScore(iae, false))
+
+    // Clear iaes implemented
     this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] })
 
     // Decorator marker are independent from iae polyline, so we have to delete them separately

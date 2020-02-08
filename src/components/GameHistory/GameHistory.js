@@ -31,7 +31,7 @@ const GameHistory = React.forwardRef((props, ref) => {
 
           </Grid.Column>
 
-          <Grid.Column width={3} style={{ height: '90vh' }}>
+          <Grid.Column width={3}>
             <Image src={mapLegend} />
             <Image src={mapInfoLegend} />
 

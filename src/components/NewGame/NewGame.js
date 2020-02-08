@@ -53,7 +53,7 @@ const NewGame = (props) => {
               header={'Veuillez sélectionner vos ' + nbPlayers + ' joueurs et choisir un scénario pour pouvoir lancer la partie.'}
             />
         }
-        <Button floated='right' content='Lancer nouvelle partie' onClick={handleOnClick} />
+        <Button color='red' floated='right' content='Lancer nouvelle partie' onClick={handleOnClick} />
       </Container>
     </div>
   )

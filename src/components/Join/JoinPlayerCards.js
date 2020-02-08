@@ -21,7 +21,7 @@ const JoinPlayerCards = (props) => (
       <Card.Group>
         {
           playersList.map(player =>
-            <Card key={player.number} link onClick={() => props.history.push('/player/' + player.number)}>
+            <Card key={player.number} link centered onClick={() => props.history.push('/player/' + player.number)}>
               <Card.Content>
                 <Image src={player.picture} centered size='mini' floated='right' />
                 <Card.Header>{player.name}</Card.Header>

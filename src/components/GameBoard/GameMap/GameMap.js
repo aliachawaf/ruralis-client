@@ -38,7 +38,7 @@ const GameMap = React.forwardRef((props, ref) => {
   return (
     <Map
       ref={ref}
-      style={{ height: '90vh', width: '55vw' }}
+      style={{ height: '90vh' }}
       crs={L.CRS.Simple}
       minZoom={-5}
       attributionControl={false}

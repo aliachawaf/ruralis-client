@@ -3,7 +3,7 @@ import { Divider, Popup, Segment, Step } from 'semantic-ui-react'
 import TimerStep1 from './TimerStep1'
 
 const Description = () => (
-  <Step.Group ordered vertical>
+  <Step.Group ordered vertical size='mini'>
 
     <Popup
       content='Chacun décide seul quelle IAE il souhaite implémenter'

@@ -9,7 +9,7 @@ const breadcrumbSections = [
 ]
 
 const JoinGame = (props) => {
-  const gamesNotEnded = props.games.filter(game => !game.ended)
+  const gamesNotEnded = props.games.filter(game => !game.ended).reverse()
 
   return (
     <div>

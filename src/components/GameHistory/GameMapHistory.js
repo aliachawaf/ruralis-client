@@ -12,6 +12,8 @@ import IaeDrawing from '../GameBoard/GameMap/IaeDrawing'
 import mapLegend from '../../config/mapLegend'
 import BosquetDrawing from '../GameBoard/GameMap/BosquetDrawing'
 import MareDrawing from '../GameBoard/GameMap/MareDrawing'
+import Control from 'react-leaflet-control'
+import { Button } from 'semantic-ui-react'
 
 const GameMapHistory = React.forwardRef((props, ref) => {
   const {
@@ -26,6 +28,7 @@ const GameMapHistory = React.forwardRef((props, ref) => {
       style={{ height: '90vh' }}
       crs={L.CRS.Simple}
       minZoom={-5}
+      zoomSnap={0}
       attributionControl={false}
     >
 
@@ -37,6 +40,14 @@ const GameMapHistory = React.forwardRef((props, ref) => {
 
       {/* MAP SCALE */}
       <ScaleControl imperial={false} position='bottomright' />
+
+      {/* BUTTON TO RECENTER MAP */}
+      <Control position='topright'>
+        <Button
+          icon='expand' content='Recentrer' color='grey'
+          onClick={() => ref.current.leafletElement.fitBounds(bounds)}
+        />
+      </Control>
 
       {/* IAE ALREADY IMPLEMENTED DRAWINGS */}
       {

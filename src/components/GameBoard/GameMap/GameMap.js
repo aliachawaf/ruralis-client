@@ -48,7 +48,6 @@ const GameMap = React.forwardRef((props, ref) => {
       onMovestart={() => removeMarkersIAEdeleted()}
       onMoveend={() => removeMarkersIAEdeleted()}
       onMove={() => removeMarkersIAEdeleted()}
-
     >
 
       {/* GAME MAP IMAGE */}

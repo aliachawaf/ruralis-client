@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import 'leaflet-polylinedecorator'
 import L from 'leaflet'
-import { FeatureGroup, ImageOverlay, Map, ScaleControl } from 'react-leaflet'
+import { FeatureGroup, ImageOverlay, Map, ScaleControl, ZoomControl } from 'react-leaflet'
 import { EditControl } from 'react-leaflet-draw'
 
 import gameMap from '../../../assets/gameMap.png'
@@ -30,7 +30,8 @@ const GameMap = React.forwardRef((props, ref) => {
     handleonChangeDeleting,
     handleDeleteIAE,
     handleValidateDeletingIAE,
-    handleCancelDeletingIAE
+    handleCancelDeletingIAE,
+    removeMarkersIAEdeleted
   } = props
 
   const iaeSelectedDrawingType = mapLegend[iaeGroupSelected].drawingType
@@ -41,11 +42,13 @@ const GameMap = React.forwardRef((props, ref) => {
       style={{ height: '90vh' }}
       crs={L.CRS.Simple}
       minZoom={-5}
-      attributionControl={false}
+      zoomSnap={0}
       zoomControl={false}
-      dragging={false}
-      doubleClickZoom={false}
-      scrollWheelZoom={false}
+      attributionControl={false}
+      onMovestart={() => removeMarkersIAEdeleted()}
+      onMoveend={() => removeMarkersIAEdeleted()}
+      onMove={() => removeMarkersIAEdeleted()}
+
     >
 
       {/* GAME MAP IMAGE */}
@@ -62,11 +65,23 @@ const GameMap = React.forwardRef((props, ref) => {
         props.game.step === 1 &&
           <Control position='topright'>
             <Button
+              disabled={iaeImplemented.length === 0 && iaeMarkerImplemented.length === 0}
               icon='trash alternate outline' content='Tout Effacer' color='grey'
               onClick={clearAllIAEs}
             />
           </Control>
       }
+
+      {/* BUTTON TO RECENTER MAP */}
+      <Control position='topleft'>
+        <Button
+          icon='expand' content='Recentrer' color='grey'
+          onClick={() => ref.current.leafletElement.fitBounds(bounds)}
+        />
+      </Control>
+
+      {/* ZOOM CONTROL */}
+      <ZoomControl />
 
       {/* DRAWING TOOLTIP */}
       {props.game.step === 1 &&
@@ -81,10 +96,10 @@ const GameMap = React.forwardRef((props, ref) => {
             draw={{
               marker: false,
               circle: false,
-              polyline: (iaeSelectedDrawingType === 'polyline'),
-              polygon: (iaeSelectedDrawingType === 'polygon') ? { showLength: true } : false,
-              rectangle: (iaeSelectedDrawingType === 'polygon'),
-              circlemarker: (iaeSelectedDrawingType === 'circlemarker')
+              polyline: (iaeSelectedDrawingType === 'polyline' ? { repeatMode: true } : false),
+              polygon: (iaeSelectedDrawingType === 'polygon') ? { repeatMode: true, showLength: true } : false,
+              rectangle: (iaeSelectedDrawingType === 'polygon' ? { repeatMode: true } : false),
+              circlemarker: (iaeSelectedDrawingType === 'circlemarker' ? { repeatMode: true } : false)
             }}
             edit={{
               edit: false
@@ -142,7 +157,8 @@ GameMap.propTypes = {
   handleonChangeDeleting: PropTypes.func.isRequired,
   handleDeleteIAE: PropTypes.func.isRequired,
   handleValidateDeletingIAE: PropTypes.func.isRequired,
-  handleCancelDeletingIAE: PropTypes.func.isRequired
+  handleCancelDeletingIAE: PropTypes.func.isRequired,
+  removeMarkersIAEdeleted: PropTypes.func.isRequired
 }
 
 GameMap.defaultProps = {

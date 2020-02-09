@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Divider, Header, Icon, Modal, Statistic } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal, Statistic } from 'semantic-ui-react'
 import Timer from 'react-compound-timer'
 
 let timerPaused = true
 
-const TimerStep1 = (props) => (
+const TimerStep1 = () => (
   <Timer
     initialTime={600000}
     direction='backward'
@@ -12,24 +12,24 @@ const TimerStep1 = (props) => (
     onPause={() => { timerPaused = true }}
     onResume={() => { timerPaused = false }}
   >
-    {({ start, resume, pause, reset, getTime }) => (
+    {({ resume, pause, reset, getTime }) => (
       <>
         <Statistic>
           <Statistic.Value>
-            <Icon size='small' name={getTime() > 301000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'} />
+            <Icon
+              size='small'
+              name={getTime() > 301000 ? 'hourglass one' : getTime() > 61000 ? 'hourglass two' : 'hourglass three'}
+            />
             <Timer.Minutes />
             :
             <Timer.Seconds formatValue={value => `${(value < 10 ? `0${value}` : value)}`} />
           </Statistic.Value>
         </Statistic>
-        <Divider hidden />
 
-        <Button
-          onClick={timerPaused ? resume : pause}
-          icon={timerPaused ? 'play' : 'pause'}
-        />
-
-        <Button onClick={reset} icon='repeat' />
+        <div>
+          <Button onClick={timerPaused ? resume : pause} icon={timerPaused ? 'play' : 'pause'} />
+          <Button onClick={reset} icon='repeat' />
+        </div>
 
         {
           getTime() < 1 &&

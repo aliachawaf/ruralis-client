@@ -6,7 +6,7 @@ import IAETypeSelect from './IAETypeSelect'
 import StartGameModal from './StartGameModal'
 import { connect } from 'react-redux'
 
-import { Button, Divider, Grid, Header, Image, Message, Modal, Segment } from 'semantic-ui-react'
+import { Button, Divider, Grid, Image, Message, Modal, Segment } from 'semantic-ui-react'
 
 import mapInfoLegend from '../../assets/mapLegend/mapInfoLegend.png'
 import RuralisHeader from '../common/RuralisHeader'
@@ -28,6 +28,7 @@ const GameBoard = React.forwardRef((props, ref) => {
     handleDeleteIAE,
     handleValidateDeletingIAE,
     handleCancelDeletingIAE,
+    removeMarkersIAEdeleted,
     iaeGroupSelected,
     iaeTypeSelected,
     handleIAETypeChange,
@@ -78,12 +79,11 @@ const GameBoard = React.forwardRef((props, ref) => {
               handleonChangeDeleting={handleonChangeDeleting}
               handleValidateDeletingIAE={handleValidateDeletingIAE}
               handleCancelDeletingIAE={handleCancelDeletingIAE}
+              removeMarkersIAEdeleted={removeMarkersIAEdeleted}
             />
           </Grid.Column>
 
           <Grid.Column width={3}>
-            <Header content={'Choix de l\'IAE à implémenter'} />
-
             <IAETypeSelect
               iaeGroupSelected={iaeGroupSelected}
               iaeTypeSelected={iaeTypeSelected}
@@ -171,6 +171,7 @@ GameBoard.propTypes = {
   handleDeleteIAE: PropTypes.func.isRequired,
   handleValidateDeletingIAE: PropTypes.func.isRequired,
   handleCancelDeletingIAE: PropTypes.func.isRequired,
+  removeMarkersIAEdeleted: PropTypes.func.isRequired,
   // IAE Type Select
   iaeGroupSelected: PropTypes.number.isRequired,
   iaeTypeSelected: PropTypes.number.isRequired,

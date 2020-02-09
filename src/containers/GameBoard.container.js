@@ -334,6 +334,69 @@ class GameBoardContainer extends React.Component {
 
   clearIAEsimplemented = () => { this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] }) }
 
+  getAllMapMarkers = () => {
+    let markers = []
+    this.mapRef.current.leafletElement.eachLayer(function (layer) {
+      if (layer instanceof L.Marker) {
+        markers = markers.concat(layer)
+      }
+    })
+    return markers
+  }
+
+  // When an iae is deleted, its decorator markers come back when dragging/zooming map.
+  // So on moving on the map, we remove the markers of the iaes deleted
+  removeMarkersIAEdeleted = () => {
+    // Get all the markers present on the map
+    const markers = this.getAllMapMarkers()
+
+    const oldIaeImplemented = this.props.game.iaeImplemented ? this.props.game.iaeImplemented : []
+    const oldIaeMarkerImplemented = this.props.game.circleIAEs ? this.props.game.circleIAEs : []
+
+    const allIaeImplemented = this.state.iaeImplemented.concat(oldIaeImplemented)
+    const allIaeMarkerImplemented = this.state.iaeMarkerImplemented.concat(oldIaeMarkerImplemented)
+
+    // For each marker, we check if it is used to decorate an IAE, and we remove it if not
+    markers.forEach(m => {
+      let toRemove = true
+
+      // Marker decorating polyline
+      allIaeImplemented
+        .filter(iae => iae.layerType === 'polyline')
+        .forEach(iae => {
+          const iaeBounds = L.latLngBounds(iae.coords[0], iae.coords[1])
+
+          if (iaeBounds.contains(m._latlng)) {
+            toRemove = false
+          }
+        })
+
+      // Marker decorating polygon (label)
+      toRemove &&
+        allIaeImplemented
+          .filter(iae => iae.layerType !== 'polyline')
+          .forEach(iae => {
+            const iaeBounds = L.latLngBounds(iae.coords).getCenter()
+
+            if (iaeBounds.lat === m._latlng.lat && iaeBounds.lng === m._latlng.lng) {
+              toRemove = false
+            }
+          })
+
+      // Markers for fixed iae (label marker for bosquet and cross marker for mare)
+      toRemove &&
+        allIaeMarkerImplemented
+          .forEach(iae => {
+            if (iae.center.lat === m._latlng.lat && iae.center.lng === m._latlng.lng) {
+              toRemove = false
+            }
+          })
+
+      toRemove && this.mapRef.current.leafletElement.removeLayer(m)
+    }
+    )
+  }
+
   render () {
     return (
       <GameBoard
@@ -362,6 +425,8 @@ class GameBoardContainer extends React.Component {
         errorTypesIAE={this.state.errorTypesIAE}
         errorMare={this.state.errorMare}
         handleOnCloseError={this.onCloseError}
+
+        removeMarkersIAEdeleted={this.removeMarkersIAEdeleted}
       />
     )
   }

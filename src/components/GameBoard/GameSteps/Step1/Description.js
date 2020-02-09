@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Popup, Segment, Step } from 'semantic-ui-react'
+import { Popup, Step } from 'semantic-ui-react'
 import TimerStep1 from './TimerStep1'
 
 const Description = () => (
@@ -16,9 +16,8 @@ const Description = () => (
       position='bottom center'
       trigger={
         <Step>
-              Discussion Collective
-          <Divider hidden />
-          <Segment padded basic><TimerStep1 /></Segment>
+          Discussion Collective
+          <div><TimerStep1 /></div>
         </Step>
       }
     />

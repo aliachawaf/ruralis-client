@@ -213,8 +213,23 @@ class GameBoardContainer extends React.Component {
   // Delete all iaes implemented in the tour
   clearAllIAEs () {
     // Update score by adding the points of the iaes deleted
-    this.state.iaeImplemented.forEach(iae => this.updateScore(iae, false))
-    this.state.iaeMarkerImplemented.forEach(iae => this.updateScore(iae, false))
+    let newProduction = this.props.game.production
+    let newTempsTravail = this.props.game.tempsTravail
+    let newEnv = this.props.game.environnement
+
+    const allIaes = this.state.iaeImplemented.concat(this.state.iaeMarkerImplemented)
+
+    allIaes.forEach(iae => {
+      const envPerUnit = mapLegend[iae.IAEGroup].environment
+      const tempsTravailPerUnit = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].workingTime
+      const productionPerUnit = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].production
+
+      newProduction = Math.round(newProduction - iae.unity * productionPerUnit)
+      newTempsTravail = Math.round(newTempsTravail - iae.unity * tempsTravailPerUnit)
+      newEnv = Math.round(newEnv - iae.unity * envPerUnit)
+    })
+
+    this.props.tmpScore(newProduction, newEnv, this.props.game.ancrageSocial, newTempsTravail)
 
     // Clear iaes implemented
     this.setState({ iaeImplemented: [], iaeMarkerImplemented: [] })

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Divider, Header, Icon, Image, List, Message, Popup, Segment } from 'semantic-ui-react'
+import { Divider, Header, Icon, Image, List, Message, Popup, Segment, Statistic } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import scenarii from '../../config/scenarii'
 import playersList from '../../config/playersList'
@@ -16,7 +16,7 @@ const GameInfosHistory = (props) => {
       <Segment.Group stacked>
 
         <Segment color='red' inverted basic>
-          <Header content={'Informations de la Partie ' + props.game._id} />
+          <Header content='Informations de la Partie' />
         </Segment>
 
         <Segment basic>
@@ -33,6 +33,13 @@ const GameInfosHistory = (props) => {
                 <Header.Content>Partie Perdue</Header.Content>
               </Header>// eslint-disable-line
           }
+
+          <Segment basic>
+            <Statistic size='small'>
+              <Statistic.Label>Tour</Statistic.Label>
+              <Statistic.Value>{props.game.numTour} / 7</Statistic.Value>
+            </Statistic>
+          </Segment>
         </Segment>
 
         <GameScore

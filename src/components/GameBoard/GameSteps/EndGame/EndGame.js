@@ -74,6 +74,10 @@ const EndGame = (props) => {
         content='Terminer la partie'
         color='red'
       />
+
+      <Divider hidden />
+
+      {props.endGameClicked && <Button content='Annuler et continuer' onClick={props.onEndGameClicked} />}
     </Segment>
   )
 }
@@ -86,7 +90,9 @@ EndGame.propTypes = {
   playersWinners: PropTypes.array.isRequired,
   onChangePlayerWinner: PropTypes.func.isRequired,
   onChangeObjectiveAchieved: PropTypes.func.isRequired,
-  onValidateEndGame: PropTypes.func.isRequired
+  onValidateEndGame: PropTypes.func.isRequired,
+  endGameClicked: PropTypes.bool.isRequired,
+  onEndGameClicked: PropTypes.func.isRequired
 }
 
 EndGame.defaultProps = {

@@ -16,7 +16,8 @@ class GameStepContainer extends React.Component {
       // End Game
       playersWinners: [],
       isObjectiveAchieved: false,
-      victory: false
+      victory: false,
+      endGameClicked: false
     }
     this.onValidateIAEs = this.onValidateIAEs.bind(this)
     this.onValidateAction = this.onValidateAction.bind(this)
@@ -154,6 +155,8 @@ class GameStepContainer extends React.Component {
         isObjectiveAchieved={this.state.isObjectiveAchieved}
         victory={this.state.victory}
         handleOnValidateEndGame={this.onValidateEndGame}
+        endGameClicked={this.state.endGameClicked}
+        onEndGameClicked={() => this.setState({ endGameClicked: !this.state.endGameClicked })}
       />
     )
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Divider, Header, Progress, Segment, Statistic } from 'semantic-ui-react'
+import { Button, Divider, Header, Progress, Segment, Statistic } from 'semantic-ui-react'
 import Step1 from './Step1/Step1'
 import Step2 from './Step2/Step2'
 import { connect } from 'react-redux'
@@ -47,24 +47,24 @@ const GameStep = (props) => (
       <Divider />
 
       {/** STEPS SECTION **/}
-      {props.game.step === 1 &&
+      {!props.endGameClicked && props.game.step === 1 &&
         <Step1 onValidateIAEs={props.handleValidateIAEs} />}
 
-      {props.game.step === 2 &&
+      {!props.endGameClicked && props.game.step === 2 &&
         <Step2
           actionSelected={props.actionSelected}
           onChangeAction={props.onChangeAction}
           onValidateActions={props.handleValidateAction}
         />}
 
-      {props.game.step === 3 &&
+      {!props.endGameClicked && props.game.step === 3 &&
         <Step3
           handleOnPickCard={props.pickCard}
           cardsPicked={props.cardsPicked}
           onValidateEventCards={props.handleOnValidateEventCards}
         />}
 
-      {props.game.numTour === 7 && props.game.step === 4 &&
+      {(props.endGameClicked || (props.game.numTour === 7 && props.game.step === 4)) &&
         <EndGame
           isObjectiveAchieved={props.isObjectiveAchieved}
           onChangeObjectiveAchieved={props.handleOnChangeObjectiveAchieved}
@@ -72,12 +72,15 @@ const GameStep = (props) => (
           playersWinners={props.playersWinners}
           onValidateEndGame={props.handleOnValidateEndGame}
           victory={props.victory}
+          endGameClicked={props.endGameClicked}
+          onEndGameClicked={props.onEndGameClicked}
         />}
 
       <Divider />
 
       <Segment basic>
         <Progress value={props.game.step} total='3' progress='ratio' color='yellow' />
+        {!props.endGameClicked && <Button content='Terminer la partie' onClick={props.onEndGameClicked} />}
       </Segment>
 
     </Segment.Group>
@@ -104,7 +107,9 @@ GameStep.propTypes = {
   playersWinners: PropTypes.array.isRequired,
   handleOnChangeObjectiveAchieved: PropTypes.func.isRequired,
   handleOnChangePlayerWinner: PropTypes.func.isRequired,
-  handleOnValidateEndGame: PropTypes.func.isRequired
+  handleOnValidateEndGame: PropTypes.func.isRequired,
+  endGameClicked: PropTypes.bool.isRequired,
+  onEndGameClicked: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({

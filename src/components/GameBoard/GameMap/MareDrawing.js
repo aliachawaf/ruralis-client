@@ -7,36 +7,39 @@ import L from 'leaflet'
 import cross from '../../../assets/mapLegend/mares/cross.png'
 import { Header } from 'semantic-ui-react'
 
-const CircleIaeDrawing = (props) => {
+// IN METERS
+const mareSize = 20
+
+const MareDrawing = (props) => {
   const { iae, handleDeleteIAE } = props
 
-  const withCross = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName === 'abreuvement animaux'
+  const mareWithCross = mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName === 'abreuvement animaux'
 
-  return ([
+  return (
+
     <Circle
-      key={iae.IAEGroup + '' + iae.IAEType}
       color={mapLegend[iae.IAEGroup].color}
       center={iae.center}
-      radius={20}
-      fill={false}
+      radius={mareSize}
       onClick={(e) => handleDeleteIAE(e, iae)}
     >
+      {mareWithCross &&
+        <Marker
+          position={iae.center}
+          icon={L.icon({ iconSize: [25, 25], iconUrl: cross })}
+        />}
       <Tooltip direction='top'>
         <Header content={mapLegend[iae.IAEGroup].iaeGroup} />
         {mapLegend[iae.IAEGroup].iaeList[iae.IAEType].iaeName}
       </Tooltip>
-    </Circle>,
-    withCross &&
-      <Marker
-        position={iae.center}
-        icon={L.icon({ iconSize: [25, 25], iconUrl: cross })}
-      />
-  ])
+
+    </Circle>
+  )
 }
 
-CircleIaeDrawing.propTypes = {
+MareDrawing.propTypes = {
   iae: PropTypes.object.isRequired,
   handleDeleteIAE: PropTypes.func
 }
 
-export default CircleIaeDrawing
+export default MareDrawing

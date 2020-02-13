@@ -9,15 +9,17 @@ const breadcrumbSections = [
 ]
 
 const AllGamesHistory = (props) => {
+  const gamesEnded = props.games.filter(game => game.ended).reverse()
+
   return (
     <div>
       <RuralisHeader breadcrumbSections={breadcrumbSections} />
 
       <Container>
         <Statistic.Group>
-          <Statistic label='Parties jouées' value={props.games.length} />
-          <Statistic label='gagnées' value={props.games.length} color='green' />
-          <Statistic label='perdues' value={props.games.length} color='red' />
+          <Statistic label='Parties jouées' value={gamesEnded.length} />
+          <Statistic label='gagnées' value={gamesEnded.filter(g => g.victory).length} color='green' />
+          <Statistic label='perdues' value={gamesEnded.filter(g => !g.victory).length} color='red' />
         </Statistic.Group>
       </Container>
 
@@ -36,14 +38,16 @@ const AllGamesHistory = (props) => {
           </Table.Header>
 
           <Table.Body>
-            {props.games
+            {gamesEnded
               .map(game =>
                 <Table.Row key={game._id} value={game._id} onClick={() => props.redirectToGameHistory(game._id)}>
-                  <Table.Cell content={'Partie ' + game._id} />
+                  <Table.Cell content={game._id + '. ' + game.name} />
 
-                  <Table.Cell positive>
-                    <Icon color='green' name='winner' /> gagnée
-                  </Table.Cell>
+                  {
+                    game.victory
+                      ? <Table.Cell positive><Icon color='green' name='winner' /> gagnée</Table.Cell>
+                      : <Table.Cell negative><Icon flipped='vertically' color='red' name='winner' /> perdue</Table.Cell>
+                  }
 
                   <Table.Cell>
                     <Statistic.Group size='mini'>

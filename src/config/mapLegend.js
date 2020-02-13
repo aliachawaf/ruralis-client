@@ -420,28 +420,32 @@ const mapLegend = [
         iaeLegend: '',
         production: 0,
         workingTime: -1,
-        decorator: []
+        decorator: [],
+        label: 'NRJ'
       },
       {
         iaeName: 'fauche',
         iaeLegend: '',
         production: 1,
         workingTime: 1,
-        decorator: []
+        decorator: [],
+        label: 'F'
       },
       {
         iaeName: 'patûre',
         iaeLegend: '',
         production: 2,
         workingTime: 0,
-        decorator: []
+        decorator: [],
+        label: 'P'
       },
       {
         iaeName: 'fauche et patûre',
         iaeLegend: '',
         production: 2,
         workingTime: 1,
-        decorator: []
+        decorator: [],
+        label: 'F+P'
       }
     ]
   },
@@ -449,7 +453,7 @@ const mapLegend = [
   /** **************************************** GROUP BOSQUET  ******************************************/
   {
     iaeGroup: 'Bosquet',
-    drawingType: 'polygon',
+    drawingType: 'circlemarker',
     color: '#1A1919',
     environment: 3,
     iaeCard: BosquetCard,
@@ -459,28 +463,32 @@ const mapLegend = [
         iaeLegend: '',
         production: 0,
         workingTime: -1,
-        decorator: []
+        decorator: [],
+        label: 'E'
       },
       {
         iaeName: 'énergie',
         iaeLegend: '',
         production: 2,
         workingTime: -3,
-        decorator: []
+        decorator: [],
+        label: 'NRJ'
       },
       {
         iaeName: 'broyat',
         iaeLegend: '',
         production: 1,
         workingTime: -2,
-        decorator: []
+        decorator: [],
+        label: 'BR'
       },
       {
         iaeName: 'bois d\'oeuvre',
         iaeLegend: '',
         production: 3,
         workingTime: -4,
-        decorator: []
+        decorator: [],
+        label: 'BO'
       }
     ]
   },
@@ -498,21 +506,24 @@ const mapLegend = [
         iaeLegend: '',
         production: 2,
         workingTime: -4,
-        decorator: []
+        decorator: [],
+        label: 'NRJ'
       },
       {
         iaeName: 'bois d\'oeuvre',
         iaeLegend: '',
         production: 4,
         workingTime: -4,
-        decorator: []
+        decorator: [],
+        label: 'BO'
       },
       {
         iaeName: 'pré-verger',
         iaeLegend: '',
         production: 3,
         workingTime: -3,
-        decorator: []
+        decorator: [],
+        label: 'P-V'
       }
     ]
   },

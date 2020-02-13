@@ -11,7 +11,7 @@ import GameInfosHistory from './GameInfosHistory'
 const GameHistory = React.forwardRef((props, ref) => {
   const breadcrumbSections = [
     { key: 'history', content: 'Historique', link: true, href: '/history/games', style: { color: '#FFFFFF' } },
-    { key: props.game._id, content: 'Partie ' + props.game._id, active: true, as: 'h3' }
+    { key: props.game._id, content: props.game._id + '. ' + props.game.name, active: true, as: 'h3' }
   ]
 
   return (
@@ -31,7 +31,7 @@ const GameHistory = React.forwardRef((props, ref) => {
 
           </Grid.Column>
 
-          <Grid.Column width={3} style={{ height: '90vh' }}>
+          <Grid.Column width={3}>
             <Image src={mapLegend} />
             <Image src={mapInfoLegend} />
 

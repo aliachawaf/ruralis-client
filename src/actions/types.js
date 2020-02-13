@@ -6,5 +6,7 @@ export const TMP_SCORE = 'TMP_SCORE'
 export const UPDATE_SCORE = 'UPDATE_SCORE'
 export const APPLY_ACTION = 'APPLY_ACTION'
 export const ADD_IAE = 'ADD_IAE'
+export const END_GAME = 'END_GAME'
+export const ADD_CARD_EVENTS = 'ADD_CARD_EVENTS'
 
 export const GET_ERRORS = 'GET_ERRORS'

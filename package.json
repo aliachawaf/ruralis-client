@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "prop-types": "latest",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
@@ -13,15 +14,17 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
-    "prop-types": "latest"
+    "serve": "^11.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -s build",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "style": "standard",
     "style-fix": "standard --fix",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -73,5 +76,5 @@
   "bugs": {
     "url": "https://github.com/aliachawaf/ruralis-client/issues"
   },
-  "homepage": "https://github.com/aliachawaf/ruralis-client#readme"
+  "homepage": "https://ruralis.herokuapp.com/"
 }

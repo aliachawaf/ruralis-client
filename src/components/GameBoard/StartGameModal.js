@@ -20,7 +20,7 @@ const StartGameModal = (props) => {
       onClose={handleStartGame}
 
     >
-      <Modal.Header>Récapitulatif de la partie</Modal.Header>
+      <Modal.Header>{'Récapitulatif de la partie ' + game.name}</Modal.Header>
       <Modal.Content>
 
         <Header as='h3' color='red' content={game.players.length + ' Joueurs'} dividing />
@@ -29,7 +29,7 @@ const StartGameModal = (props) => {
           ses intérêts, mais pas ses objectifs, qui doivent rester secrets !
         </p>
 
-        <Card.Group itemsPerRow={4}>
+        <Card.Group itemsPerRow={4} stackable>
           {
             gamePlayersInfos.map(player =>
               <Card key={player.number}>

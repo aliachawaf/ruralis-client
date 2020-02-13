@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Divider, Header, Icon, Image, List, Message, Popup, Segment } from 'semantic-ui-react'
+import { Divider, Header, Icon, Image, List, Message, Popup, Segment, Statistic } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import scenarii from '../../config/scenarii'
 import playersList from '../../config/playersList'
@@ -16,24 +16,31 @@ const GameInfosHistory = (props) => {
       <Segment.Group stacked>
 
         <Segment color='red' inverted basic>
-          <Header content={'Informations de la Partie ' + props.game._id} />
+          <Header content='Informations de la Partie' />
         </Segment>
 
         <Segment basic>
 
-          <Header as='h2'>
-            <Icon color='green' name='winner' />
-            <Header.Content>Partie Gagnée</Header.Content>
-          </Header>
+          {
+            props.game.victory
+              ? <Header as='h2'>
+                <Icon color='green' name='winner' />
+                <Header.Content>Partie Gagnée</Header.Content>
+              </Header>// eslint-disable-line
 
-          <Header as='h2'>
-            <Icon flipped='vertically' color='red' name='winner' />
-            <Header.Content>Partie Perdue</Header.Content>
-          </Header>
+              : <Header as='h2'>
+                <Icon flipped='vertically' color='red' name='winner' />
+                <Header.Content>Partie Perdue</Header.Content>
+              </Header>// eslint-disable-line
+          }
 
+          <Segment basic>
+            <Statistic size='small'>
+              <Statistic.Label>Tour</Statistic.Label>
+              <Statistic.Value>{props.game.numTour} / 7</Statistic.Value>
+            </Statistic>
+          </Segment>
         </Segment>
-
-        <Divider />
 
         <GameScore
           production={props.game.production}
@@ -57,7 +64,9 @@ const GameInfosHistory = (props) => {
                 content={<Image src={player.card} />}
                 trigger={
                   <List.Item>
-                    <Icon color='green' name='winner' />
+                    {props.game.victoryPlayers.includes(player.number)
+                      ? <Icon color='green' name='winner' />
+                      : <Icon flipped='vertically' color='red' name='winner' />}
                     <Image avatar src={player.picture} />
                     <List.Content header={player.name} />
                   </List.Item>
@@ -67,7 +76,7 @@ const GameInfosHistory = (props) => {
           </List>
 
           <Header as='h3' color='red' content={'Scénario ' + props.game.scenario} dividing />
-          <Message color='yellow' header='OBJECTIFS' content={scenario && scenario.objectives} />
+          <Message color='yellow' header='OBJECTIF COMMUN' content={scenario && scenario.objectives} />
 
         </Segment>
 

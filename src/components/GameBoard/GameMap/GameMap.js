@@ -65,7 +65,7 @@ const GameMap = React.forwardRef((props, ref) => {
           <Control position='topright'>
             <Button
               disabled={iaeImplemented.length === 0 && iaeMarkerImplemented.length === 0}
-              icon='trash alternate outline' content='Tout Effacer' color='grey'
+              icon='trash alternate outline' content='Effacer les IAE de ce tour' color='grey'
               onClick={clearAllIAEs}
             />
           </Control>

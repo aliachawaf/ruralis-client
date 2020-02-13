@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import ruralisLogo from '../../assets/logos/ruralisLogo.png'
 import logoActa from '../../assets/logos/logoActa.jpg'
 import logoRMT from '../../assets/logos/logoRMT.jpeg'
-import logoMinistere from '../../assets/logos/logoMinistere.jpeg'
+import logoMinistere from '../../assets/logos/logoMinistere.png'
 
 const HomeRuralis = () => (
   <Container className='homePage'>

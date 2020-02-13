@@ -41,7 +41,7 @@ const AllGamesHistory = (props) => {
             {gamesEnded
               .map(game =>
                 <Table.Row key={game._id} value={game._id} onClick={() => props.redirectToGameHistory(game._id)}>
-                  <Table.Cell content={'Partie ' + game._id} />
+                  <Table.Cell content={game._id + '. ' + game.name} />
 
                   {
                     game.victory

@@ -1,6 +1,6 @@
 import React from 'react'
 import RuralisHeader from '../common/RuralisHeader'
-import { Button, Container, Divider, Header, Message } from 'semantic-ui-react'
+import { Button, Container, Divider, Header, Input, Message } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import PlayersSelect from './Players/PlayersSelect'
 import ScenarioSelect from './Scenario/ScenarioSelect'
@@ -12,6 +12,8 @@ const breadcrumbSections = [
 const NewGame = (props) => {
   const {
     handleOnClick,
+    gameName,
+    handleOnChangeName,
     handleOnChangeNbPlayers,
     nbPlayers,
     handleOnClickPlayer,
@@ -24,6 +26,12 @@ const NewGame = (props) => {
   return (
     <div>
       <RuralisHeader breadcrumbSections={breadcrumbSections} />
+
+      <Container>
+        <Input label='Nom de la partie' type='text' value={gameName} onChange={handleOnChangeName} size='large' />
+      </Container>
+
+      <Divider hidden />
 
       <Container>
         <Header as='h3' icon='users' content='Choix des joueurs' dividing />
@@ -50,7 +58,7 @@ const NewGame = (props) => {
             <Message
               negative
               icon='warning sign'
-              header={'Veuillez sélectionner vos ' + nbPlayers + ' joueurs et choisir un scénario pour pouvoir lancer la partie.'}
+              header={'Veuillez saisir un nom de partie et sélectionner vos ' + nbPlayers + ' joueurs et choisir un scénario pour pouvoir lancer la partie.'}
             />
         }
         <Button color='red' floated='right' content='Lancer nouvelle partie' onClick={handleOnClick} />
@@ -62,6 +70,8 @@ const NewGame = (props) => {
 NewGame.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
   handleOnChangeNbPlayers: PropTypes.func.isRequired,
+  gameName: PropTypes.string.isRequired,
+  handleOnChangeName: PropTypes.func.isRequired,
   nbPlayers: PropTypes.number.isRequired,
   handleOnClickPlayer: PropTypes.func.isRequired,
   playersSelected: PropTypes.array.isRequired,

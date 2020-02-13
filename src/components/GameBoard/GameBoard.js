@@ -45,7 +45,7 @@ const GameBoard = React.forwardRef((props, ref) => {
   } = props
 
   const breadcrumbSections = [
-    { key: game._id, content: 'Partie ' + game._id, active: true, as: 'h3' }
+    { key: game._id, content: game._id + '. ' + game.name, active: true, as: 'h3' }
   ]
 
   const scenarioInfos = scenarii.find(s => s.number === game.scenario)
@@ -92,7 +92,7 @@ const GameBoard = React.forwardRef((props, ref) => {
 
             <Divider hidden />
 
-            <Message color='yellow' header='OBJECTIFS' content={scenarioInfos && scenarioInfos.objectives} />
+            <Message color='yellow' header='OBJECTIF COMMUN' content={scenarioInfos && scenarioInfos.objectives} />
 
             <Modal
               size='large' closeIcon
@@ -103,8 +103,7 @@ const GameBoard = React.forwardRef((props, ref) => {
                 />
               }
             >
-              <Modal.Header>Cartes événement tirées</Modal.Header>
-              <Modal.Content>
+              <Modal.Content scrolling>
                 <Image.Group size='medium'>
                   {
                     game.cardsPicked &&

@@ -10,30 +10,32 @@ class NewGameContainer extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      gameName: '',
       nbPlayers: 5,
       playersSelected: [4, 5],
       scenario: -1,
       error: false
     }
     this.onClickNewGame = this.onClickNewGame.bind(this)
+    this.onChangeGameName = this.onChangeGameName.bind(this)
     this.onChangeNbPlayers = this.onChangeNbPlayers.bind(this)
     this.onClickPlayer = this.onClickPlayer.bind(this)
     this.onChangeScenario = this.onChangeScenario.bind(this)
   }
 
   onClickNewGame () {
-    const error = (this.state.nbPlayers !== this.state.playersSelected.length || this.state.scenario === -1)
-
-    console.log(this.state.nbPlayers !== this.state.playersSelected.length)
+    const error = (this.state.nbPlayers !== this.state.playersSelected.length || this.state.scenario === -1 || this.state.gameName === '')
 
     if (error) {
       this.setState({ error: true })
     } else {
       this.setState({ error: false })
 
-      this.props.createGame(this.state.playersSelected, this.state.scenario, this.props.history)
+      this.props.createGame(this.state.gameName, this.state.playersSelected, this.state.scenario, this.props.history)
     }
   }
+
+  onChangeGameName (e) { this.setState({ gameName: e.target.value }) }
 
   onChangeNbPlayers (e) {
     const newNbPlayers = parseInt(e.target.value)
@@ -68,6 +70,8 @@ class NewGameContainer extends React.Component {
     return (
       <NewGame
         handleOnClick={this.onClickNewGame}
+        gameName={this.state.gameName}
+        handleOnChangeName={this.onChangeGameName}
         handleOnChangeNbPlayers={this.onChangeNbPlayers}
         nbPlayers={this.state.nbPlayers}
         handleOnClickPlayer={this.onClickPlayer}

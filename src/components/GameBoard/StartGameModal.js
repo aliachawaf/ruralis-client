@@ -20,7 +20,7 @@ const StartGameModal = (props) => {
       onClose={handleStartGame}
 
     >
-      <Modal.Header>Récapitulatif de la partie</Modal.Header>
+      <Modal.Header>{'Récapitulatif de la partie ' + game.name}</Modal.Header>
       <Modal.Content>
 
         <Header as='h3' color='red' content={game.players.length + ' Joueurs'} dividing />

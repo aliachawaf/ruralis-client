@@ -41,7 +41,7 @@ const JoinGame = (props) => {
             {gamesNotEnded
               .map(game =>
                 <Table.Row key={game._id} value={game._id} onClick={() => props.redirectToGameBoard(game._id)}>
-                  <Table.Cell content={'Partie ' + game._id} />
+                  <Table.Cell content={game._id + '. ' + game.name} />
 
                   <Table.Cell>
                     {'Tour ' + game.numTour}

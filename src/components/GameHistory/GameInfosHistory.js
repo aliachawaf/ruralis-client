@@ -69,7 +69,7 @@ const GameInfosHistory = (props) => {
           </List>
 
           <Header as='h3' color='red' content={'Scénario ' + props.game.scenario} dividing />
-          <Message color='yellow' header='OBJECTIFS' content={scenario && scenario.objectives} />
+          <Message color='yellow' header='OBJECTIF COMMUN' content={scenario && scenario.objectives} />
 
         </Segment>
 

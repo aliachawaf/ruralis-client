@@ -3,7 +3,7 @@ import GameStep from '../components/GameBoard/GameSteps/GameStep'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { addIAE, applyAction, endgame, updateScore, addEventCards, tmpScore } from '../actions/gameActions'
+import { addEventCards, addIAE, applyAction, endgame, tmpScore, updateScore } from '../actions/gameActions'
 
 import actions from '../config/actionsCards'
 import eventCards from '../config/eventCards'
@@ -54,6 +54,8 @@ class GameStepContainer extends React.Component {
       const newAncrageSocial = this.props.game.ancrageSocial + card.ancrageSocialEffect
       const newTempsTravail = this.props.game.tempsTravail + card.tempsTravailEffect
       this.props.applyAction(this.props.game._id, this.props.actionSelected, newProduction, newEnvironnement, newAncrageSocial, newTempsTravail)
+
+      this.props.onChangeAction(undefined, { value: -1 })
     } else {
       this.props.applyAction(this.props.game._id, this.props.actionSelected, this.props.game.production, this.props.game.environnement, this.props.game.ancrageSocial, this.props.game.tempsTravail)
     }

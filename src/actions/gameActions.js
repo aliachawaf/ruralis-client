@@ -1,4 +1,16 @@
-import { FETCH_GAME, GET_ERRORS, START_GAME, TMP_SCORE, ADD_IAE, UPDATE_SCORE, APPLY_ACTION, CREATE_GAME, FETCH_ALL_GAMES, END_GAME, ADD_CARD_EVENTS } from './types'
+import {
+  ADD_CARD_EVENTS,
+  ADD_IAE,
+  APPLY_ACTION,
+  CREATE_GAME,
+  END_GAME,
+  FETCH_ALL_GAMES,
+  FETCH_GAME,
+  GET_ERRORS,
+  START_GAME,
+  TMP_SCORE,
+  UPDATE_SCORE
+} from './types'
 import * as APIFetch from '../helpers/APIFetch'
 
 // _______ FETCH ONE GAME _______
@@ -58,8 +70,9 @@ export const createGameAction = game => ({
   }
 })
 
-export const createGame = (playersSelected, scenario, history) => dispatch => {
+export const createGame = (gameName, playersSelected, scenario, history) => dispatch => {
   const params = {
+    name: gameName,
     players: playersSelected,
     scenario: scenario
   }

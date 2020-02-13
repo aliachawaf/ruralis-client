@@ -4,9 +4,10 @@
 Ruralis, un jeu pédagogique sur les infrastructures agro-écologiques
 
 Ruralis est un jeu de société, qui permet de réfléchir sur l’implantation d'IAE dans une exploitation agricole, et d'en appréhender les différents enjeux.
-
+## Travis 
+[![Build Status](https://travis-ci.org/ChawafGestin/ruralis-client.svg?branch=master)](https://travis-ci.org/ChawafGestin/ruralis-client)
 ## Setup
-You need Node.js (version >= 10) & npm. Once installed simply run `npm install` followed by `npm start` and you should be running.
+You need Node.js (version >= 10) & npm. Once installed simply run `npm install` followed by `npm run dev` and you should be running.
 
 ## Tests
 They work using [jest](https://jestjs.io/). Jest allow to make tests using a simple API . To run the tests use `npm test`.
